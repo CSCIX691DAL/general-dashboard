@@ -1,0 +1,3 @@
+test_build:
+  script:
+    - echo "Hello, World!"
