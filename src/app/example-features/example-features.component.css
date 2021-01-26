@@ -1,0 +1,20 @@
+.features-container{
+  display: flex;
+  justify-content: center;
+}
+
+.features{
+  align-self: center;
+}
+.feature-image{
+  margin:10px;
+  border: 5px solid black;
+  vertical-align: top;
+}
+
+.feature-fig{
+  display: inline-block;
+}
+.feature-caption{
+  text-align: center;
+}
