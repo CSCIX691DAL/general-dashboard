@@ -1,0 +1,12 @@
+<div class="features-container">
+  <table class="features">
+    <tr class="feature-row">
+      <td class="feature-col" *ngFor="let feature of features">
+        <figure class="feature-fig">
+          <img class="feature-image"src="{{feature.url}}">
+          <figcaption class="feature-caption">{{feature.name}}</figcaption>
+        </figure>
+      </td>
+    </tr>
+  </table>
+</div>
