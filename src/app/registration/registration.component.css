@@ -3,3 +3,37 @@
   text-align:center;
 }
 
+h1{
+  margin-bottom: 5%;
+}
+
+form{
+  text-align: left;
+  margin-left:25%;
+  margin-right:25%;
+}
+
+label{
+  font-size: large;
+  margin-bottom:-8px;
+}
+
+/* CSS style pulled from:
+ https://www.w3schools.com/howto/howto_css_login_form.asp
+ */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px auto;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button{
+  width:75%;
+  margin-top:5%;
+  margin-left:10%;
+  font-size: larger;
+  padding: 1%;
+}
