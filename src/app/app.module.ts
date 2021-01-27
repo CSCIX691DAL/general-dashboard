@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ExampleFeaturesComponent } from './example-features/example-features.component';
 import { AppDescComponent } from './app-desc/app-desc.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     ExampleFeaturesComponent,
-    AppDescComponent
+    AppDescComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
