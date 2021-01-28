@@ -16,10 +16,21 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    apt-get update
-    apt-get install -y firefox xvfb
     npm install -g @angular/cli
     npm install
-    xvfb-run ng test --watch=false --sourceMap=false --browsers=Firefox
-    ng build --prod
-  displayName: 'npm install, headless tests, build'
+  displayName: 'install dependencies'
+- script: ng build --prod
+  displayName: 'production build'
+- script: xvfb-run ng test --watch=false --sourceMap=false --browsers=ChromeHeadless
+  displayName: 'execute headless :tests'
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+    failTaskOnFailedTests: true # Optional
+    testResultsFiles: 'testresults/junit/unit-test-result.xml'
+    # searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
+    # mergeTestResults: false # Optional
+    # testRunTitle: # Optional
+    # buildPlatform: # Optional
+    # buildConfiguration: # Optional
+    # publishRunAttachments: true # Optional
