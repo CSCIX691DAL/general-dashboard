@@ -16,7 +16,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    apt-get update
+    apt-get install -y firefox xvfb
     npm install -g @angular/cli
     npm install
+    xvfb-run ng test --watch=false --sourceMap=false --browsers=Firefox
     ng build --prod
-  displayName: 'npm install and build'
+  displayName: 'npm install, headless tests, build'
