@@ -45,13 +45,22 @@ describe('GeneralDashboard Routings', () => {
 
   });
 
-  it('should test component with Activated Route', fakeAsync(() => {
+  it('should test component navigating from home to login', fakeAsync(() => {
     fixture.detectChanges();
     tick();
 
     router.navigate(['login']);
     tick();
     expect(location.path()).toBe('/login');
+  }));
+
+  it('should test component navigating to registration', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    router.navigate(['registration']);
+    tick();
+    expect(location.path()).toBe('/registration');
   }));
 
 });
