@@ -63,6 +63,15 @@ describe('GeneralDashboard Routings', () => {
     expect(location.path()).toBe('/registration');
   }));
 
+  it('should test component navigating to home', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    router.navigate(['home']);
+    tick();
+    expect(location.path()).toBe('/home');
+  }));
+
 });
 
 
