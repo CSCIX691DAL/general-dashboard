@@ -8,6 +8,7 @@ import { ExampleFeaturesComponent } from './example-features/example-features.co
 import { AppDescComponent } from './app-desc/app-desc.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HomeComponent } from './home/home.component';
     ExampleFeaturesComponent,
     AppDescComponent,
     RegistrationComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
