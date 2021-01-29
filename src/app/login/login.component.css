@@ -31,10 +31,10 @@ input[type=text], input[type=password] {
 }
 
 button{
-width:75%;
-margin-top:5%;
-margin-left:10%;
-font-size: larger;
-padding: 1%;
+  width:75%;
+  margin-top:5%;
+  margin-left:10%;
+  font-size: larger;
+  padding: 1%;
 }
   
