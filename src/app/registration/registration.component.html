@@ -2,23 +2,18 @@
 
   <h1>Registration</h1>
 
-  <form>
-      <div>
-        <label for="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username:" id="username" required>
-      </div>
+  <form id="registerForm">
 
-      <div>
-        <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password:" id="password" required>
-      </div>
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username:" id="username" required>
 
-      <div>
-        <label for="passwordConfirm"><b>Confirm Password</b></label>
-        <input type="password" placeholder="Confirm Password:" id="passwordConfirm" required>
-      </div>
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password:" id="password" required>
 
-      <button type="submit" class="btn-primary" (click)="onClick()">Register</button>
+    <label for="passwordConfirm"><b>Confirm Password</b></label>
+    <input type="password" placeholder="Confirm Password:" id="passwordConfirm" required>
+
+    <button type="submit" class="btn-primary" (click)="onClick()">Register</button>
 
   </form>
 
