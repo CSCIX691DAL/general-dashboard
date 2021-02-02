@@ -10,6 +10,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { UserhomeComponent } from './userhome/userhome.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import { UserhomeComponent } from './userhome/userhome.component';
     RegistrationComponent,
     HomeComponent,
     LoginComponent,
-    UserhomeComponent
+    UserhomeComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

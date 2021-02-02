@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -9,6 +9,7 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [ LoginComponent ]
     })
     .compileComponents();
@@ -53,7 +54,7 @@ describe('LoginComponent', () => {
 
     expect(inputDeEl.querySelector('#username').getAttribute('type')).toEqual['text'];
     expect(inputDeEl.querySelector('#username').getAttribute('placeholder')).toEqual('Enter Username:');
-    
+
     expect(inputDeEl.querySelector('#password').getAttribute('type')).toEqual['text'];
     expect(inputDeEl.querySelector('#password').getAttribute('placeholder')).toEqual('Enter Password:');
   });
