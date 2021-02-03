@@ -39,19 +39,23 @@ export class RegistrationComponent implements OnInit {
    * empty for now add more validation criteria to this method).
    * @param form - the form element in registration.component.html which contains all the input fields
    */
-  validForm(form): boolean{
+  validForm(form): boolean {
     // Add form validation criteria here
     const inputFields = form.getElementsByTagName('input');
-    for (let i = 0; i < inputFields.length; i++){
-      if (inputFields[i].hasAttribute('required')){
-        if (inputFields[i].value != inputFields[i]){
+
+    for (let i = 0; i < inputFields.length; i++) {
+      if (inputFields[i].hasAttribute('required')) {
+        if (inputFields[i].value === '') {
           return false;
         }
+        // Password match check
+        if (i === 2) {
+          const password = inputFields[i - 1].value;
+          if (password !== inputFields[i].value) {
+            return false;
+          }
+        }
       }
-    }
-    // Password match check
-    if (inputFields.getElementById('password') != inputFields.getElementById('passwordConfirm')) {
-      return false;
     }
     return true;
   }
