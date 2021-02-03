@@ -35,21 +35,21 @@ export class RegistrationComponent implements OnInit {
 
   /**
    * @desc Called by the onClick method to check whether or not the registration form
-   * has valid data in each input field (checks if Field is empty for now add more validation criteria
-   * to this method).
+   * has valid data in each input field and also checking if password inputs match (checks if Field is
+   * empty for now add more validation criteria to this method).
    * @param form - the form element in registration.component.html which contains all the input fields
    */
   validForm(form): boolean{
     // Add form validation criteria here
-    const inputFields = form.getElementsByTagName('input');
+    const inputFields = form.getElementsByTagName('input');	
     for (let i = 0; i < inputFields.length; i++){
       if (inputFields[i].hasAttribute('required')){
-        if (inputFields[i].value === ''){
+        if (inputFields[i].value != inputFields[i]){
           return false;
         }
       }
     }
-    return true;
+	if (inputFields.getElementById('password') != inputFields.getElementById('passwordConfirm') {return false;} //Password match check
+	return true;
   }
-
 }
