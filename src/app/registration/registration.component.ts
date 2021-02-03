@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {FormControl, FormGroup} from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -9,6 +11,26 @@ import {Router} from '@angular/router';
 export class RegistrationComponent implements OnInit {
 
   constructor(private router: Router) { }
+
+  /**
+   * @desc This is what will take the users input and checks it against the pattern
+   * that most to all email address' follow
+   */
+  userEmail = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
+      ]),
+  });
+
+  /**
+   * This allows the html file to call the users
+   * email to check its status in the form
+   */
+  // tslint:disable-next-line:typedef
+  getUserEmail(){
+    return this.userEmail.get('email');
+  }
 
   ngOnInit(): void {
   }

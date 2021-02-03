@@ -2,18 +2,32 @@
 
   <h1>Registration</h1>
 
-  <form id="registerForm">
+  <form [formGroup]="userEmail">
+    <div class="form-group">
+      <label><b>Username</b></label>
+      <!--Takes the user input then tells the program whether it's valid or not-->
+      <label>
+        <input [class.is-invalid]="userEmail.get('email').invalid"
+          type="email" class="form-control" formControlName="email" placeholder="Enter Username:" required>
+      </label>
+    </div>
 
-    <label for="username"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username:" id="username" required>
+    <!--This is what displays the error message if isn't a valid email-->
+    <div *ngIf="(getUserEmail().invalid && getUserEmail().touched)|| getUserEmail().dirty">
+      <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">Please provide a valid email address</small>
+    </div>
 
-    <label for="password"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password:" id="password" required>
+    <div>
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password:" id="password" required>
+    </div>
 
-    <label for="passwordConfirm"><b>Confirm Password</b></label>
-    <input type="password" placeholder="Confirm Password:" id="passwordConfirm" required>
+    <div>
+      <label for="passwordConfirm"><b>Confirm Password</b></label>
+      <input type="password" placeholder="Confirm Password:" id="passwordConfirm" required>
+    </div>
 
-    <button type="submit" class="btn-primary" (click)="onClick()">Register</button>
+    <button type="submit" class="btn-primary">Register</button>
 
   </form>
 
