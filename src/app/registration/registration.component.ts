@@ -41,7 +41,7 @@ export class RegistrationComponent implements OnInit {
    */
   validForm(form): boolean{
     // Add form validation criteria here
-    const inputFields = form.getElementsByTagName('input');	
+    const inputFields = form.getElementsByTagName('input');
     for (let i = 0; i < inputFields.length; i++){
       if (inputFields[i].hasAttribute('required')){
         if (inputFields[i].value != inputFields[i]){
@@ -49,7 +49,10 @@ export class RegistrationComponent implements OnInit {
         }
       }
     }
-	if (inputFields.getElementById('password') != inputFields.getElementById('passwordConfirm') {return false;} //Password match check
-	return true;
+    // Password match check
+    if (inputFields.getElementById('password') != inputFields.getElementById('passwordConfirm')) {
+      return false;
+    }
+    return true;
   }
 }
