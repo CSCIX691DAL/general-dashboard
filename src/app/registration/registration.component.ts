@@ -52,6 +52,7 @@ export class RegistrationComponent implements OnInit {
         if (i === 2) {
           const password = inputFields[i - 1].value;
           if (password !== inputFields[i].value) {
+            alert('Passwords do not match');
             return false;
           }
         }
