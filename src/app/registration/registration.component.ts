@@ -44,8 +44,9 @@ export class RegistrationComponent implements OnInit {
     // Add other validation checks to validForm() method (below this method)
     const form = document.getElementById('registerForm');
     const bool = this.validForm(form);
+    const boolPW = this.validPassword(form);
     // If validation checks pass then route user to login page
-    if (bool){
+    if (bool && boolPW){
       this.router.navigate(['/login']).then(response => {
         console.log(response);
       });
@@ -82,4 +83,29 @@ export class RegistrationComponent implements OnInit {
     }
     return true;
   }
+  validPassword(form): boolean{
+    const inputFields = form.getElementsByTagName('input');
+    const specialChars  = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const numChars = /\d/;
+    const letterChars = /[a-zA-Z]/;
+
+    if (4 > inputFields[1].value.length || inputFields[1].value.length > 12) {
+      alert('Password must be between 4 and 12 characters long');
+      return false;
+    }
+    if (!(specialChars.test(inputFields[1].value)) ) {
+      alert('Password must contain at least one special character');
+      return false;
+    }
+    if (!(numChars.test(inputFields[1].value))) {
+      alert('Password must contain at least one number');
+      return false;
+    }
+    if (!(letterChars.test(inputFields[1].value))) {
+      alert('Password must contain at least one letter');
+      return false;
+    }
+    return true;
+  }
+
 }
