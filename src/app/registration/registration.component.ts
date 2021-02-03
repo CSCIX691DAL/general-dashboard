@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {variable} from "@angular/compiler/src/output/output_ast";
+import {FormControl, FormGroup} from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -10,6 +11,26 @@ import {variable} from "@angular/compiler/src/output/output_ast";
 export class RegistrationComponent implements OnInit {
 
   constructor(private router: Router) { }
+
+  /**
+   * @desc This is what will take the users input and checks it against the pattern
+   * that most to all email address' follow
+   */
+  userEmail = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
+      ]),
+  });
+
+  /**
+   * This allows the html file to call the users
+   * email to check its status in the form
+   */
+  // tslint:disable-next-line:typedef
+  getUserEmail(){
+    return this.userEmail.get('email');
+  }
 
   ngOnInit(): void {
   }
@@ -37,21 +58,26 @@ export class RegistrationComponent implements OnInit {
 
   /**
    * @desc Called by the onClick method to check whether or not the registration form
-   * has valid data in each input field (checks if Field is empty for now add more validation criteria
-   * to this method).
+   * has valid data in each input field and also checking if password inputs match (checks if Field is
+   * empty for now add more validation criteria to this method).
    * @param form - the form element in registration.component.html which contains all the input fields
    */
-  validForm(form): boolean{
+  validForm(form): boolean {
     // Add form validation criteria here
     const inputFields = form.getElementsByTagName('input');
-    const specialChars  = '/[ `!@#$%^&*()_+\\-=\[\]{};\':\"\|,.<>\/?~]/';
-    const numChars = '0123456789';
-    const letterChars = 'abcdefghijklmnopqrstuvwxyz';
 
     for (let i = 0; i < inputFields.length; i++) {
       if (inputFields[i].hasAttribute('required')) {
-        if ((inputFields[i].value === '')) {
+        if (inputFields[i].value === '') {
           return false;
+        }
+        // Password match check
+        if (i === 2) {
+          const password = inputFields[i - 1].value;
+          if (password !== inputFields[i].value) {
+            alert('Passwords do not match');
+            return false;
+          }
         }
       }
     }
@@ -81,4 +107,5 @@ export class RegistrationComponent implements OnInit {
     }
     return true;
   }
+
 }
