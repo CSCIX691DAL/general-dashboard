@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onClick(): void {
+  Validate(): void {
     const form = document.getElementById('logInForm');
     const valid = this.validForm(form); // TODO: Validate against database looking for existing user
     if (valid) { // TODO: Add the bool check instead of true, looking for existing users
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
         console.log(response);
       });
     }
-    // Log that this user does not exist
+    // TODO: Log that this user does not exist
     else {
       // alert('The username/password does not match any existing user');
     }
