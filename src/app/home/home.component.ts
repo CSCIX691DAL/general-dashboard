@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     });
   }
   createUser(): void{
-    this.conn.createUser('Xiappi', 'Adam', 'Mattatall', 'Password123'  ).subscribe(data =>{
+    this.conn.createUser('Xiappi',  'Password123'  ).subscribe(data => {
       console.log(data);
     });
   }
