@@ -1,5 +1,5 @@
 const express = require('express');
-const userStruc = require('../src/app/user');
+const userStruc = require('./user');
 const {Sequelize, DataTypes} = require('sequelize');
 const sequelize = new Sequelize('x691_G_dashboard', 'x691_G_student', 'yED3IX83k3BDYrCS', {
   host: 'db.cs.dal.ca',
@@ -59,7 +59,7 @@ function createRouter(db) {
     }
   );
 
-  //  >>>>>>>>>>> GET USER <<<<<<<<<<
+  //  >>>>>>>>>>> DELETE USER <<<<<<<<<<
   router.delete('/users/:user', function (req, res, next) {
       seq.destroy({
         where:{
