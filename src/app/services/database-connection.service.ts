@@ -25,7 +25,7 @@ export class DatabaseService {
   constructor(private http: HttpClient) {
   }
 
-  createUser(id: string, fName: string, lName: string, password: string ): Observable<any>{
+  createUser(id: string, password: string ): Observable<any>{
 
     return this.http.request('post',
        '/posts/user',
@@ -33,8 +33,6 @@ export class DatabaseService {
          headers: this.header,
          body: {
            ID: id,
-           FirstName: fName,
-           LastName: lName,
            Password: password
          }
        }

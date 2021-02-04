@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
 import { Validators } from '@angular/forms';
+import {DatabaseService} from '../services/database-connection.service';
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +11,7 @@ import { Validators } from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private conn: DatabaseService) { }
 
   /**
    * @desc This is what will take the users input and checks it against the pattern
@@ -72,6 +73,7 @@ export class RegistrationComponent implements OnInit {
    */
   onClick(): void{
     if (this.getUserPassword().valid && this.getUserEmail().valid && this.getUserPassword().value === this.getConfirmPassword().value){
+      this.createUser(this.getUserEmail().value, this.getUserPassword().value);
       this.router.navigate(['/login']).then(response => {
         console.log(response);
       });
@@ -80,4 +82,16 @@ export class RegistrationComponent implements OnInit {
       alert('Expected something different, please try again.');
     }
   }
+  /**
+   * @desc Creates new user and stores in MySQL db. Called by the onClick() method
+   * after register button is pushed on registration page.
+   * @param id: email address entered by User
+   * @param password: the password entered by User
+   */
+  createUser(id: string, password: string): void{
+    this.conn.createUser(id, password).subscribe(data => {
+      console.log(data); // Can remove this, but keeping for testing purposes for now
+    });
+  }
+
 }
