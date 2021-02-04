@@ -21,8 +21,6 @@ function createRouter(db) {
   router.post('/user', function (req, res, next) {
     seq.create({
       ID: req.body.ID,
-      FirstName: req.body.FirstName,
-      LastName: req.body.LastName,
       Password: req.body.Password
     }).then(data => {
         res.status(201).json({status:'ok'});
