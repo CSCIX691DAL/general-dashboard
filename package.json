@@ -16,10 +16,21 @@
     "@angular/compiler": "~11.0.9",
     "@angular/core": "~11.0.9",
     "@angular/forms": "~11.0.9",
+    "@angular/http": "^7.2.16",
     "@angular/platform-browser": "~11.0.9",
     "@angular/platform-browser-dynamic": "~11.0.9",
     "@angular/router": "~11.0.9",
+    "@okta/okta-angular": "1.2.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "4.17.1",
+    "mysql": "2.17.1",
+    "mysql2": "^2.2.5",
+    "ngx-timeline": "5.0.0",
     "rxjs": "~6.6.0",
+    "sequelize": "^6.5.0",
+    "sequelize-auto": "^0.7.10",
+    "sequelize-automate": "^1.2.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
@@ -44,5 +55,13 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"
+  },
+  "browser": {
+    "crypto": false,
+    "fs": false,
+    "net": false,
+    "stream": false,
+    "timers": false,
+    "tls": false
   }
 }
