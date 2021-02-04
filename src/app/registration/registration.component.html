@@ -8,11 +8,10 @@
       <!--Takes the user input then tells the program whether it's valid or not-->
       <input [class.is-invalid]="userEmail.get('email').invalid"
              type="email" class="form-control" formControlName="email" placeholder="Enter Username:" required>
-    </div>
-
-    <!--This is what displays the error message if isn't a valid email-->
-    <div *ngIf="(getUserEmail().invalid && getUserEmail().touched)|| getUserEmail().dirty">
-      <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">Please provide a valid email address</small>
+      <!--This is what displays the error message if isn't a valid email-->
+      <div *ngIf="(getUserEmail().invalid && getUserEmail().touched)|| getUserEmail().dirty">
+        <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">Please provide a valid email address</small>
+      </div>
     </div>
 
   <div [formGroup]="passwords" class="form-group">
