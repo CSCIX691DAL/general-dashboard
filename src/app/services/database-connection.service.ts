@@ -58,4 +58,8 @@ export class DatabaseService {
       }
       );
   }
+
+  getEmployees(): Observable<any>{
+    return this.http.get('/gets/employees');
+  }
 }
