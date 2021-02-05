@@ -20,27 +20,34 @@
            type="password" class="form-control" formControlName="password" placeholder="Enter Password:" required>
 
     <!--Displays this error messages if isn't a valid password-->
-    <div *ngIf="(getUserPassword().invalid && getUserPassword().touched)|| getUserPassword().dirty">
-      <small *ngIf="getUserPassword().errors?.pattern" class="text-danger">Password must contain at least one letter,
+    <div *ngIf="(getPassword().invalid && getPassword().touched)|| getPassword().dirty">
+      <small *ngIf="getPassword().errors?.pattern" class="text-danger">Password must contain at least one letter,
         one symbol, and one number</small>
     </div>
     <!-- Displays error message when char length exceeds boundaries -->
-    <div *ngIf="(getUserPassword().invalid && getUserPassword().touched)|| getUserPassword().dirty">
-      <small *ngIf="getUserPassword().errors?.minlength || getUserPassword().errors?.maxlength" class="text-danger">
+    <div *ngIf="(getPassword().invalid && getPassword().touched)|| getPassword().dirty">
+      <small *ngIf="getPassword().errors?.minlength || getPassword().errors?.maxlength" class="text-danger">
         Password must be between 4 and 12 characters</small>
     </div>
 
     <label><b>Confirm Password</b></label>
-    <input [class.is-invalid]="passwords.get('confirmPassword').invalid || getConfirmPassword().value !== getUserPassword().value"
+    <input [class.is-invalid]="passwords.get('confirmPassword').invalid || getConfirmPassword().value !== getPassword().value"
            type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password:" required>
 
     <!--Displays this error messages if isn't a valid password-->
     <div *ngIf="(getConfirmPassword().touched)|| getConfirmPassword().dirty">
-      <small *ngIf="getConfirmPassword().value !== getUserPassword().value" class="text-danger">Passwords do not match</small>
+      <small *ngIf="getConfirmPassword().value !== getPassword().value" class="text-danger">Passwords do not match</small>
     </div>
   </div>
 
-    <button type="submit" class="btn-primary" (click)="onClick()">Register</button>
+    <!-- Displays error message if user exists in database already -->
+    <div [style.display]="isVisible ? 'block' : 'none'" *ngIf="isVisible">
+      <small class="alert alert-danger">
+        It appears this user already exists, please login or try again with a different email
+      </small>
+    </div>
+
+    <button type="button" class="btn-primary" (click)="validate()">Register</button>
 
   </form>
 
