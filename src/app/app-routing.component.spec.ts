@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Router} from '@angular/router';
 import { DebugElement } from '@angular/core';
 import { Location } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { routes } from './app-routing.module';
 
@@ -18,7 +19,8 @@ describe('GeneralDashboard Routings', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(routes)
+        RouterTestingModule.withRoutes(routes),
+        HttpClientTestingModule
       ],
       declarations: [
         AppComponent,

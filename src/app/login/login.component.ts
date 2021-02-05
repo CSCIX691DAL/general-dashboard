@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { DatabaseService } from '../services/database-connection.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   private usernameExisted = false;
   private usernames = [];
 
-  constructor(private router: Router, private conn: DatabaseService) {
+  constructor(private router: Router, private conn: DatabaseService, h: HttpClient) {
     this.getUsers();
   }
 
