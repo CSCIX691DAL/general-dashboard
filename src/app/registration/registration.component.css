@@ -3,6 +3,15 @@
   text-align:center;
 }
 
+.alert{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px auto;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
 h1{
   margin-bottom: 5%;
 }
@@ -33,7 +42,7 @@ input[type=text], input[type=password], input[type=email] {
 button{
   width:75%;
   margin-top:5%;
-  margin-left:10%;
+  margin-left:11.5%;
   font-size: larger;
   padding: 1%;
 }
