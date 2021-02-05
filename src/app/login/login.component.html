@@ -1,20 +1,40 @@
 <div class="container">
 
-    <h1>Login</h1>
+  <h1>Login</h1>
 
-    <form id="logInForm">
-        <div>
-          <label for="username"><b>Username</b></label>
-          <input type="text" placeholder="Enter Username:" id="username" required>
-        </div>
+  <form id="logInForm">
+    <div [formGroup]="userEmail" class="form-group">
+      <label><b>Username</b></label>
+      <input [class.is-invalid]="userEmail.get('email').invalid" type="email" class="form-control"
+        formControlName="email" placeholder="Enter Username:" id="username" required>
+      <div *ngIf="(getUserEmail().invalid && getUserEmail().touched)|| getUserEmail().dirty">
+        <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">Please enter a valid email address</small>
+      </div>
+      <div *ngIf="getUserEmail().touched|| getUserEmail().dirty">
+        <small *ngIf="valid && !usernameExisted && usernameExisted!=null" class="text-danger">The username doesn't exist. Please retry</small>
+      </div>
+    </div>
 
-        <div>
-          <label for="password"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password:" id="password" required>
-        </div>
+    <div [formGroup]="passwords" class="form-group">
+      <label><b>Password</b></label>
+      <input [class.is-invalid]="passwords.get('password').invalid" type="password" class="form-control"
+        formControlName="password" placeholder="Enter Password:" id="password" required>
 
-        <button type="submit" class="btn-primary" (click)="Validate()">Log in</button>
+      <!--Displays this error messages if isn't a valid password-->
+      <div *ngIf="(getUserPassword().invalid && getUserPassword().touched)|| getUserPassword().dirty">
+        <small *ngIf="getUserPassword().errors?.pattern" class="text-danger">Password must contain at least one letter,
+          one symbol, and one number</small>
+      </div>
+      <!-- Displays error message when char length exceeds boundaries -->
+      <div *ngIf="(getUserPassword().invalid && getUserPassword().touched)|| getUserPassword().dirty">
+        <small *ngIf="getUserPassword().errors?.minlength || getUserPassword().errors?.maxlength" class="text-danger">
+          Password must be between 4 and 12 characters</small>
+      </div>
 
-    </form>
+    </div>
 
-  </div>
+    <button type="button" class="btn-primary" (click)="Signin()">Log in</button>
+
+  </form>
+
+</div>
