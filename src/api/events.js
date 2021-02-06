@@ -78,8 +78,25 @@ function createRouter(db) {
   }
   );
 
-  //  >>>>>>>>>>> GET ALL EMPLYEES <<<<<<<<<<
-  router.get('/employees', function (req, res, next) {
+  //  >>>>>>>>>>> GET COUNTS OF ALL EMPLYEES GENDER <<<<<<<<<<
+  router.get('/employees/countByGender', function (req, res, next) {
+    seqEmployee.findAll({
+      attributes: [
+        'gender',
+        [sequelize.fn('COUNT', sequelize.col('gender')), 'SumOfGender']
+      ],
+      group: 'gender'
+    }).then(data => {
+      res.status(200).json(data);
+    }).catch(err => {
+      console.log(err)
+      res.status(500).append("Error", err);
+    });
+  }
+  );
+
+  // >>>>>>>>>>> GET ALL EMPLYEES <<<<<<<<<<
+  router.get('/employees/getAllEmployees', function (req, res, next) {
     seqEmployee.findAll({ limit: 50 }).then(data => {
       res.status(200).json(data);
     }).catch(err => {

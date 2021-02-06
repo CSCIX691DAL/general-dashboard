@@ -59,7 +59,11 @@ export class DatabaseService {
       );
   }
 
-  getEmployees(): Observable<any>{
-    return this.http.get('/gets/employees');
+  getAllEmployees(): Observable<any>{
+    return this.http.get('/gets/employees/getAllEmployees');
+  }
+
+  getEmployeesGender(): Observable<any>{
+    return this.http.get('/gets/employees/countByGender');
   }
 }

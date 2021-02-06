@@ -9,11 +9,11 @@ import { Employee } from "../models/employee";
 export class EmployeesService {
   private employees = [];
   constructor(private conn: DatabaseService, h: HttpClient) {
-    this.getEmployees();
+    this.getAllEmployees();
    }
 
-  getEmployees() {
-    this.conn.getEmployees().subscribe(data => {
+   getAllEmployees() {
+    this.conn.getAllEmployees().subscribe(data => {
       for (let item of data) {
         let itemAttr = [];
         for(let key in item){
@@ -25,4 +25,7 @@ export class EmployeesService {
     return this.employees;
   }
   
+  getEmployeesGender(){
+    return this.conn.getEmployeesGender();
+  }
 }
