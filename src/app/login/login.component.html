@@ -32,8 +32,12 @@
       </div>
 
     </div>
+    <!--Displays error message after pressing the login button -->
+    <div *ngIf="signedIn==false && getUserPassword().touched">
+      <small *ngIf="correctPassword==false" class="text-danger">Password Is Incorrect</small>
+    </div>
 
-    <button type="button" class="btn-primary" (click)="Signin()">Log in</button>
+    <button id="button" type="button" class="btn-primary" (click)="signIn()">Log in</button>
 
   </form>
 

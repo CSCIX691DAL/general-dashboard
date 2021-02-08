@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { DatabaseService } from '../services/database-connection.service';
 import {HttpClient} from '@angular/common/http';
@@ -14,14 +14,16 @@ export class LoginComponent implements OnInit {
   private signedIn = false;
   private valid = false;
   private usernameExisted = false;
+  private correctPassword;
   private usernames = [];
+  private passwordList = [];
 
   constructor(private router: Router, private conn: DatabaseService, h: HttpClient) {
     this.getUsers();
   }
 
   /**
- * @desc Login username and password validation follows rules of registriation
+ * @desc Login username and password validation follows rules of registration
  */
   userEmail = new FormGroup({
     email: new FormControl('', [
@@ -54,11 +56,15 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  Signin(): void {
+  signIn(): void {
     const form = document.getElementById('logInForm');
     this.valid = this.validForm(form);
     this.checkUsernameExistence(this.getUserEmail().value);
-    this.updateUI();
+    this.checkPassword(this.getUserEmail().value, this.getUserPassword().value)
+    if (this.usernameExisted == true && this.correctPassword == true){
+      this.signedIn=true;
+      this.updateUI();
+    }
   }
 
   validForm(form): boolean {
@@ -98,5 +104,34 @@ export class LoginComponent implements OnInit {
         this.usernames.push(element.ID);
       }
     });
+  }
+
+  /**
+   * @desc Fills an array with the passwords for each of the saved users
+   */
+  getPasswords() {
+    this.conn.getUsers().subscribe(data => {
+      for (let element of data) {
+        this.passwordList.push(element.Password);
+      }
+    });
+  }
+
+  /**
+   * @dec Takes in the email and password from the form, then populates two arrays and checks the corresponding indexes
+   * make sure that inputted password is the correct password
+   * @param email
+   * @param password
+   */
+  checkPassword(email: string, password: string): void {
+    this.getUsers()
+    this.getPasswords()
+
+    if (password == (this.passwordList[this.usernames.indexOf(email)])){
+      this.correctPassword = true;
+    }
+    else {
+      this.correctPassword = false;
+    }
   }
 }

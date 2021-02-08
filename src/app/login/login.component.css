@@ -21,7 +21,7 @@ label{
 /* CSS style pulled from:
 https://www.w3schools.com/howto/howto_css_login_form.asp
 */
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px auto;
@@ -37,4 +37,3 @@ button{
   font-size: larger;
   padding: 1%;
 }
-  
