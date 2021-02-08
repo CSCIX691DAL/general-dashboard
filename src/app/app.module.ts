@@ -14,6 +14,8 @@ import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
+import { EmployeesService } from './services/employees.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,7 @@ import {HttpClientModule} from '@angular/common/http';
     RouterModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [EmployeesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

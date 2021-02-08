@@ -58,4 +58,12 @@ export class DatabaseService {
       }
       );
   }
+
+  getAllEmployees(): Observable<any>{
+    return this.http.get('/gets/employees/getAllEmployees');
+  }
+
+  getEmployeesGender(): Observable<any>{
+    return this.http.get('/gets/employees/countByGender');
+  }
 }
