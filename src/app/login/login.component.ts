@@ -11,7 +11,7 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private signedIn = false;
+  public signedIn = false;
   private valid = false;
   private usernameExisted = false;
   private correctPassword;
