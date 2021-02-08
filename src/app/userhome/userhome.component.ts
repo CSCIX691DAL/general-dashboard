@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Employee } from "../models/employee";
-import { EmployeesService } from '../services/employees.service'
+import { Employee } from '../models/employee';
+import { EmployeesService } from '../services/employees.service';
 import { Chart } from 'chart.js';
 
 @Component({
@@ -24,7 +24,7 @@ export class UserhomeComponent implements OnInit {
         labels: ['Gender'],
         datasets: [
           {
-            label: "Felmale",
+            label: "Female",
             fillColor: 'rgba(255, 99, 132, 0.2)',
             strokeColor: 'rgba(255, 99, 132, 0.2)',
             highlightFill: 'rgba(255, 99, 132, 0.2)',
@@ -77,12 +77,12 @@ export class UserhomeComponent implements OnInit {
         this.genderMap.set(item['gender'], item['SumOfGender']);
       }
       this.graph();
-    });;
+    });
   }
 
   printEmployees() {
     for (let emp of this.employees) {
-      console.log(emp)
+      console.log(emp);
     }
   }
 
