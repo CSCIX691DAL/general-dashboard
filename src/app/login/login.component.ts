@@ -95,8 +95,19 @@ export class LoginComponent implements OnInit {
     if (this.valid && this.usernameExisted) {
       this.router.navigate(['/userhome']).then(response => {
         console.log(response);
+        // Makes the navbar element 'Signout' visible to user upon logging in
+        this.updateNav();
       });
     }
+  }
+
+  /**
+   * @desc Makes the nav element for signout visible and hides the login and registration nav elements
+   */
+  updateNav(){
+    document.getElementById('signout').classList.remove('d-none');
+    document.getElementById('login').classList.add('d-none');
+    document.getElementById('register').classList.add('d-none');
   }
 
   getUsers() {
