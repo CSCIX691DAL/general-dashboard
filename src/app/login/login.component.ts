@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private conn: DatabaseService, h: HttpClient) {
     this.getUsers();
+    this.getPasswords();
   }
 
   /**
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
     const form = document.getElementById('logInForm');
     this.valid = this.validForm(form);
     this.checkUsernameExistence(this.getUserEmail().value);
-    this.checkPassword(this.getUserEmail().value, this.getUserPassword().value)
+    this.checkPassword(this.getUserEmail().value, this.getUserPassword().value);
     if (this.usernameExisted == true && this.correctPassword == true){
       this.signedIn=true;
       this.updateUI();
@@ -124,8 +125,8 @@ export class LoginComponent implements OnInit {
    * @param password
    */
   checkPassword(email: string, password: string): void {
-    this.getUsers()
-    this.getPasswords()
+    const emailList = this.usernames;
+    const passList = this.passwordList;
 
     if (password == (this.passwordList[this.usernames.indexOf(email)])){
       this.correctPassword = true;
