@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   public signedIn = false;
   private valid = false;
   private usernameExisted = false;
-  private correctPassword;
+  public correctPassword;
   private usernames = [];
   private passwordList = [];
 
