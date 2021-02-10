@@ -125,9 +125,6 @@ export class LoginComponent implements OnInit {
    * @param password
    */
   checkPassword(email: string, password: string): void {
-    const emailList = this.usernames;
-    const passList = this.passwordList;
-
     if (password == (this.passwordList[this.usernames.indexOf(email)])){
       this.correctPassword = true;
     }
