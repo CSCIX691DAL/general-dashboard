@@ -1,26 +1,40 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
-const events = require('./events');
+const events = require("./events");
+const {Sequelize} = require('sequelize')
 
-const connection = mysql.createConnection({
-  host: 'db.cs.dal.ca',
-  user: 'x691_G_student',
-  password: 'yED3IX83k3BDYrCS',
-  database: 'x691_G_dashboard'
+
+let appPort = process.env.PORT || 5000;
+
+const sequelize = new Sequelize('x691_G_dashboard', 'x691_G_student', 'yED3IX83k3BDYrCS', {
+    host: 'db.cs.dal.ca',
+    dialect: 'mysql',
+    port: 3306,
+    pool: {
+        max: 10,
+        min: 0,
+        idle: 20000
+    }
 });
-
-connection.connect();
-
-const port = process.env.PORT || 8080;
 
 const app = express()
-  .use(cors())
-  .use(bodyParser.json())
-  .use(events(connection));
+    .use(cors())
+    .use(bodyParser.json())
+    .use(events(sequelize));
 
-app.listen(port, () => {
-  console.log(`Express server listening on port ${port}`);
+app.get("/", function (req, res, next){
+    res.json("<h1>Api</h1>")
+})
+
+app.listen(appPort, () => {
+    console.log(`Express server listening on port ${appPort}`);
 });
+
+
+
+
+
+
+
 

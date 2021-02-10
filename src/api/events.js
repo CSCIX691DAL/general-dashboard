@@ -1,14 +1,9 @@
 const express = require('express');
 const userStruc = require('./user');
 const empStruc = require('./employees');
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('x691_G_dashboard', 'x691_G_student', 'yED3IX83k3BDYrCS', {
-  host: 'db.cs.dal.ca',
-  dialect: 'mysql',
-  logging: false
-})
 
-function createRouter(db) {
+
+function createRouter(sequelize) {
   const router = express.Router();
   const owner = '';
   const seq = sequelize.define("Users", userStruc,
