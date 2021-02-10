@@ -1,6 +1,6 @@
 {
   "/posts": {
-    "target": "http://localhost:8080",
+    "target": "https://general-dashboard-api.herokuapp.com",
     "secure": true,
     "logLevel": "debug",
     "pathRewrite": {
@@ -10,7 +10,7 @@
     },
 
   "/gets": {
-    "target": "http://localhost:8080",
+    "target": "https://general-dashboard-api.herokuapp.com",
     "secure": true,
     "logLevel": "debug",
     "pathRewrite": {
@@ -20,7 +20,7 @@
   },
 
   "/puts": {
-    "target": "http://localhost:8080",
+    "target": "https://general-dashboard-api.herokuapp.com",
     "secure": true,
     "logLevel": "debug",
     "pathRewrite": {
@@ -30,7 +30,7 @@
   },
 
   "/deletes": {
-    "target": "http://localhost:8080",
+    "target": "https://general-dashboard-api.herokuapp.com",
     "secure": true,
     "logLevel": "debug",
     "pathRewrite": {
