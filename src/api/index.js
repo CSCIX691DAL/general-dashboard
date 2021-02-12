@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const events = require("./events");
-const {Sequelize} = require('sequelize')
+const {Sequelize} = require('sequelize');
 
 
 let appPort = process.env.PORT || 5000;

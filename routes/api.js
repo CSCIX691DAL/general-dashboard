@@ -1,25 +1,38 @@
 const express = require('express');
-const userStruc = require('../models/user');
-const empStruc = require('../models/employees');
+const router = express.Router();
+const userStruc = require('../src/models/user');
+const empStruc = require('../src/models/employees');
+const {Sequelize} = require('sequelize');
 
+const sequelize = new Sequelize('x691_G_dashboard', 'x691_G_student', 'yED3IX83k3BDYrCS', {
+  host: 'db.cs.dal.ca',
+  dialect: 'mysql',
+  port: 3306,
+  pool: {
+    max: 10,
+    min: 0,
+    idle: 20000
+  }
+});
 
-function createRouter(sequelize) {
-  const router = express.Router();
-  const owner = '';
-  const seq = sequelize.define("Users", userStruc,
-    {
-      timestamps: false
-    });
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.send('Express RESTful API');
+});
 
-  const seqEmployee = sequelize.define("employees", empStruc,
-    {
-      timestamps: false
-    });
+const seq = sequelize.define("Users", userStruc,
+  {
+    timestamps: false
+  });
 
-  // >>>>>> ROUTES <<<<<<<
+const seqEmployee = sequelize.define("employees", empStruc,
+  {
+    timestamps: false
+  });
+// >>>>>> ROUTES <<<<<<<
 
-  // >>>>>> CREATE A USER <<<<<<
-  router.post('/user', function (req, res, next) {
+// >>>>>> CREATE A USER <<<<<<
+router.post('/user', function (req, res, next) {
     seq.create({
       ID: req.body.ID,
       Password: req.body.Password
@@ -30,10 +43,10 @@ function createRouter(sequelize) {
       res.status(500).json({ status: 'error', error: err });
     })
   }
-  );
+);
 
-  //  >>>>>>>>>>> GET ALL USERS <<<<<<<<<<
-  router.get('/users', function (req, res, next) {
+//  >>>>>>>>>>> GET ALL USERS <<<<<<<<<<
+router.get('/users', function (req, res, next) {
     seq.findAll().then(data => {
       res.status(200).json(data);
     }).catch(err => {
@@ -41,10 +54,10 @@ function createRouter(sequelize) {
       res.status(500).append("Error", err);
     });
   }
-  );
+);
 
-  //  >>>>>>>>>>> GET USER <<<<<<<<<<
-  router.get('/users/:user', function (req, res, next) {
+//  >>>>>>>>>>> GET USER <<<<<<<<<<
+router.get('/users/:user', function (req, res, next) {
     seq.findAll({
       where: {
         ID: req.params.user
@@ -56,10 +69,10 @@ function createRouter(sequelize) {
       res.status(500).append("Error", err);
     });
   }
-  );
+);
 
-  //  >>>>>>>>>>> DELETE USER <<<<<<<<<<
-  router.delete('/users/:user', function (req, res, next) {
+//  >>>>>>>>>>> DELETE USER <<<<<<<<<<
+router.delete('/users/:user', function (req, res, next) {
     seq.destroy({
       where: {
         ID: req.params.user
@@ -71,10 +84,10 @@ function createRouter(sequelize) {
       res.status(500).append("Error", err);
     });
   }
-  );
+);
 
-  //  >>>>>>>>>>> GET COUNTS OF ALL EMPLYEES GENDER <<<<<<<<<<
-  router.get('/employees/countByGender', function (req, res, next) {
+//  >>>>>>>>>>> GET COUNTS OF ALL EMPLYEES GENDER <<<<<<<<<<
+router.get('/employees/countByGender', function (req, res, next) {
     seqEmployee.findAll({
       attributes: [
         'gender',
@@ -88,10 +101,10 @@ function createRouter(sequelize) {
       res.status(500).append("Error", err);
     });
   }
-  );
+);
 
-  // >>>>>>>>>>> GET ALL EMPLYEES <<<<<<<<<<
-  router.get('/employees/getAllEmployees', function (req, res, next) {
+// >>>>>>>>>>> GET ALL EMPLYEES <<<<<<<<<<
+router.get('/employees/getAllEmployees', function (req, res, next) {
     seqEmployee.findAll({ limit: 50 }).then(data => {
       res.status(200).json(data);
     }).catch(err => {
@@ -99,9 +112,6 @@ function createRouter(sequelize) {
       res.status(500).append("Error", err);
     });
   }
-  );
+);
 
-  return router;
-}
-
-module.exports = createRouter;
+module.exports = router;

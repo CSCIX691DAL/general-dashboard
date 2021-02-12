@@ -28,7 +28,7 @@ export class DatabaseService {
   createUser(id: string, password: string ): Observable<any>{
 
     return this.http.request('post',
-       '/posts/user',
+       '/api/user',
        {
          headers: this.header,
          body: {
@@ -40,16 +40,16 @@ export class DatabaseService {
   }
 
   getUsers(): Observable<any>{
-    return this.http.get('/gets/users');
+    return this.http.get('/api/users');
   }
 
   getUser(user: String): Observable<any>{
-    return this.http.get('/gets/users/' + user);
+    return this.http.get('/api/users/' + user);
   }
 
   deleteUser(user: String): Observable<any>{
     return this.http.request('delete',
-      '/gets/users/' + user,
+      '/api/users/' + user,
       {
         headers: this.header,
         body:{
@@ -60,10 +60,10 @@ export class DatabaseService {
   }
 
   getAllEmployees(): Observable<any>{
-    return this.http.get('/gets/employees/getAllEmployees');
+    return this.http.get('/api/employees/getAllEmployees');
   }
 
   getEmployeesGender(): Observable<any>{
-    return this.http.get('/gets/employees/countByGender');
+    return this.http.get('/api/employees/countByGender');
   }
 }
