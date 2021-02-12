@@ -17,6 +17,8 @@ import {Observable, of} from 'rxjs';
  */
 export class DatabaseService {
 
+  uri = 'https://general-dashboard-api.herokuapp.com';
+
   header = new HttpHeaders({
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -26,9 +28,8 @@ export class DatabaseService {
   }
 
   createUser(id: string, password: string ): Observable<any>{
-
     return this.http.request('post',
-       '/posts/user',
+       this.uri + '/user',
        {
          headers: this.header,
          body: {
@@ -40,16 +41,17 @@ export class DatabaseService {
   }
 
   getUsers(): Observable<any>{
-    return this.http.get('/gets/users');
+    console.log(this.uri + '/users');
+    return this.http.get(this.uri + '/users');
   }
 
   getUser(user: String): Observable<any>{
-    return this.http.get('/gets/users/' + user);
+    return this.http.get(this.uri + '/users/' + user);
   }
 
   deleteUser(user: String): Observable<any>{
     return this.http.request('delete',
-      '/gets/users/' + user,
+      this.uri + '/users/' + user,
       {
         headers: this.header,
         body:{
@@ -60,10 +62,10 @@ export class DatabaseService {
   }
 
   getAllEmployees(): Observable<any>{
-    return this.http.get('/gets/employees/getAllEmployees');
+    return this.http.get(this.uri + '/employees/getAllEmployees');
   }
 
   getEmployeesGender(): Observable<any>{
-    return this.http.get('/gets/employees/countByGender');
+    return this.http.get(this.uri + '/employees/countByGender');
   }
 }

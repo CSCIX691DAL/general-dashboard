@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "public": "y",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+	"redirects": [{
+	"source": "/",
+	"destination": "https://general-dashboard-api.herokuapp.com/users",
+	"type": 301
+	}]
+  }
+}
