@@ -13,8 +13,9 @@ import { UserhomeComponent } from './userhome/userhome.component';
 import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-
+import {FormsModule} from '@angular/forms';
 import { EmployeesService } from './services/employees.service'
+import {AuthService} from './auth.service';
 
 @NgModule({
   declarations: [
@@ -33,8 +34,9 @@ import { EmployeesService } from './services/employees.service'
     AppRoutingModule,
     RouterModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
-  providers: [EmployeesService],
+  providers: [EmployeesService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
