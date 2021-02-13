@@ -20,8 +20,8 @@ import {AuthTokenInterceptor} from './auth-token.interceptor';
 import {HttpClientModule} from '@angular/common/http';
 
 import { EmployeesService } from './services/employees.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalBasicComponent } from './modal-basic/modal-basic.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 

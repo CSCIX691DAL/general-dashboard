@@ -1,33 +1,42 @@
-<!--<ng-template #content let-modal>-->
-<!--  <div class="modal-header">-->
-<!--    <h2 class="modal-title" id="modal-basic-title">List of Reports</h2>-->
-<!--    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
-<!--      <span aria-hidden="true">&times;</span>-->
-<!--    </button>-->
-<!--  </div>-->
-<!--  <div class="modal-body">-->
-<!--  <table>-->
-<!--      <tr>-->
-<!--        <th>-->
-<!--          <h4>Reports</h4>-->
-<!--        </th>-->
-<!--        <th>-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">List of Reports</h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  <table>
+      <tr>
+        <th>
+          <h4>Reports</h4>
+        </th>
+        <th>
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
 
-<!--        </th>-->
-<!--      </tr>-->
 
-<!--  </table>-->
-<!--  </div>-->
-<!--  <div class="modal-footer">-->
-<!--    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
-<!--  </div>-->
-<!--</ng-template>-->
+        </th>
+      </tr>
 
-<!--<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>-->
+  </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
 
-<!--<hr>-->
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
 
-<!--<pre>{{ closeResult }}</pre>-->
+<hr>
+
+<pre>{{ closeResult }}</pre>
 
 
 
