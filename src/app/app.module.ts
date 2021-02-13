@@ -14,7 +14,11 @@ import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
-import { EmployeesService } from './services/employees.service'
+import { EmployeesService } from './services/employees.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalBasicComponent } from './modal-basic/modal-basic.component';
+
+
 
 @NgModule({
   declarations: [
@@ -26,6 +30,7 @@ import { EmployeesService } from './services/employees.service'
     HomeComponent,
     LoginComponent,
     UserhomeComponent,
+    ModalBasicComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +38,8 @@ import { EmployeesService } from './services/employees.service'
     AppRoutingModule,
     RouterModule,
     ReactiveFormsModule,
+    NgbModule,
+
   ],
   providers: [EmployeesService],
   bootstrap: [AppComponent]
