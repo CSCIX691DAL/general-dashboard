@@ -17,6 +17,13 @@ import {FormsModule} from '@angular/forms';
 import { EmployeesService } from './services/employees.service'
 import {AuthService} from './auth.service';
 import {AuthTokenInterceptor} from './auth-token.interceptor';
+import {HttpClientModule} from '@angular/common/http';
+
+import { EmployeesService } from './services/employees.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalBasicComponent } from './modal-basic/modal-basic.component';
+
+
 
 @NgModule({
   declarations: [
@@ -28,6 +35,7 @@ import {AuthTokenInterceptor} from './auth-token.interceptor';
     HomeComponent,
     LoginComponent,
     UserhomeComponent,
+    ModalBasicComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +44,8 @@ import {AuthTokenInterceptor} from './auth-token.interceptor';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    NgbModule,
+
   ],
   providers: [EmployeesService, AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
