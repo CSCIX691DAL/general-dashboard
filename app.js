@@ -4,21 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var api = require('./routes/api');
-const events = require("./src/api/events");
-const {Sequelize} = require('sequelize')
+
 
 var app = express();
 
-const sequelize = new Sequelize('x691_G_dashboard', 'x691_G_student', 'yED3IX83k3BDYrCS', {
-  host: 'db.cs.dal.ca',
-  dialect: 'mysql',
-  port: 3306,
-  pool: {
-    max: 10,
-    min: 0,
-    idle: 20000
-  }
-});
 
 // configure database connection here
 
