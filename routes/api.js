@@ -4,16 +4,37 @@ const userStruc = require('../src/models/user');
 const empStruc = require('../src/models/employees');
 const {Sequelize} = require('sequelize');
 
-const sequelize = new Sequelize('x691_G_dashboard', 'x691_G_student', 'yED3IX83k3BDYrCS', {
-  host: 'db.cs.dal.ca',
-  dialect: 'mysql',
-  port: 3306,
-  pool: {
-    max: 10,
-    min: 0,
-    idle: 20000
+
+const {SSHConnection} = require("node-ssh-forward");
+
+const sshConnection = new SSHConnection({
+    endHost: process.env.DB_SSH_HOST || 'timberlea.cs.dal.ca',
+    username: process.env.DB_SSH_USER,
+    password: process.env.DB_SSH_PASSWORD,
+})
+
+sshConnection.forward({
+  fromHost: '127.0.0.1',
+  fromPort: 3306,
+  toPort: 3306,
+  toHost: 'db.cs.dal.ca'
+}).then(_ => {
+
+const sequelize = new Sequelize(
+  process.env.DB_DATABASE || 'x691_G_dashboard',
+  process.env.DB_USER || 'x691_G_student',
+  process.env.DB_PASSWORD || 'yED3IX83k3BDYrCS',
+  {
+    host: '127.0.0.1',
+    dialect: 'mysql',
+    port: 3306,
+    pool: {
+      max: 10,
+      min: 0,
+      idle: 20000
+    }
   }
-});
+);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -113,5 +134,7 @@ router.get('/employees/getAllEmployees', function (req, res, next) {
     });
   }
 );
+
+});
 
 module.exports = router;

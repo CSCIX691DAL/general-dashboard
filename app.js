@@ -20,6 +20,7 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use('/home', express.static(path.join(__dirname, 'dist')));
 app.use('/registration', express.static(path.join(__dirname, 'dist')));
 app.use('/login', express.static(path.join(__dirname, 'dist')));
+app.use('/userhome', express.static(path.join(__dirname, 'dist')));
 app.use('/api', api);
 
 // catch 404 and forward to error handler
