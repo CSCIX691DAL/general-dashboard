@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
 import { Validators } from '@angular/forms';
 import {DatabaseService} from '../services/database-connection.service';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -11,7 +12,7 @@ import {DatabaseService} from '../services/database-connection.service';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private router: Router, private conn: DatabaseService) {
+  constructor(private router: Router, private conn: DatabaseService, private auth: AuthService) {
   }
 
   /**
@@ -44,14 +45,13 @@ export class RegistrationComponent implements OnInit {
   /**
    * @desc Hides div which displays error message if user exists in database
    */
-  isVisible = false;
+  alreadyExists = false;
 
   /**
    * This allows the html file to call the users
    * email to check its status in the form
    */
-  // tslint:disable-next-line:typedef
-  getUserEmail() {
+  getUserEmail(): AbstractControl {
     return this.userEmail.get('email');
   }
 
@@ -59,8 +59,7 @@ export class RegistrationComponent implements OnInit {
    * This allows the html file to call the users
    * password to check its status in the form
    */
-  // tslint:disable-next-line:typedef
-  getPassword() {
+  getPassword(): AbstractControl {
     return this.passwords.get('password');
   }
 
@@ -68,8 +67,7 @@ export class RegistrationComponent implements OnInit {
    * This allows the html file to call the confirm
    * password to check its status in the form
    */
-  // tslint:disable-next-line:typedef
-  getConfirmPassword() {
+  getConfirmPassword(): AbstractControl {
     return this.passwords.get('confirmPassword');
   }
 
@@ -78,12 +76,9 @@ export class RegistrationComponent implements OnInit {
 
   /**
    * @desc Triggers when register button is clicked on Registration page
-   * determines whether or not to route user to Login page by ensuring all form input
-   * is valid. Then calls 'existingUser' method to check email against database which
-   * determines whether or not to create new user.
    */
-  // tslint:disable-next-line:typedef
-  validate(): void {
+  register(): void {
+    this.alreadyExists = false;
     const emailInputTag = this.getUserEmail();
     const passwordInputTag = this.getPassword();
     const confirmPasswordInputTag = this.getConfirmPassword();
@@ -94,49 +89,15 @@ export class RegistrationComponent implements OnInit {
     // or notify user that this email is already in use by another user
     if (passwordInputTag.valid && emailInputTag.valid &&
       passwordString === confirmPasswordString) {
-      this.existingUser(emailString, passwordString).then(result => {
-        console.log(result);
+      this.auth.register(emailString, passwordString).then(() => {
+        this.router.navigate(['/userhome']).catch(e => console.error(e));
+      }, reason => {
+        console.log(reason);
+        this.alreadyExists = true;
       });
     }
     else{
       alert('Please fill all input fields according to specifications in red text');
     }
-  }
-  /**
-   * @desc Creates new user and stores in MySQL db. Called by the onClick() method
-   * after register button is pushed on registration page.
-   * @param id: email address entered by User
-   * @param password: the password entered by User
-   */
-  createUser(id: string, password: string): void{
-    this.conn.createUser(id, password).subscribe(data => {
-      console.log(data); // Can remove this, but keeping for testing purposes for now
-    });
-  }
-
-  /**
-   * @desc Checks a given email against the database. If no matching email is found, a new user is created.
-   * and password, and the user is redirected to login page. Otherwise, error message is presented.
-   * @param id string containing the email address given by the user in username input field of form on registration page
-   * @param password string containing the password given by the user in password input field of form on registration page
-   */
-  async existingUser(id, password): Promise<any>{
-    await new Promise(resolve => {
-      this.conn.getUser(id).subscribe(data => {
-        // If no match is found i.e. email not stored in database
-        console.log(data[0]);
-        if (data[0] == null){
-          this.createUser(id, password);
-          this.router.navigate(['/login']).then(response => {
-            console.log(response);
-          });
-        }
-        else{
-          // Display error message
-          this.isVisible = true;
-        }
-        resolve(data[0]);
-      });
-    });
   }
 }

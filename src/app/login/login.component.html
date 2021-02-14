@@ -10,9 +10,6 @@
       <div *ngIf="(getUserEmail().invalid && getUserEmail().touched)|| getUserEmail().dirty">
         <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">Please enter a valid email address</small>
       </div>
-      <div *ngIf="getUserEmail().touched|| getUserEmail().dirty">
-        <small *ngIf="valid && !usernameExisted && usernameExisted!=null" class="text-danger">The username doesn't exist. Please retry</small>
-      </div>
     </div>
 
     <div [formGroup]="passwords" class="form-group">
@@ -33,8 +30,8 @@
 
     </div>
     <!--Displays error message after pressing the login button -->
-    <div *ngIf="signedIn==false && getUserPassword().touched">
-      <small *ngIf="correctPassword==false" class="text-danger">Password Is Incorrect</small>
+    <div *ngIf="!valid">
+      <small class="text-danger">Invalid Credentials</small>
     </div>
 
     <button id="button" type="button" class="btn-primary" (click)="signIn()">Log in</button>
