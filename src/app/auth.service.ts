@@ -12,6 +12,6 @@ export class AuthService {
 
   // tslint:disable-next-line:ban-types
   Authenticate(username: string, password: string): Observable<Object> {
-    return this.Http.post('/api/auth', {username , password} );
+    return this.Http.post('/api/auth/authenticate', {username , password} );
   }
 }
