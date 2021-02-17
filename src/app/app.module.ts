@@ -11,7 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { UserhomeComponent } from './userhome/userhome.component';
 import {RouterModule} from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
 import { EmployeesService } from './services/employees.service';
@@ -39,6 +39,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule,
     ReactiveFormsModule,
     NgbModule,
+    FormsModule,
 
   ],
   providers: [EmployeesService],
