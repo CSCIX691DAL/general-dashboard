@@ -38,7 +38,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     RouterModule,
     ReactiveFormsModule,
-    FormsModule,
     NgbModule,
     FormsModule,
 
