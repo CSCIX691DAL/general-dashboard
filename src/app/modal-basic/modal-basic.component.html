@@ -27,9 +27,9 @@
         <form id="reportForm" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.params">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">{{param.name}}</span>
+              <span class="input-group-text input-field" id="inputGroup-sizing-default">{{param.name}}</span>
             </div>
-            <input formControlName="{{param.name}}" type="{{param.type}}" class="form-control" aria-label="Default"
+            <input formControlName="{{param.name}}" type="{{param.type}}" class="form-control input-field" aria-label="Default"
                    aria-describedby="inputGroup-sizing-default"/>
           </div>
         </form>
@@ -40,7 +40,10 @@
 
   </div>
   <div class="modal-footer">
-    <button type="submit" form="reportForm" class="btn btn-outline-dark">Save</button>
+    <button type="button" id="exit-btn" class="btn btn-outline-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">Close</span>
+    </button>
+    <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark">Save</button>
   </div>
 
 </ng-template>

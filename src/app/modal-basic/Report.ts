@@ -10,7 +10,6 @@ export interface Report{
   id: number;
 }
 
-
 export const Reports: Report[] = [
   {id: 1, name: 'Search by Hire date', sql: 'select * from employees where ' +
       'hire_date >= CAST("@" AS DATE) and' +
@@ -22,4 +21,5 @@ export const Reports: Report[] = [
     params: [{name: 'date1', type: 'Date'}, {name: 'date2', type: 'date'}]},
   {id: 3, name: 'Search by lastname', sql: 'select * from employees where last_name like \'%@%\';',
     params: [{name: 'name', type: 'text'}]},
+
 ];
