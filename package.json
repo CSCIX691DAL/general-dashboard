@@ -37,7 +37,6 @@
     "ngx-timeline": "5.0.0",
     "node-ssh-forward": "^0.7.2",
     "jquery": "^3.5.1",
-    "ngx-timeline": "5.0.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
     "sequelize": "^6.5.0",
