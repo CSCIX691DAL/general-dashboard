@@ -12,11 +12,13 @@ import { LoginComponent } from './login/login.component';
 import { UserhomeComponent } from './userhome/userhome.component';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { EmployeesService } from './services/employees.service';
 import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {AuthService} from './auth.service';
+import {AuthTokenInterceptor} from './auth-token.interceptor';
 
 
 
