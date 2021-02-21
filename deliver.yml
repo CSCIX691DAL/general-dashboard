@@ -7,24 +7,9 @@ steps:
   displayName: 'Install Node.js'
 - script: |
     npm install -g @angular/cli
+    npm install -g pm2
     npm install
   displayName: 'install dependencies'
-- script: ng build --prod
-  displayName: 'production build'
-- task: CopyFilesOverSSH@0
-  inputs:
-    sshEndpoint: 'OpenStack GeneralDashboard VM'
-    contents: |
-      **
-      !node_modules/**
-      !.git/**
-      !.idea/**
-    targetFolder: '/var/general-dashboard'
-    cleanTargetFolder: true
-    readyTimeout: '20000'
-- task: SSH@0
-  inputs:
-    sshEndpoint: 'OpenStack GeneralDashboard VM'
-    runOptions: 'inline'
-    inline: 'cd /var/general-dashboard; npm install; fuser -k 3000/tcp; nohup bin/www >node.log 2>&1 </dev/null &'
-    readyTimeout: '20000'
+- script: |
+    pm2 deploy ecosystem.config.js production
+  displayName: 'deploy application'
