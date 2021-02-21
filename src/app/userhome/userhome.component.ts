@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Employee } from '../models/employee';
 import { EmployeesService } from '../services/employees.service';
 import { Chart } from 'chart.js';
+import {Router} from '@angular/router';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-userhome',
@@ -12,19 +14,18 @@ export class UserhomeComponent implements OnInit {
   private employees = [];
   private genderMap = new Map();
 
-  constructor(private _employee: EmployeesService) {
-
+  constructor(private employee: EmployeesService) {
   }
 
-  graph() {
-    let ctx = document.getElementById('empGraph');
-    let empGraph = new Chart(ctx, {
+  graph(): void {
+    const ctx = document.getElementById('empGraph');
+    const empGraph = new Chart(ctx, {
       type: 'horizontalBar',
       data: {
         labels: ['Gender'],
         datasets: [
           {
-            label: "Female",
+            label: 'Female',
             fillColor: 'rgba(255, 99, 132, 0.2)',
             strokeColor: 'rgba(255, 99, 132, 0.2)',
             highlightFill: 'rgba(255, 99, 132, 0.2)',
@@ -36,7 +37,7 @@ export class UserhomeComponent implements OnInit {
             data: [this.genderMap.get('F')]
           },
           {
-            label: "Male",
+            label: 'Male',
             fillColor: 'rgba(54, 162, 235, 0.2)',
             strokeColor: 'rgba(54, 162, 235, 0.2)',
             highlightFill: 'rgba(54, 162, 235, 0.2)',
@@ -70,25 +71,25 @@ export class UserhomeComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.employees = this._employee.getAllEmployees();
-    this._employee.getEmployeesGender().subscribe(data => {
-      for (let item of data) {
-        this.genderMap.set(item['gender'], item['SumOfGender']);
+  ngOnInit(): void {
+    this.employees = this.employee.getAllEmployees();
+    this.employee.getEmployeesGender().subscribe(data => {
+      for (const item of data) {
+        this.genderMap.set(item.gender, item.SumOfGender);
       }
       this.graph();
     });
   }
 
-  printEmployees() {
-    for (let emp of this.employees) {
+  printEmployees(): void {
+    for (const emp of this.employees) {
       console.log(emp);
     }
   }
 
-  //for test purpose
-  printGenderMap() {
-    for (let entry of this.genderMap) {
+  // for test purpose
+  printGenderMap(): void {
+    for (const entry of this.genderMap) {
       console.log(entry);
     }
   }
