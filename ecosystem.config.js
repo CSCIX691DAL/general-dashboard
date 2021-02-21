@@ -8,7 +8,6 @@ module.exports = {
     production : {
       user : 'deploy',
       host : 'general-dashboard.nfagan.com',
-	  key  : './GeneralDashboard',
       ref  : 'origin/continuous-delivery',
       repo : 'https://github.com/CSCIX691DAL/general-dashboard.git',
       path : '/home/deploy/general-dashboard',
