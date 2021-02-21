@@ -1,0 +1,33 @@
+pool:
+  vmImage: ubuntu-latest
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+- script: |
+    npm install -g @angular/cli
+    npm install
+  displayName: 'install dependencies'
+- script: ng build --prod
+  displayName: 'production build'
+- script: xvfb-run ng test --watch=false --sourceMap=false --browsers=ChromeHeadless || true
+  displayName: 'execute headless tests'
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+    failTaskOnFailedTests: true # Optional
+    testResultsFiles: 'testresults/junit/unit-test-result.xml'
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'OpenStack GeneralDashboard VM'
+    contents: '**'
+    targetFolder: '/var/general-dashboard'
+    cleanTargetFolder: true
+    readyTimeout: '20000'
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'OpenStack GeneralDashboard VM'
+    runOptions: 'inline'
+    inline: 'cd /var/general-dashboard; fuser -k 3000/tcp; node bin/www & sleep 5'
+    readyTimeout: '20000'
