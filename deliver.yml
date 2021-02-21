@@ -29,5 +29,5 @@ steps:
   inputs:
     sshEndpoint: 'OpenStack GeneralDashboard VM'
     runOptions: 'inline'
-    inline: 'cd /var/general-dashboard; fuser -k 3000/tcp; node bin/www & sleep 5'
+    inline: 'cd /var/general-dashboard; fuser -k 3000/tcp; nohup bin/www >node.log 2>&1 </dev/null &'
     readyTimeout: '20000'
