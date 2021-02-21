@@ -32,9 +32,9 @@
             Password must be between 4 and 12 characters</small>
         </div>
       </div>
-      
+
       <!--Displays error message after pressing the login button -->
-      <div *ngIf="signedIn==false && getUserPassword().touched">
+      <div *ngIf="getUserPassword().touched">
         <small *ngIf="correctPassword==false" class="text-danger">Password Is Incorrect</small>
       </div>
 
