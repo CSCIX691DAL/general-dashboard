@@ -21,7 +21,7 @@ steps:
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: 'OpenStack GeneralDashboard VM'
-    contents: '**'
+    contents: '** !node_modules/** !.git/** !.idea/**'
     targetFolder: '/var/general-dashboard'
     cleanTargetFolder: true
     readyTimeout: '20000'
