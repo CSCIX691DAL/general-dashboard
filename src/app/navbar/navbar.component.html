@@ -4,18 +4,18 @@
     <li class="nav-link" routerLink="/home">
       Home
     </li>
-    <li *ngIf="!auth.hasToken()" id="login" class="nav-link" routerLink="/login">
+    <li id="login" class="nav-link" routerLink="/login">
       Login
     </li>
-    <li *ngIf="!auth.hasToken()" id="register" class="nav-link" routerLink="/registration">
+    <li id="register" class="nav-link" routerLink="/registration">
       Register
     </li>
-    <li *ngIf="auth.hasToken()" id="logout" class="nav-link" (click)="logout()">
-      Logout
-    </li>
-    <li *ngIf="auth.hasToken()" id="userhome" class="nav-link" routerLink="/userhome">
-      UserHome
-    </li>
+  </ul>
+  <ul class="navbar-nav ml-auto">
+    <!-- Hidden by default, add behaviour to login which changes d-none to d-block -->
+    <a id="signout" class="nav-link d-none" href="#">
+      Signout
+    </a>
   </ul>
 </nav>
 

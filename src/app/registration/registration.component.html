@@ -41,13 +41,13 @@
   </div>
 
     <!-- Displays error message if user exists in database already -->
-    <div *ngIf="alreadyExists">
+    <div [style.display]="isVisible ? 'block' : 'none'" *ngIf="isVisible">
       <small class="alert alert-danger">
         It appears this user already exists, please login or try again with a different email
       </small>
     </div>
 
-    <button type="button" class="btn-primary" (click)="register()">Register</button>
+    <button type="button" class="btn-primary" (click)="validate()">Register</button>
 
   </form>
 
