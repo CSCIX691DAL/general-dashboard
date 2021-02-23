@@ -23,8 +23,8 @@ describe('AuthService', () => {
 
   it('should return the token on ok', () => {
     service = new AuthService(new HttpClient(new Responder('{"token":"abc"}', 200)));
-    service.Authenticate('a', 'b').subscribe(data => {
-      expect(data === '{"token":"abc"}').toBeTrue();
+    service.authenticate('a', 'b').then(() => {
+      expect(service.getToken() === '{"token":"abc"}').toBeTrue();
     });
   });
 });
