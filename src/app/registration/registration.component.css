@@ -72,10 +72,12 @@ button{
 }
 
 .background {
-  background-image: ("Registration-Background.png");
+  background-image: url("/Registration-Background.png");
   filter: blur(8px);
   width: 100%;
   height: 94%;
+  position: absolute;
+  background-size: cover;
 }
 
 @media (max-width: 540px) {
