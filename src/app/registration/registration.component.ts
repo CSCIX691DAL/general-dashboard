@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
 import { Validators } from '@angular/forms';
+import {DatabaseService} from '../services/database-connection.service';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +12,8 @@ import { Validators } from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private conn: DatabaseService, private auth: AuthService) {
+  }
 
   /**
    * @desc This is what will take the users input and checks it against the pattern
@@ -20,16 +23,52 @@ export class RegistrationComponent implements OnInit {
     email: new FormControl('', [
       Validators.required,
       Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
-      ]),
+    ]),
   });
+
+  /**
+   * @desc This will take the user input in password and confirm password fields and checks it against the corresponding
+   * lengths and patterns
+   */
+  passwords = new FormGroup({
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(12),
+      Validators.pattern(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/),
+      Validators.pattern(/\d/),
+      Validators.pattern(/[a-zA-Z]/)
+    ]), confirmPassword: new FormControl('', [
+      Validators.required,
+    ])
+  });
+  /**
+   * @desc Hides div which displays error message if user exists in database
+   */
+  alreadyExists = false;
 
   /**
    * This allows the html file to call the users
    * email to check its status in the form
    */
-  // tslint:disable-next-line:typedef
-  getUserEmail(){
+  getUserEmail(): AbstractControl {
     return this.userEmail.get('email');
+  }
+
+  /**
+   * This allows the html file to call the users
+   * password to check its status in the form
+   */
+  getPassword(): AbstractControl {
+    return this.passwords.get('password');
+  }
+
+  /**
+   * This allows the html file to call the confirm
+   * password to check its status in the form
+   */
+  getConfirmPassword(): AbstractControl {
+    return this.passwords.get('confirmPassword');
   }
 
   ngOnInit(): void {
@@ -37,49 +76,28 @@ export class RegistrationComponent implements OnInit {
 
   /**
    * @desc Triggers when register button is clicked on Registration page
-   * determines whether or not to route user to Login page by calling validForm(form) method
-   * and redirects user based on the returned boolean
    */
-  onClick(): void{
-    // Add other validation checks to validForm() method (below this method)
-    const form = document.getElementById('registerForm');
-    const bool = this.validForm(form);
-    // If validation checks pass then route user to login page
-    if (bool){
-      this.router.navigate(['/login']).then(response => {
-        console.log(response);
+  register(): void {
+    this.alreadyExists = false;
+    const emailInputTag = this.getUserEmail();
+    const passwordInputTag = this.getPassword();
+    const confirmPasswordInputTag = this.getConfirmPassword();
+    const emailString = emailInputTag.value;
+    const passwordString = passwordInputTag.value;
+    const confirmPasswordString = confirmPasswordInputTag.value;
+    // Ensures all form data is validated, if so calls existingUser to either create new user
+    // or notify user that this email is already in use by another user
+    if (passwordInputTag.valid && emailInputTag.valid &&
+      passwordString === confirmPasswordString) {
+      this.auth.register(emailString, passwordString).then(() => {
+        this.router.navigate(['/userhome']).catch(e => console.error(e));
+      }, reason => {
+        console.log(reason);
+        this.alreadyExists = true;
       });
     }
-    // Display some sort of error message, for now it will display the required fields auto message
     else{
+      alert('Please fill all input fields according to specifications in red text');
     }
-  }
-
-  /**
-   * @desc Called by the onClick method to check whether or not the registration form
-   * has valid data in each input field and also checking if password inputs match (checks if Field is
-   * empty for now add more validation criteria to this method).
-   * @param form - the form element in registration.component.html which contains all the input fields
-   */
-  validForm(form): boolean {
-    // Add form validation criteria here
-    const inputFields = form.getElementsByTagName('input');
-
-    for (let i = 0; i < inputFields.length; i++) {
-      if (inputFields[i].hasAttribute('required')) {
-        if (inputFields[i].value === '') {
-          return false;
-        }
-        // Password match check
-        if (i === 2) {
-          const password = inputFields[i - 1].value;
-          if (password !== inputFields[i].value) {
-            alert('Passwords do not match');
-            return false;
-          }
-        }
-      }
-    }
-    return true;
   }
 }

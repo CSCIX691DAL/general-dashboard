@@ -12,6 +12,11 @@ import { LoginComponent } from './login/login.component';
 import { UserhomeComponent } from './userhome/userhome.component';
 import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
+import { EmployeesService } from './services/employees.service'
+import {AuthService} from './auth.service';
+import {AuthTokenInterceptor} from './auth-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,11 +31,13 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [EmployeesService, AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

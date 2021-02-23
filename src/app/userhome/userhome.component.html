@@ -1,3 +1,21 @@
-<div class="container">
+<div class="container-fluid">
   <h1>User Homepage</h1>
+
+  <div class="row">
+    <div class="col-3">
+      <button class="btn btn-secondary" (click)="printEmployees()">Get Employees</button>
+    </div>
+    <div class="col-8">
+      <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2>Dashboard</h2>
+      </div>
+      <div class="container">
+        <canvas id="empGraph">
+          <p>Employee Graph</p>
+        </canvas>
+      </div>
+      
+    </div>
+  </div>
 </div>
