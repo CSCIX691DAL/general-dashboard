@@ -1,0 +1,23 @@
+
+.modal-body > div {
+  margin:10px;
+  display:flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.report-header{
+  flex: 1;
+}
+.report-content{
+  flex:2;
+}
+.report-content label{
+  width:75%;
+}
+
+.error-msg{
+  color:red;
+}
+
+

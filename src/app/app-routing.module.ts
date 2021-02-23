@@ -8,8 +8,8 @@ import {GuestGuard} from './guest.guard';
 import {LoggedInGuard} from './logged-in.guard';
 
 export const routes: Routes = [
-  { path: 'registration', component: RegistrationComponent, canActivate: [GuestGuard]},
-  { path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
+  { path: 'registration', component: RegistrationComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'userhome', component: UserhomeComponent, canActivate: [LoggedInGuard]},
   { path: 'home', component: HomeComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full'}
