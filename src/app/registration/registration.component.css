@@ -71,6 +71,12 @@ button{
   margin-bottom: 5%;
 }
 
+.background {
+  background-image: ("Registration-Background.png");
+  filter: blur(8px);
+  width: 100%;
+  height: 94%;
+}
 
 @media (max-width: 540px) {
   form {
