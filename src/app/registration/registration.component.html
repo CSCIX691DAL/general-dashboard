@@ -1,5 +1,6 @@
-<div class="container">
-
+<div class="background"></div>
+<div class="registration text-center">
+<div class="center">
   <h1>Registration</h1>
 
   <form>
@@ -16,6 +17,7 @@
 
   <div [formGroup]="passwords" class="form-group">
     <label><b>Password</b></label>
+    <div class = "Password-Input">
     <input [class.is-invalid]="passwords.get('password').invalid"
            type="password" class="form-control" formControlName="password" placeholder="Enter Password:" required>
 
@@ -32,13 +34,12 @@
 
     <label><b>Confirm Password</b></label>
     <input [class.is-invalid]="passwords.get('confirmPassword').invalid || getConfirmPassword().value !== getPassword().value"
-           type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password:" required>
-
+            type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password:" required>
+    
     <!--Displays this error messages if isn't a valid password-->
     <div *ngIf="(getConfirmPassword().touched)|| getConfirmPassword().dirty">
       <small *ngIf="getConfirmPassword().value !== getPassword().value" class="text-danger">Passwords do not match</small>
     </div>
-  </div>
 
     <!-- Displays error message if user exists in database already -->
     <div *ngIf="alreadyExists">
@@ -46,9 +47,11 @@
         It appears this user already exists, please login or try again with a different email
       </small>
     </div>
+  </div>
+</div>
 
     <button type="button" class="btn-primary" (click)="register()">Register</button>
 
   </form>
-
+</div>
 </div>
