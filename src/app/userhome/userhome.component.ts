@@ -93,7 +93,4 @@ export class UserhomeComponent implements OnInit {
       console.log(entry);
     }
   }
-  getMessage(): void{
-    console.log('Hey');
-  }
 }
