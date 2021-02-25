@@ -17,5 +17,14 @@ module.exports={
     autoIncrement: false,
     comment: null,
     field: "Password"
+  },
+  Message: {
+    type: DataTypes.STRING(160),
+    allowNull: true,
+    defaultValue: null,
+    primaryKey: true,
+    autoIncrement: false,
+    comment: null,
+    field: "Message"
   }
 };
