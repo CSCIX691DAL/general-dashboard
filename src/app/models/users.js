@@ -39,6 +39,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "Password"
+    },
+    homepage_contents: {
+      type: DataTypes.STRING(160),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: true,
+      autoIncrement: false,
+      comment: null,
+      field: "homepage_contents"
     }
   };
   const options = {
