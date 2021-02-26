@@ -14,6 +14,7 @@ export class ModalBasicComponent implements OnInit {
   closeResult = '';
   constructor(private modalService: NgbModal) { }
   formGroup = new FormGroup({});
+  chartType = new FormGroup({});
   isFormCompleted = true;
   ngOnInit(): void {
   }
@@ -35,6 +36,10 @@ export class ModalBasicComponent implements OnInit {
     this.formGroup = new FormGroup({});
     for (const param of this.selectedReport.params){
       this.formGroup.addControl(param.name, new FormControl(''));
+    }
+    this.chartType = new FormGroup({});
+    for (const chart of this.selectedReport.charts){
+      this.formGroup.addControl(chart.name, new FormControl(''));
     }
   }
 

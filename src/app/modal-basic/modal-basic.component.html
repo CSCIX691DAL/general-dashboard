@@ -37,13 +37,25 @@
         <span class="error-msg" *ngIf="!isFormCompleted">Please fill out all the fields</span>
       </div>
     </div>
+
     <div class="middle">
+
       <div class="report-header"><h4>Chart Type</h4></div>
       <div class="report-content" *ngIf="selectedReport">
 
+        <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
+          <div class="input-group mb-3 input-param" *ngFor="let chart of selectedReport.charts">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-field">{{chart.name}}</span>
+            </div>
+            <select class="form-control reports">
+              <option></option>
+            </select>
+          </div>
+        </form>
+        <span class="error-msg" *ngIf="!isFormCompleted">Please fill out all the fields</span>
       </div>
     </div>
-
 
   </div>
   <div class="modal-footer">
