@@ -13,7 +13,7 @@ export class ModalBasicComponent implements OnInit {
   reports: Report[] = Reports;
   closeResult = '';
   constructor(private modalService: NgbModal) { }
-  formGroup = new FormGroup({});
+  paramGroup = new FormGroup({});
   chartType = new FormGroup({});
   isFormCompleted = true;
   ngOnInit(): void {
@@ -33,14 +33,16 @@ export class ModalBasicComponent implements OnInit {
   updateFormGroup(): void{
     this.isFormCompleted = true;
     if (this.selectedReport === undefined) { return; }
-    this.formGroup = new FormGroup({});
+    this.paramGroup = new FormGroup({});
     for (const param of this.selectedReport.params){
-      this.formGroup.addControl(param.name, new FormControl(''));
+      this.paramGroup.addControl(param.name, new FormControl(''));
     }
     this.chartType = new FormGroup({});
     for (const chart of this.selectedReport.charts){
-      this.formGroup.addControl(chart.name, new FormControl(''));
+      this.paramGroup.addControl(chart.name, new FormControl(''));
     }
+  }
+  updateChartOptions(): void{
   }
 
   onSubmit(): void{
@@ -48,7 +50,7 @@ export class ModalBasicComponent implements OnInit {
     const values: string[] = [];
     // required field check because 'required' tag wasn't working
     for (const param of this.selectedReport.params){
-      values.push(this.formGroup.get(param.name).value);
+      values.push(this.paramGroup.get(param.name).value);
     }
     this.isFormCompleted = !values.includes('');
 

@@ -20,12 +20,12 @@ export const Reports: Report[] = [
   {id: 1, name: 'Search by Hire date', sql: 'select * from employees where ' +
       'hire_date >= CAST("@" AS DATE) and' +
       ' hire_date <= CAST("@" AS DATE);',
-    params: [{name: 'date1', type: 'Date'}, {name: 'date2', type: 'date'}],
-  charts: [{name: 'x-axis', options: ['1']}, {name: 'y-axis', options: ['2']}]},
+    params: [{name: 'date1', type: 'Date'}, {name: 'date2', type: 'Date'}],
+  charts: [{name: 'x-axis', options: []}, {name: 'y-axis', options: []}]},
   {id: 2, name: 'Search by birthdate', sql: 'select * from employees where ' +
       'birth_date >= CAST("@" AS DATE) and ' +
       'birth_date <= CAST("@" AS DATE);',
-    params: [{name: 'date1', type: 'Date'}, {name: 'date2', type: 'date'}],
+    params: [{name: 'date1', type: 'Date'}, {name: 'date2', type: 'Date'}],
     charts: [{name: 'x-axis', options: []}, {name: 'y-axis', options: []}]},
   {id: 3, name: 'Search by lastname', sql: 'select * from employees where last_name like \'%@%\';',
     params: [{name: 'name', type: 'text'}],
