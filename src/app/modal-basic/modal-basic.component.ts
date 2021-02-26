@@ -42,8 +42,6 @@ export class ModalBasicComponent implements OnInit {
       this.paramGroup.addControl(chart.name, new FormControl(''));
     }
   }
-  updateChartOptions(): void{
-  }
 
   onSubmit(): void{
     if (this.selectedReport === undefined) { return; }
