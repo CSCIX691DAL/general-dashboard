@@ -18,13 +18,13 @@ module.exports={
     comment: null,
     field: "Password"
   },
-  Message: {
+  homepage_contents: {
     type: DataTypes.STRING(160),
     allowNull: true,
     defaultValue: null,
     primaryKey: true,
     autoIncrement: false,
     comment: null,
-    field: "Message"
+    field: "homepage_contents"
   }
 };
