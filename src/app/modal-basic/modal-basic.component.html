@@ -49,7 +49,7 @@
               <span class="input-group-text input-field">{{chart.name}}</span>
             </div>
             <select class="form-control reports">
-              <option></option>
+              <option *ngFor="let option of chart.options">{{option}}</option>
             </select>
           </div>
         </form>
