@@ -21,14 +21,17 @@ export const Reports: Report[] = [
       'hire_date >= CAST("@" AS DATE) and' +
       ' hire_date <= CAST("@" AS DATE);',
     params: [{name: 'date1', type: 'Date'}, {name: 'date2', type: 'Date'}],
-  charts: [{name: 'x-axis', options: []}, {name: 'y-axis', options: []}]},
+  charts: [{name: 'x-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']},
+    {name: 'y-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']}]},
   {id: 2, name: 'Search by birthdate', sql: 'select * from employees where ' +
       'birth_date >= CAST("@" AS DATE) and ' +
       'birth_date <= CAST("@" AS DATE);',
     params: [{name: 'date1', type: 'Date'}, {name: 'date2', type: 'Date'}],
-    charts: [{name: 'x-axis', options: []}, {name: 'y-axis', options: []}]},
+    charts: [{name: 'x-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']},
+      {name: 'y-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']}]},
   {id: 3, name: 'Search by lastname', sql: 'select * from employees where last_name like \'%@%\';',
     params: [{name: 'name', type: 'text'}],
-    charts: [{name: 'x-axis', options: []}, {name: 'y-axis', options: []}]},
+    charts: [{name: 'x-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']},
+      {name: 'y-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']}]},
 
 ];
