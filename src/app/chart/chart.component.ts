@@ -13,33 +13,20 @@ export class ChartComponent implements OnInit {
 
   public AllowedCharts = [ 'bar', 'line', 'doughnut'];
 
-  public barChartOptions: ChartOptions = {
-    responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: { xAxes: [{}], yAxes: [{}] },
-    plugins: {
-      datalabels: {
-        anchor: 'end',
-        align: 'end',
-      }
-    }
-  };
+  public barChartOptions: ChartOptions;
   public barChartLabels: Label[];
   public barChartType: ChartType;
   public barChartLegend: boolean;
   public barChartPlugins = [pluginDataLabels];
-  public barChartData: ChartDataSets[] = [
-    { data: [3000, 2852], label: 'Male' },
-    { data: [2852], label: 'Females' }];
+  public barChartData: ChartDataSets[];
 
   constructor() {
   }
 
   ngOnInit(): void {
     console.log(this.chartInfo);
-    // this.barChartData = this.chartInfo.data;
-    // this.barChartLabels = this.chartInfo.labels;
-
+    this.barChartData = this.chartInfo.data;
+    this.barChartLabels = this.chartInfo.labels;
     this.barChartOptions = this.chartInfo.chartOptions;
     this.barChartType = this.chartInfo.chartType;
     this.barChartLegend = this.chartInfo.showLegends;

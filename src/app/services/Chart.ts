@@ -14,7 +14,8 @@ export interface ChartInfo {
 export const baseOptions: ChartOptions = {
   responsive: true,
     scales: { xAxes: [
-      {ticks: {beginAtZero: true}}
+      {ticks: {suggestedMax: 200000,
+        beginAtZero: true}}
       ],
       yAxes: [
         {ticks: {beginAtZero: true}}

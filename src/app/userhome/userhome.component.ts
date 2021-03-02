@@ -27,8 +27,8 @@ export class UserhomeComponent implements OnInit {
       }
       this.chartInfo = this.chartFactory.generateBar(
         [this.genderMap.get('M'), this.genderMap.get('F')],
-        'Number of People',
-        ['Male', 'Female']);
+        ['Male', 'Female'],
+        ['Gender']);
 
     });
   }
