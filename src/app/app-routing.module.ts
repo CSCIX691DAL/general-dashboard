@@ -6,8 +6,10 @@ import {LoginComponent} from './login/login.component';
 import { UserhomeComponent } from './userhome/userhome.component';
 import {GuestGuard} from './guest.guard';
 import {LoggedInGuard} from './logged-in.guard';
+import {ReportComponent} from './report/report.component';
 
 export const routes: Routes = [
+  { path: 'report', component: ReportComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'userhome', component: UserhomeComponent, canActivate: [LoggedInGuard]},

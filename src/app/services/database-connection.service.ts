@@ -66,4 +66,9 @@ export class DatabaseService {
   getEmployeesGender(): Observable<any>{
     return this.http.get('/api/employees/countByGender');
   }
+
+  getEmployeesReport(sql: string): Observable<any>{
+    const query = `?sql=${sql}`;
+    return this.http.get('/api/employees/execute' + query);
+  }
 }

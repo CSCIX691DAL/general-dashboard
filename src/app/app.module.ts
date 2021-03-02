@@ -19,6 +19,7 @@ import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from './auth.service';
 import {AuthTokenInterceptor} from './auth-token.interceptor';
+import { ReportComponent } from './report/report.component';
 
 
 
@@ -33,6 +34,7 @@ import {AuthTokenInterceptor} from './auth-token.interceptor';
     LoginComponent,
     UserhomeComponent,
     ModalBasicComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,
