@@ -16,6 +16,7 @@ export class ModalBasicComponent implements OnInit {
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
   isFormCompleted = true;
+  differentAxisValues = false;
   ngOnInit(): void {
   }
 
@@ -42,7 +43,16 @@ export class ModalBasicComponent implements OnInit {
       this.paramGroup.addControl(chart.name, new FormControl(''));
     }
   }
-
+  checkAxisValues(): void{
+    const xAxisSelect = document.getElementById('0') as HTMLSelectElement;
+    const xAxis = xAxisSelect.value;
+    const yAxisSelect = document.getElementById('1') as HTMLSelectElement;
+    const yAxis = yAxisSelect.value;
+    console.log(xAxis);
+    console.log(yAxis);
+    console.log(!(xAxis === yAxis));
+    this.differentAxisValues = !(xAxis === yAxis);
+  }
   onSubmit(): void{
     if (this.selectedReport === undefined) { return; }
     const values: string[] = [];
@@ -51,9 +61,9 @@ export class ModalBasicComponent implements OnInit {
       values.push(this.paramGroup.get(param.name).value);
     }
     this.isFormCompleted = !values.includes('');
-
     // close modal if form is completed
-    if (this.isFormCompleted){
+    if (this.isFormCompleted && this.differentAxisValues === true){
+      this.differentAxisValues = false;
       this.processReport(values);
       this.modalService.dismissAll();
     }
