@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +69,8 @@ export class DatabaseService {
   }
 
   getEmployeesReport(sql: string): Observable<any>{
-    const query = `?sql=${sql}`;
+    let result = escape(sql);
+    const query = `?sql=${result}`;
     return this.http.get('/api/employees/execute' + query);
   }
 }
