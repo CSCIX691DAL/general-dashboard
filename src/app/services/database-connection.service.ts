@@ -66,4 +66,9 @@ export class DatabaseService {
   getEmployeesGender(): Observable<any>{
     return this.http.get('/api/employees/countByGender');
   }
+
+  readHomepageJson(): string {
+    console.log(JSON.stringify((this.http.get('api/userRoute/homepageContentJson'))))
+    return JSON.stringify(this.http.get('api/userRoute/homepageContentJson'));
+  }
 }
