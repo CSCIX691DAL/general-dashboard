@@ -44,17 +44,17 @@ export class DatabaseService {
     return this.http.get('/api/users');
   }
 
-  getUser(user: String): Observable<any>{
+  getUser(user: string): Observable<any>{
     return this.http.get('/api/users/' + user);
   }
 
-  deleteUser(user: String): Observable<any>{
+  deleteUser(user: string): Observable<any>{
     return this.http.request('delete',
       '/api/users/' + user,
       {
         headers: this.header,
-        body:{
-          user: user
+        body: {
+          user
         }
       }
       );
@@ -69,7 +69,8 @@ export class DatabaseService {
   }
 
   getEmployeesReport(sql: string): Observable<any>{
-    let result = escape(sql);
+    console.log('SQL ' + sql);
+    const result = escape(sql);
     const query = `?sql=${result}`;
     return this.http.get('/api/employees/execute' + query);
   }
