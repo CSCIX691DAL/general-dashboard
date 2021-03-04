@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "live": "nodemon "
   },
   "private": true,
   "dependencies": {
@@ -27,6 +28,7 @@
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.4",
+    "chartjs-plugin-datalabels": "^0.7.0",
     "component": "^1.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -35,6 +37,7 @@
     "morgan": "^1.10.0",
     "mysql": "2.18.1",
     "mysql2": "^2.2.5",
+    "ng2-charts": "^2.4.2",
     "ngx-timeline": "5.0.0",
     "node-ssh-forward": "^0.7.2",
     "popper.js": "^1.16.1",

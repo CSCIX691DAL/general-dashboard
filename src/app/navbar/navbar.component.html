@@ -10,12 +10,15 @@
     <li *ngIf="!auth.hasToken()" id="register" class="nav-link" routerLink="/registration">
       Register
     </li>
-    <li *ngIf="auth.hasToken()" id="logout" class="nav-link" (click)="logout()">
-      Logout
-    </li>
     <li *ngIf="auth.hasToken()" id="userhome" class="nav-link" routerLink="/userhome">
       UserHome
     </li>
   </ul>
+  <ul class="navbar-nav ml-auto">
+    <li *ngIf="auth.hasToken()" id="logout" class="nav-link" (click)="logout()">
+      Logout
+    </li>
+  </ul>
+
 </nav>
 

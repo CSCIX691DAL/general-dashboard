@@ -14,9 +14,13 @@ export class ModalBasicComponent implements OnInit {
   selectedReport: Report;
   reports: Report[] = Reports;
   closeResult = '';
+
   constructor(private router: Router, private modalService: NgbModal, private employeeService: EmployeesService) { }
-  formGroup = new FormGroup({});
+
+  paramGroup = new FormGroup({});
+  chartType = new FormGroup({});
   isFormCompleted = true;
+  differentAxisValues = false;
   ngOnInit(): void {
   }
 
@@ -34,23 +38,36 @@ export class ModalBasicComponent implements OnInit {
   updateFormGroup(): void{
     this.isFormCompleted = true;
     if (this.selectedReport === undefined) { return; }
-    this.formGroup = new FormGroup({});
+    this.paramGroup = new FormGroup({});
     for (const param of this.selectedReport.params){
-      this.formGroup.addControl(param.name, new FormControl(''));
+      this.paramGroup.addControl(param.name, new FormControl(''));
+    }
+    this.chartType = new FormGroup({});
+    for (const chart of this.selectedReport.charts){
+      this.paramGroup.addControl(chart.name, new FormControl(''));
     }
   }
-
+  checkAxisValues(): void{
+    const xAxisSelect = document.getElementById('0') as HTMLSelectElement;
+    const xAxis = xAxisSelect.value;
+    const yAxisSelect = document.getElementById('1') as HTMLSelectElement;
+    const yAxis = yAxisSelect.value;
+    console.log(xAxis);
+    console.log(yAxis);
+    console.log(!(xAxis === yAxis));
+    this.differentAxisValues = !(xAxis === yAxis);
+  }
   onSubmit(): void{
     if (this.selectedReport === undefined) { return; }
     const values: string[] = [];
     // required field check because 'required' tag wasn't working
     for (const param of this.selectedReport.params){
-      values.push(this.formGroup.get(param.name).value);
+      values.push(this.paramGroup.get(param.name).value);
     }
     this.isFormCompleted = !values.includes('');
-
     // close modal if form is completed
-    if (this.isFormCompleted){
+    if (this.isFormCompleted && this.differentAxisValues === true){
+      this.differentAxisValues = false;
       this.processReport(values);
       this.modalService.dismissAll();
     }
