@@ -1,0 +1,19 @@
+<div>
+  <div>
+    <div style="display: block">
+      <canvas baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [legend]="barChartLegend"
+              [chartType]="barChartType">
+      </canvas>
+    </div>
+    <label>
+      <select class="form-control reports" [(ngModel)]="barChartType">
+        <option *ngFor="let val of AllowedCharts" [ngValue]="val">{{val}}</option>
+      </select>
+    </label>
+  </div>
+</div>
