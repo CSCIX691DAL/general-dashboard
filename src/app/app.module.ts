@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ExampleFeaturesComponent } from './example-features/example-features.component';
+import {ChartComponent} from './chart/chart.component';
 import { AppDescComponent } from './app-desc/app-desc.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
@@ -19,8 +20,8 @@ import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from './auth.service';
 import {AuthTokenInterceptor} from './auth-token.interceptor';
-
-
+import { ReportComponent } from './report/report.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,8 @@ import {AuthTokenInterceptor} from './auth-token.interceptor';
     LoginComponent,
     UserhomeComponent,
     ModalBasicComponent,
+    ReportComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,7 @@ import {AuthTokenInterceptor} from './auth-token.interceptor';
     ReactiveFormsModule,
     NgbModule,
     FormsModule,
-
+    ChartsModule
   ],
   providers: [EmployeesService, AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {DatabaseService} from '../services/database-connection.service';
 
 
 @Component({
@@ -10,7 +9,7 @@ import {DatabaseService} from '../services/database-connection.service';
 
 
 export class HomeComponent implements OnInit {
-  constructor(private conn: DatabaseService) {
+  constructor() {
   }
 
   ngOnInit(): void {

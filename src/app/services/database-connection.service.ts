@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
@@ -43,21 +44,25 @@ export class DatabaseService {
     return this.http.get('/api/users');
   }
 
-  getUser(user: String): Observable<any>{
+  getUser(user: string): Observable<any>{
     return this.http.get('/api/users/' + user);
   }
 
-  deleteUser(user: String): Observable<any>{
+  deleteUser(user: string): Observable<any>{
     return this.http.request('delete',
       '/api/users/' + user,
       {
         headers: this.header,
-        body:{
-          user: user
+        body: {
+          user
         }
       }
       );
   }
+  readHomepageJson(): Observable<any> {
+    return this.http.get('/api/userRoute/homepageContentJson');
+  }
+
 
   getAllEmployees(): Observable<any>{
     return this.http.get('/api/employees/getAllEmployees');
@@ -67,7 +72,10 @@ export class DatabaseService {
     return this.http.get('/api/employees/countByGender');
   }
 
-  readHomepageJson(): Observable<any> {
-    return this.http.get('/api/userRoute/homepageContentJson');
+  getEmployeesReport(sql: string): Observable<any>{
+    console.log('SQL ' + sql);
+    const result = escape(sql);
+    const query = `?sql=${result}`;
+    return this.http.get('/api/employees/execute' + query);
   }
 }

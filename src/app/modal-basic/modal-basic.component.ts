@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Report, Reports} from './Report';
 import { FormControl, FormGroup } from '@angular/forms';
+import {EmployeesService} from '../services/employees.service';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-modal-basic',
   templateUrl: './modal-basic.component.html',
@@ -12,7 +14,9 @@ export class ModalBasicComponent implements OnInit {
   selectedReport: Report;
   reports: Report[] = Reports;
   closeResult = '';
-  constructor(private modalService: NgbModal) { }
+
+  constructor(private router: Router, private modalService: NgbModal, private employeeService: EmployeesService) { }
+
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
   isFormCompleted = true;
@@ -79,7 +83,10 @@ export class ModalBasicComponent implements OnInit {
       str = str.replace('@', val);
       // str = str.substr(0, index + 1).replace('@', val) + str.substr(index + 1, str.length);
     });
-    alert(str);
+    this.selectedReport.sql = str;
+    this.employeeService.setReport(this.selectedReport);
+    // navigate to report page to display data
+    this.router.navigate(['/report']).then(() => {}).catch(e => console.error(e));
    return true;
   }
 
