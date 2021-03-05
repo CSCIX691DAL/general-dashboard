@@ -10,7 +10,7 @@ import {DatabaseService} from '../services/database-connection.service';
 
 
 export class HomeComponent implements OnInit {
-  constructor(public conn: DatabaseService) {
+  constructor(private conn: DatabaseService) {
   }
 
   ngOnInit(): void {
