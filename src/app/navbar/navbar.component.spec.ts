@@ -12,8 +12,8 @@ describe('NavbarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ NavbarComponent ],
-	  imports: [ RouterTestingModule ],
-	  providers: [ { provide: AuthService, useClass: MockAuthService } ]
+      imports: [ RouterTestingModule ],
+      providers: [ { provide: AuthService, useClass: MockAuthService } ]
     })
     .compileComponents();
   });

@@ -19,10 +19,9 @@
       </div>
     </div>
 
-    <div class="middle">
-
+    <div class="middle" *ngIf="selectedReport">
       <div class="report-header"><h4>Parameters</h4></div>
-      <div class="report-content" *ngIf="selectedReport">
+      <div class="report-content" >
 
         <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
           <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.params">
@@ -38,22 +37,21 @@
       </div>
     </div>
 
-    <div class="middle">
+    <div class="middle" *ngIf="selectedReport">
 
       <div class="report-header"><h4>Chart Type</h4></div>
-      <div class="report-content" *ngIf="selectedReport">
+
+      <div class="report-content" >
 
         <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
-          <div class="input-group mb-3 input-param" *ngFor="let chart of selectedReport.charts; let i = index;">
-            <div class="input-group-prepend">
-              <span class="input-group-text input-field">{{chart.name}}</span>
-            </div>
-            <select id="{{i}}"class="form-control reports" (change)="checkAxisValues()" >
-              <option *ngFor="let option of chart.options">{{option}}</option>
+          <label>
+            <select class="form-control reports" [(ngModel)]="selectedChartType" [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let type of chartTypes" [ngValue]="type">{{type}}</option>
             </select>
-          </div>
+          </label>
+
+
         </form>
-        <span class="error-msg" *ngIf="!differentAxisValues">x-axis and y-axis cannot be the same</span>
       </div>
     </div>
 

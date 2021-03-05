@@ -1,7 +1,7 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { Label } from 'ng2-charts';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import {ChartInfo} from '../services/Chart';
+import {ChartInfo, WidgetTypes} from '../services/Chart';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-chart',
@@ -11,26 +11,27 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 export class ChartComponent implements OnInit {
   @Input() chartInfo: ChartInfo;
 
-  public AllowedCharts = [ 'bar', 'line', 'doughnut'];
+  public AllowedCharts = WidgetTypes;
 
-  public barChartOptions: ChartOptions;
-  public barChartLabels: Label[];
-  public barChartType: ChartType;
-  public barChartLegend: boolean;
-  public barChartPlugins = [pluginDataLabels];
-  public barChartData: ChartDataSets[];
-
+  public options: ChartOptions;
+  public xAxisLabels: Label[];
+  public chartType: ChartType;
+  public showLegend: boolean;
+  public plugins = [pluginDataLabels];
+  public data: ChartDataSets[];
   constructor() {
   }
 
   ngOnInit(): void {
-    console.log(this.chartInfo);
-    this.barChartData = this.chartInfo.data;
-    this.barChartLabels = this.chartInfo.labels;
-    this.barChartOptions = this.chartInfo.chartOptions;
-    this.barChartType = this.chartInfo.chartType;
-    this.barChartLegend = this.chartInfo.showLegends;
+      if (this.chartInfo){
+        this.data = this.chartInfo.data;
+        this.xAxisLabels = this.chartInfo.labels;
+        this.options = this.chartInfo.chartOptions;
+        this.chartType = this.chartInfo.chartType;
+        this.showLegend = this.chartInfo.showLegends;
+      }
   }
+
 
 
 
