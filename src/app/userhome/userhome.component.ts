@@ -5,7 +5,7 @@ import { Chart } from 'chart.js';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
-import {ChartInfo} from '../services/Chart';
+import {baseOptions, ChartInfo, WidgetInfo, Table} from '../services/Chart';
 
 @Component({
   selector: 'app-userhome',
@@ -15,7 +15,8 @@ import {ChartInfo} from '../services/Chart';
 export class UserhomeComponent implements OnInit {
   private employees = [];
   private genderMap = new Map();
-  public chartInfo: ChartInfo;
+  public widgets: WidgetInfo[] = [];
+
   constructor(private employee: EmployeesService, private chartFactory: ChartFactoryService) {
   }
 
@@ -25,10 +26,19 @@ export class UserhomeComponent implements OnInit {
       for (const item of data) {
         this.genderMap.set(item.gender, item.SumOfGender);
       }
-      this.chartInfo = this.chartFactory.generateBar(
-        [this.genderMap.get('M'), this.genderMap.get('F')],
-        ['Male', 'Female'],
-        ['Gender']);
+
+      // example chart for genders
+      this.widgets.push({
+        name: 'chart',
+        chartOptions: baseOptions,
+        labels: ['Count'],
+        data: [
+          {data: [this.genderMap.get('M')], label: 'Male'},
+          {data: [this.genderMap.get('F')], label: 'Female'},
+        ],
+        chartType: 'bar',
+        showLegends: true
+      });
 
     });
   }
@@ -44,5 +54,9 @@ export class UserhomeComponent implements OnInit {
     for (const entry of this.genderMap) {
       console.log(entry);
     }
+  }
+
+  isTable(obj: WidgetInfo): boolean{
+    return obj.name === 'table';
   }
 }
