@@ -19,12 +19,11 @@
       </div>
     </div>
 
-    <div class="middle">
-
+    <div class="middle" *ngIf="selectedReport">
       <div class="report-header"><h4>Parameters</h4></div>
-      <div class="report-content" *ngIf="selectedReport">
+      <div class="report-content" >
 
-        <form id="reportForm" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
           <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.params">
             <div class="input-group-prepend">
               <span class="input-group-text input-field" id="inputGroup-sizing-default">{{param.name}}</span>
@@ -35,6 +34,24 @@
         </form>
 
         <span class="error-msg" *ngIf="!isFormCompleted">Please fill out all the fields</span>
+      </div>
+    </div>
+
+    <div class="middle" *ngIf="selectedReport">
+
+      <div class="report-header"><h4>Chart Type</h4></div>
+
+      <div class="report-content" >
+
+        <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
+          <label>
+            <select class="form-control reports" [(ngModel)]="selectedChartType" [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let type of chartTypes" [ngValue]="type">{{type}}</option>
+            </select>
+          </label>
+
+
+        </form>
       </div>
     </div>
 

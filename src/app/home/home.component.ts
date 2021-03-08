@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {DatabaseService} from '../services/database-connection.service';
 
 
 @Component({
@@ -10,31 +9,9 @@ import {DatabaseService} from '../services/database-connection.service';
 
 
 export class HomeComponent implements OnInit {
-  constructor(private conn: DatabaseService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-  }
-
-  listUsers(): void{
-    this.conn.getUsers().subscribe(data =>{
-      console.log(data);
-    });
-  }
-  listUser(): void{
-    this.conn.getUser('Xiappi').subscribe(data =>{
-      console.log(data);
-    });
-  }
-  createUser(): void{
-    this.conn.createUser('Xiappi',  'Password123'  ).subscribe(data => {
-      console.log(data);
-    });
-  }
-
-  deleteUser(): void{
-    this.conn.deleteUser('Xiappi' ).subscribe(data =>{
-      console.log(data);
-    });
   }
 }

@@ -1,20 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Report, Reports} from './Report';
 import { FormControl, FormGroup } from '@angular/forms';
+import {EmployeesService} from '../services/employees.service';
+import {ChartInfo, WidgetTypes, WidgetInfo} from '../services/Chart';
+import {ChartFactoryService} from '../services/chart-factory.service';
+
 @Component({
   selector: 'app-modal-basic',
   templateUrl: './modal-basic.component.html',
   styleUrls: ['./modal-basic.component.css']
 })
 export class ModalBasicComponent implements OnInit {
+  @Output() outputEvent = new EventEmitter<WidgetInfo>();
+
   selectedReport: Report;
+  selectedChartType: string;
+  chartTypes = WidgetTypes;
   reports: Report[] = Reports;
   closeResult = '';
-  constructor(private modalService: NgbModal) { }
-  formGroup = new FormGroup({});
+
+  constructor(
+              private modalService: NgbModal,
+              private employeeService: EmployeesService,
+              private chartFactory: ChartFactoryService) { }
+
+  paramGroup = new FormGroup({});
+  chartType = new FormGroup({});
   isFormCompleted = true;
+  differentAxisValues = false;
   ngOnInit(): void {
   }
 
@@ -32,21 +47,31 @@ export class ModalBasicComponent implements OnInit {
   updateFormGroup(): void{
     this.isFormCompleted = true;
     if (this.selectedReport === undefined) { return; }
-    this.formGroup = new FormGroup({});
+    this.paramGroup = new FormGroup({});
     for (const param of this.selectedReport.params){
-      this.formGroup.addControl(param.name, new FormControl(''));
+      this.paramGroup.addControl(param.name, new FormControl(''));
+    }
+    this.chartType = new FormGroup({});
+    for (const chart of this.selectedReport.charts){
+      this.paramGroup.addControl(chart.name, new FormControl(''));
     }
   }
-
+  checkAxisValues(): void{
+    const xAxisSelect = document.getElementById('0') as HTMLSelectElement;
+    const xAxis = xAxisSelect.value;
+    const yAxisSelect = document.getElementById('1') as HTMLSelectElement;
+    const yAxis = yAxisSelect.value;
+    this.differentAxisValues = !(xAxis === yAxis);
+  }
   onSubmit(): void{
     if (this.selectedReport === undefined) { return; }
+
     const values: string[] = [];
     // required field check because 'required' tag wasn't working
     for (const param of this.selectedReport.params){
-      values.push(this.formGroup.get(param.name).value);
+      values.push(this.paramGroup.get(param.name).value);
     }
     this.isFormCompleted = !values.includes('');
-
     // close modal if form is completed
     if (this.isFormCompleted){
       this.processReport(values);
@@ -55,16 +80,21 @@ export class ModalBasicComponent implements OnInit {
   }
 
   private processReport(values: string[]): boolean{
-    console.log(values);
     // replace sql identifiers with the inputted values
-    let str = this.selectedReport.sql;
+    let sql = this.selectedReport.sql;
     values.forEach(val => {
-      const index = str.indexOf('@');
-      // this is basically a string.replace
-      str = str.replace('@', val);
-      // str = str.substr(0, index + 1).replace('@', val) + str.substr(index + 1, str.length);
+      // replace the delimiters with inputted values
+      sql = sql.replace('@', val);
     });
-    alert(str);
+
+    this.employeeService.getEmployeesReport(sql).then(data => {
+      const widget = this.chartFactory.processChartType(this.selectedChartType, data,
+        [this.selectedReport.displayName],
+        ['Count']);
+      this.outputEvent.emit(widget);
+      console.log(widget);
+
+    });
    return true;
   }
 
@@ -77,4 +107,5 @@ export class ModalBasicComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
 }

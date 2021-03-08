@@ -4,6 +4,8 @@ import { EmployeesService } from '../services/employees.service';
 import { Chart } from 'chart.js';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
+import {ChartFactoryService} from '../services/chart-factory.service';
+import {baseOptions, ChartInfo, WidgetInfo, Table} from '../services/Chart';
 
 @Component({
   selector: 'app-userhome',
@@ -13,62 +15,9 @@ import {AuthService} from '../auth.service';
 export class UserhomeComponent implements OnInit {
   private employees = [];
   private genderMap = new Map();
+  public widgets: WidgetInfo[] = [];
 
-  constructor(private employee: EmployeesService) {
-  }
-
-  graph(): void {
-    const ctx = document.getElementById('empGraph');
-    const empGraph = new Chart(ctx, {
-      type: 'horizontalBar',
-      data: {
-        labels: ['Gender'],
-        datasets: [
-          {
-            label: 'Female',
-            fillColor: 'rgba(255, 99, 132, 0.2)',
-            strokeColor: 'rgba(255, 99, 132, 0.2)',
-            highlightFill: 'rgba(255, 99, 132, 0.2)',
-            highlightStroke: 'rgba(255, 99, 132, 0.2)',
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)'],
-            borderColor: [
-              'rgba(255, 99, 132, 1)'],
-            data: [this.genderMap.get('F')]
-          },
-          {
-            label: 'Male',
-            fillColor: 'rgba(54, 162, 235, 0.2)',
-            strokeColor: 'rgba(54, 162, 235, 0.2)',
-            highlightFill: 'rgba(54, 162, 235, 0.2)',
-            highlightStroke: 'rgba(54, 162, 235, 0.2)',
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.2)'],
-            borderColor: [
-              'rgba(54, 162, 235, 0.2)'],
-            data: [this.genderMap.get('M')]
-          }
-        ]
-      },
-      options: {
-        title: {
-          display: true,
-          text: 'Gender of Employees'
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
+  constructor(private employee: EmployeesService, private chartFactory: ChartFactoryService) {
   }
 
   ngOnInit(): void {
@@ -77,7 +26,20 @@ export class UserhomeComponent implements OnInit {
       for (const item of data) {
         this.genderMap.set(item.gender, item.SumOfGender);
       }
-      this.graph();
+
+      // example chart for genders
+      this.widgets.push({
+        name: 'chart',
+        chartOptions: baseOptions,
+        labels: ['Count'],
+        data: [
+          {data: [this.genderMap.get('M')], label: 'Male'},
+          {data: [this.genderMap.get('F')], label: 'Female'},
+        ],
+        chartType: 'bar',
+        showLegends: true
+      });
+
     });
   }
 
@@ -92,5 +54,9 @@ export class UserhomeComponent implements OnInit {
     for (const entry of this.genderMap) {
       console.log(entry);
     }
+  }
+
+  isTable(obj: WidgetInfo): boolean{
+    return obj.name === 'table';
   }
 }
