@@ -14,12 +14,12 @@ class BackendAuth {
   }
 
   // register a user.
-  register(email, password) {
+  register(email, password, adminAccount) {
     const auth = this;
     return new Promise(function(resolve, reject){
       // create the user in the database, then create and return an auth token
       return auth.users
-        .create({ID: email, Password: password})
+        .create({ID: email, Password: password, Admin: adminAccount})
         .then(_ => {
           return jwt.sign(
             { data: {email: email} },

@@ -1,3 +1,4 @@
+const {INTEGER} = require("sequelize");
 const {
   DataTypes
 } = require('sequelize');
@@ -44,10 +45,19 @@ module.exports = sequelize => {
       type: DataTypes.STRING(160),
       allowNull: true,
       defaultValue: null,
-      primaryKey: true,
+      primaryKey: false,
       autoIncrement: false,
       comment: null,
       field: "homepage_contents"
+    },
+    Admin: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+      defaultValue: false,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Admin"
     }
   };
   const options = {

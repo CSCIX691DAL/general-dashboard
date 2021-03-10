@@ -35,9 +35,9 @@ export class AuthService {
     });
   }
 
-  async register(username: string, password: string): Promise<void> {
+  async register(username: string, password: string, adminAccount: boolean): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.Http.post('/api/auth/register', {username , password}, {responseType: 'text'})
+      this.Http.post('/api/auth/register', {username , password, adminAccount}, {responseType: 'text'})
         .toPromise()
         .then(value => {
           localStorage.setItem('auth-token', value);
