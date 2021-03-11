@@ -59,10 +59,24 @@ export class DatabaseService {
       }
       );
   }
+
   readHomepageJson(): Observable<any> {
     return this.http.get('/api/users/homepage');
   }
 
+
+  updateHomepage(jsonString: string): Observable<any> {
+    return this.http.put(
+      '/api/users/homepage',
+      {
+        headers: this.header,
+        body: {
+          homepageContents: jsonString
+        }
+      }
+    );
+
+  }
 
   getAllEmployees(): Observable<any>{
     return this.http.get('/api/employees/getAllEmployees');

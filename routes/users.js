@@ -22,5 +22,17 @@ module.exports = sequelize => {
     }
   );
 
+  router.put('/homepage', auth.authParser(), function (req, res, next) {
+    auth.users.update(
+      // not sure why the body's contents are wrapped inside an additional body
+      {homepage_contents: req.body.body.homepageContents },
+      {where: {ID: req.token.data.email}}).then(resp => {
+      res.status(200);
+    }).catch(err => { console.log(err);
+      res.status(500).append("Error", err); })
+    }
+  );
+
+
   return router;
 };
