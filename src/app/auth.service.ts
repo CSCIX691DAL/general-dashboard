@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Protocol} from "puppeteer";
-import integer = Protocol.integer;
-import {IntegerDataType} from "sequelize";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +25,7 @@ export class AuthService {
   }
   async getAdmin(adminUsername: string): Promise<boolean>{
     return new Promise<boolean>((resolve, reject) => {
-      this.Http.post('api/auth/getAdmin', {adminUsername}).subscribe(Response => {
+      this.Http.post('api/auth/getAdmin', {adminUsername}).toPromise().then(Response => {
         // @ts-ignore
         return resolve(Response);
       });
