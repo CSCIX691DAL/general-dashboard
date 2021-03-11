@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin-databases-page',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDatabasesPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: AuthService, private router: Router) {
+    if (auth.isAdmin() === false){
+      this.router.navigate(['/home']);
+    }
+  }
 
   ngOnInit(): void {
   }
