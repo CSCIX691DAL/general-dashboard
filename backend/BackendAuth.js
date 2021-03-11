@@ -36,6 +36,12 @@ class BackendAuth {
         }).catch(err => { return reject(err); })
     });
   }
+  getAdmin(adminUsername){
+    const auth = this;
+    return auth.users.findAll({where: {ID: adminUsername}}).then(resp => {
+      return resp[0].Admin;
+    });
+  }
 
   // sign in to a user, checking the password and producing a token if valid.
   authenticate(email, password) {

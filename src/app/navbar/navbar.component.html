@@ -14,7 +14,7 @@
       UserHome
     </li>
     <!-- Dropdown menu taken from: https://getbootstrap.com/docs/4.0/components/navbar/ -->
-    <li *ngIf="auth.hasToken()" class="nav-item dropdown">
+    <li *ngIf="auth.hasToken() && getAdmin('admin@test.com')" class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Configurations
       </a>
