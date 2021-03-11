@@ -23,9 +23,17 @@ export class AuthService {
   async validateToken(): Promise<any> {
     return this.Http.get('/api/auth/validate', {responseType: 'text'}).toPromise();
   }
+  getAdminStorage(): string{
+    return localStorage.getItem('isAdmin');
+  }
+  isAdmin(): boolean{
+    return this.getAdminStorage() === 'true';
+  }
   async getAdmin(adminUsername: string): Promise<boolean>{
     return new Promise<boolean>((resolve, reject) => {
       this.Http.post('api/auth/getAdmin', {adminUsername}).toPromise().then(Response => {
+        // @ts-ignore
+        localStorage.setItem('isAdmin', Response);
         // @ts-ignore
         return resolve(Response);
       });
@@ -33,6 +41,7 @@ export class AuthService {
   }
 
   async authenticate(username: string, password: string): Promise<void> {
+    this.getAdmin(username);
     return new Promise<void>((resolve, reject) => {
       this.Http.post('/api/auth/authenticate', {username , password}, {responseType: 'text'})
         .toPromise()

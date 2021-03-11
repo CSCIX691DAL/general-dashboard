@@ -8,7 +8,6 @@ import {Router} from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
   constructor(public auth: AuthService, private router: Router ) { }
 
   ngOnInit(): void {
@@ -20,12 +19,4 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/home']).catch(e => console.error(e));
     }
   }
-  // @ts-ignore
-  getAdmin(adminUsername): boolean{
-    this.auth.getAdmin(adminUsername).then(data => {
-      console.log(data + ' navbar');
-      return data;
-    });
-  }
-
 }
