@@ -11,7 +11,7 @@ module.exports = sequelize => {
   // these routes require authentication
   const auth = new BackendAuth(sequelize);
 
-  router.get('/homepageContentJson', auth.authParser(), function (req, res, next) {
+  router.get('/homepage', auth.authParser(), function (req, res, next) {
     auth.users
       .findAll({where: {ID: req.token.data.email} })
       .then(resp => {

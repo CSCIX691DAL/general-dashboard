@@ -60,7 +60,7 @@ export class DatabaseService {
       );
   }
   readHomepageJson(): Observable<any> {
-    return this.http.get('/api/userRoute/homepageContentJson');
+    return this.http.get('/api/users/homepage');
   }
 
 
