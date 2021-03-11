@@ -36,6 +36,7 @@ class BackendAuth {
         }).catch(err => { return reject(err); })
     });
   }
+  // Retrieves the value stored in Admin column of a given User in database where ID is given email
   getAdmin(adminUsername){
     const auth = this;
     return auth.users.findAll({where: {ID: adminUsername}}).then(resp => {
