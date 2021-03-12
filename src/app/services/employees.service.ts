@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from './database-connection.service';
 import { HttpClient } from '@angular/common/http';
-import { Employee } from '../models/employee';
+import {Employee} from '../../models/employee';
 import {Report} from '../modal-basic/Report';
 import {Observable} from 'rxjs';
 
