@@ -7,15 +7,6 @@ import { stringify } from 'querystring';
   providedIn: 'root'
 })
 
-/*
-  URLs for http requests are prefixed with the type of request they are.
-  E.G:
-    GET requests are /gets/<RESOURCE>
-    POST requests are /posts/<RESOURCE>
-
-  This is to get around CORS Policy blocking when we try to redirect to another domain directly,
-  so we send the request through a proxy
- */
 export class DatabaseService {
 
   header = new HttpHeaders({
@@ -59,10 +50,24 @@ export class DatabaseService {
       }
       );
   }
+
   readHomepageJson(): Observable<any> {
     return this.http.get('/api/users/homepage');
   }
 
+
+  updateHomepage(jsonString: string): Observable<any> {
+    return this.http.put(
+      '/api/users/homepage',
+      {
+        headers: this.header,
+        body: {
+          homepageContents: jsonString
+        }
+      }
+    );
+
+  }
 
   getAllEmployees(): Observable<any>{
     return this.http.get('/api/employees/getAllEmployees');
