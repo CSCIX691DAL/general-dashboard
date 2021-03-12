@@ -1,11 +1,11 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {Report, Reports} from './Report';
 import { FormControl, FormGroup } from '@angular/forms';
 import {EmployeesService} from '../services/employees.service';
 import {ChartInfo, WidgetTypes, WidgetInfo} from '../services/Chart';
 import {ChartFactoryService} from '../services/chart-factory.service';
+import {Report} from '../../models/report';
 
 @Component({
   selector: 'app-modal-basic',
@@ -18,7 +18,7 @@ export class ModalBasicComponent implements OnInit {
   selectedReport: Report;
   selectedChartType: string;
   chartTypes = WidgetTypes;
-  reports: Report[] = Reports;
+  reports: Report[] = [];
   closeResult = '';
 
   constructor(
@@ -48,13 +48,11 @@ export class ModalBasicComponent implements OnInit {
     this.isFormCompleted = true;
     if (this.selectedReport === undefined) { return; }
     this.paramGroup = new FormGroup({});
-    for (const param of this.selectedReport.params){
+    for (const param of this.selectedReport.input_params){
       this.paramGroup.addControl(param.name, new FormControl(''));
     }
     this.chartType = new FormGroup({});
-    for (const chart of this.selectedReport.charts){
-      this.paramGroup.addControl(chart.name, new FormControl(''));
-    }
+
   }
   checkAxisValues(): void{
     const xAxisSelect = document.getElementById('0') as HTMLSelectElement;
@@ -68,7 +66,7 @@ export class ModalBasicComponent implements OnInit {
 
     const values: string[] = [];
     // required field check because 'required' tag wasn't working
-    for (const param of this.selectedReport.params){
+    for (const param of this.selectedReport.input_params){
       values.push(this.paramGroup.get(param.name).value);
     }
     this.isFormCompleted = !values.includes('');
@@ -89,7 +87,7 @@ export class ModalBasicComponent implements OnInit {
 
     this.employeeService.getEmployeesReport(sql).then(data => {
       const widget = this.chartFactory.processChartType(this.selectedChartType, data,
-        [this.selectedReport.displayName],
+        [this.selectedReport.display_name],
         ['Count']);
       this.outputEvent.emit(widget);
       console.log(widget);
