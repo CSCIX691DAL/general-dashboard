@@ -19,8 +19,8 @@ module.exports = sequelize => {
   });
 
   // Executes the getAdmin function to retrieve the value in Admin column of a given User
-  router.post('/getAdmin', function (req, res, next) {
-    auth.getAdmin(req.body.adminUsername).then(data => {
+  router.get('/getAdmin', function (req, res, next) {
+    auth.getAdmin(req.query.adminUsername).then(data => {
       res.status(201).send(data);
     })
   });
