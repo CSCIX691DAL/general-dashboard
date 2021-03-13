@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Employee } from '../models/employee';
 import { EmployeesService } from '../services/employees.service';
 import { Chart } from 'chart.js';
 import {Router} from '@angular/router';

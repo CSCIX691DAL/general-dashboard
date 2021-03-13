@@ -2,8 +2,7 @@ const {
   DataTypes
 } = require('sequelize');
 
-module.exports = sequelize => {
-  const attributes = {
+module.exports = {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -49,12 +48,5 @@ module.exports = sequelize => {
       comment: null,
       field: "input_params"
     }
-  };
-  const options = {
-    tableName: "reports",
-    comment: "",
-    indexes: []
-  };
-  const ReportsModel = sequelize.define("reports_model", attributes, options);
-  return ReportsModel;
+
 };
