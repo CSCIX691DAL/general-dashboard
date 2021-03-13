@@ -6,6 +6,7 @@ import {EmployeesService} from '../services/employees.service';
 import {ChartInfo, WidgetTypes, WidgetInfo} from '../services/Chart';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {Report} from '../../models/report';
+import {ReportsService} from '../services/reports.service';
 
 @Component({
   selector: 'app-modal-basic',
@@ -24,13 +25,15 @@ export class ModalBasicComponent implements OnInit {
   constructor(
               private modalService: NgbModal,
               private employeeService: EmployeesService,
-              private chartFactory: ChartFactoryService) { }
+              private chartFactory: ChartFactoryService,
+              private reportsService: ReportsService) { }
 
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
   isFormCompleted = true;
   differentAxisValues = false;
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.reports = await this.reportsService.readReports();
   }
 
   open(content): void {

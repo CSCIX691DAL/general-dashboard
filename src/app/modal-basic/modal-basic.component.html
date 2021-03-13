@@ -24,7 +24,7 @@
       <div class="report-content" >
 
         <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
-          <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.params">
+          <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.input_params">
             <div class="input-group-prepend">
               <span class="input-group-text input-field" id="inputGroup-sizing-default">{{param.name}}</span>
             </div>
