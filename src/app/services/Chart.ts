@@ -1,6 +1,6 @@
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 import {Label} from 'ng2-charts';
-import {Employee} from '../models/employee';
+import {Employee} from '../../models/employee';
 
 // need this for typeof because typescript can't handle custom types easily
 export interface TypeName {
