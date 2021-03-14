@@ -18,13 +18,6 @@ module.exports = sequelize => {
     }
   });
 
-  // Executes the getAdmin function to retrieve the value in Admin column of a given User
-  router.get('/getAdmin', function (req, res, next) {
-    auth.getAdmin(req.query.adminUsername).then(data => {
-      res.status(201).send(data);
-    })
-  });
-
   // authenticate credentials and get a token
   router.post('/authenticate', function (req, res, next) {
     if(req.body && req.body.hasOwnProperty('username') && typeof req.body.username === 'string' && req.body.username.match('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')

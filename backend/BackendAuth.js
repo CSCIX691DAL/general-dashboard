@@ -22,7 +22,7 @@ class BackendAuth {
         .create({ID: email, Password: password, Admin: adminAccount})
         .then(_ => {
           return jwt.sign(
-            { data: {email: email} },
+            { data: {email: email, admin: adminAccount} },
             privateKey,
             signOptions,
             function(err, token) {
@@ -36,13 +36,6 @@ class BackendAuth {
         }).catch(err => { return reject(err); })
     });
   }
-  // Retrieves the value stored in Admin column of a given User in database where ID is given email
-  getAdmin(adminUsername){
-    const auth = this;
-    return auth.users.findAll({where: {ID: adminUsername}}).then(resp => {
-      return resp[0].Admin;
-    });
-  }
 
   // sign in to a user, checking the password and producing a token if valid.
   authenticate(email, password) {
@@ -54,7 +47,7 @@ class BackendAuth {
         .then(resp => {
           if(resp[0].ID === email && resp[0].Password === password) {
             return jwt.sign(
-              { data: {email: email} },
+              { data: {email: email, admin: resp[0].Admin} },
               privateKey,
               signOptions,
               function(err, token) {
