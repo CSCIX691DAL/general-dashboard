@@ -26,7 +26,7 @@ export class AuthService {
     return this.Http.get('/api/auth/validate', {responseType: 'text'}).toPromise();
   }
   // Retrieves Admin value stored in json token
-  getAdmin(): Promise<any>{
+  async getAdmin(): Promise<any>{
     return this.Http.get('/api/auth/validate', {responseType: 'json'}).toPromise().then(data => {
       let adminValue = data as JSONObject;
       // @ts-ignore
