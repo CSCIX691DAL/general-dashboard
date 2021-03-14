@@ -50,15 +50,6 @@ module.exports = sequelize => {
       comment: null,
       field: "homepage_contents"
     },
-    Admin: {
-      type: DataTypes.TINYINT,
-      allowNull: false,
-      defaultValue: false,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "Admin"
-    }
   };
   const options = {
     tableName: "Users",
