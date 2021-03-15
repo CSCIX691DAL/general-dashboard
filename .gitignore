@@ -47,3 +47,6 @@ Thumbs.db
 
 # Test Results
 testresults
+
+# sequelize models
+src/app/models

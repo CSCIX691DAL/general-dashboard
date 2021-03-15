@@ -4,66 +4,57 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    EmployeeID: {
+    id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
       comment: null,
-      field: "emp_no"
+      field: "id"
     },
-    BirthDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: true,
-      autoIncrement: false,
-      comment: null,
-      field: "birth_date"
-    },
-    FirstName: {
-      type: DataTypes.STRING(14),
+    name: {
+      type: DataTypes.STRING(100),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "first_name"
+      field: "name"
     },
-    LastName: {
-      type: DataTypes.STRING(16),
+    display_name: {
+      type: DataTypes.STRING(45),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "last_name"
+      field: "display_name"
     },
-    Gender: {
-      type: DataTypes.ENUM('M', 'F'),
+    sql: {
+      type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "gender"
+      field: "sql"
     },
-    HireDate: {
-      type: DataTypes.DATEONLY,
+    input_params: {
+      type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: null,
-      primaryKey: true,
+      primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "hire_date"
+      field: "input_params"
     }
   };
   const options = {
-    tableName: "employees",
+    tableName: "reports",
     comment: "",
     indexes: []
   };
-  const EmployeesModel = sequelize.define("Employees_model", attributes, options);
-  return EmployeesModel;
+  const ReportsModel = sequelize.define("reports_model", attributes, options);
+  return ReportsModel;
 };

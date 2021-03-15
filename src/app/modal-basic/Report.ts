@@ -24,14 +24,17 @@ export const Reports: Report[] = [
     params: [{name: 'startDate', type: 'Date'}, {name: 'endDate', type: 'Date'}],
   charts: [{name: 'x-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']},
     {name: 'y-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']}]},
+
   {id: 2, name: 'Search by birthdate', displayName: 'BirthDate', sql: 'select * from employees where ' +
       'birth_date >= CAST("@" AS DATE) and ' +
       'birth_date <= CAST("@" AS DATE);',
     params: [{name: 'startDate', type: 'Date'}, {name: 'endDate', type: 'Date'}],
     charts: [{name: 'x-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']},
       {name: 'y-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']}]},
+
   {id: 3, name: 'Search by lastname', displayName: 'LastName', sql: 'select * from employees where last_name like \'%@%\';',
     params: [{name: 'lastName', type: 'text'}],
+
     charts: [{name: 'x-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']},
       {name: 'y-axis', options: ['EmployeeID', 'BirthDate', 'FirstName', 'LastName', 'Gender', 'HireDate']}]},
 

@@ -32,6 +32,8 @@ sshConnection.forward({
 
   router.use('/auth', require('./auth')(sequelize));
   router.use('/employees', require('./employees')(sequelize));
+  router.use('/users', require('./users')(sequelize));
+  router.use('/reports', require('./reports')(sequelize));
 
 });
 
