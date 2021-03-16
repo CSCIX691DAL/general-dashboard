@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import { stringify } from 'querystring';
+import {Observable} from 'rxjs';
+import {User} from '../../models/users';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +31,10 @@ export class DatabaseService {
       );
   }
 
-  getUsers(): Observable<any>{
-    return this.http.get('/api/users');
+  public async getUsers(): Promise<User[]>{
+    return new Promise<User[]>((resolve, reject) => this.http.get<User[]>('/api/users/getAllUsers').subscribe(reports => {
+      resolve(reports);
+    }));
   }
 
   getUser(user: string): Observable<any>{
@@ -66,7 +68,6 @@ export class DatabaseService {
         }
       }
     );
-
   }
 
   getAllEmployees(): Observable<any>{

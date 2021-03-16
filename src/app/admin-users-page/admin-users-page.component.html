@@ -1,1 +1,28 @@
 <h1>Users</h1>
+<div class="container" >
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Admin</th>
+        <th scope="col">Creation Date</th>
+      </tr>
+      </thead>
+
+      <tbody *ngFor="let user of Users">
+      <tr>
+        <td>
+          {{user.ID}}
+        </td>
+        <td>
+          {{user.Admin}}
+        </td>
+        <td>
+          {{user.creation_date}}
+        </td>
+      </tr>
+
+
+      </tbody>
+    </table>
+  </div>
