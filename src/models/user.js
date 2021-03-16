@@ -26,5 +26,14 @@ module.exports={
     autoIncrement: false,
     comment: null,
     field: "homepage_contents"
+  },
+  Admin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+    primaryKey: false,
+    autoIncrement: false,
+    comment: null,
+    field: "Admin"
   }
 };

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from './database-connection.service';
 import { HttpClient } from '@angular/common/http';
-import {Employee} from '../../models/employee';
-import {Report} from '../modal-basic/Report';
+import { Employee } from '../../models/employee';
 import {Observable} from 'rxjs';
+import {Report} from '../../models/report';
 
 @Injectable({
   providedIn: 'root'
