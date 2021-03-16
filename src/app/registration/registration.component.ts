@@ -70,6 +70,10 @@ export class RegistrationComponent implements OnInit {
   getConfirmPassword(): AbstractControl {
     return this.passwords.get('confirmPassword');
   }
+  getAdminAccount(): boolean{
+    const adminAccount = document.getElementById('adminAccount')as HTMLInputElement;
+    return adminAccount.checked;
+  }
 
   ngOnInit(): void {
   }
@@ -85,11 +89,12 @@ export class RegistrationComponent implements OnInit {
     const emailString = emailInputTag.value;
     const passwordString = passwordInputTag.value;
     const confirmPasswordString = confirmPasswordInputTag.value;
+    const adminAccount = this.getAdminAccount();
     // Ensures all form data is validated, if so calls existingUser to either create new user
     // or notify user that this email is already in use by another user
     if (passwordInputTag.valid && emailInputTag.valid &&
       passwordString === confirmPasswordString) {
-      this.auth.register(emailString, passwordString).then(() => {
+      this.auth.register(emailString, passwordString, adminAccount).then(() => {
         this.router.navigate(['/userhome']).catch(e => console.error(e));
       }, reason => {
         console.log(reason);
