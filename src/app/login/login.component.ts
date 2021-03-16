@@ -28,11 +28,11 @@ export class LoginComponent implements OnInit {
   passwords = new FormGroup({
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(12),
-      Validators.pattern(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/),
-      Validators.pattern(/\d/),
-      Validators.pattern(/[a-zA-Z]/)
+      // Validators.minLength(4),
+      // Validators.maxLength(12),
+      // Validators.pattern(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/),
+      // Validators.pattern(/\d/),
+      // Validators.pattern(/[a-zA-Z]/)
     ]), confirmPassword: new FormControl('', [
       Validators.required,
     ])
