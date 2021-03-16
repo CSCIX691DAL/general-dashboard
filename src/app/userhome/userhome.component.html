@@ -3,43 +3,14 @@
 <div class="container-fluid">
   <h1>User Homepage</h1>
   <div class="row">
-    <div class="col-3">
-      <app-modal-basic (outputEvent)="widgets.push($event)"></app-modal-basic>
-
-    </div>
     <div class="col-8">
       <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2>Dashboard</h2>
       </div>
       <div class="container" *ngFor="let widget of widgets">
-        <div *ngIf="isTable(widget)">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">BirthDate</th>
-                <th scope="col">ID</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Gender</th>
-                <th scope="col">HireDate</th>
-                <th scope="col">Last Name</th>
-            </tr>
-            </thead>
-
-            <tbody *ngFor="let emp of widget.data">
-            <tr>
-              <td *ngFor="let item of emp| keyvalue">
-                {{item.value}}
-              </td>
-            </tr>
-
-            </tbody>
-          </table>
-        </div>
-
-        <app-chart *ngIf="!isTable(widget)" [chartInfo]="widget"></app-chart>
+        <app-chart [chartInfo]="widget"></app-chart>
       </div>
-
     </div>
   </div>
 </div>
