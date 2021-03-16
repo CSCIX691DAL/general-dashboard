@@ -21,6 +21,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from './auth.service';
 import {AuthTokenInterceptor} from './auth-token.interceptor';
 import { ChartsModule } from 'ng2-charts';
+import { AdminReportPageComponent } from './admin-report-page/admin-report-page.component';
+import { AdminUsersPageComponent } from './admin-users-page/admin-users-page.component';
+import { AdminDatabasesPageComponent } from './admin-databases-page/admin-databases-page.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { ChartsModule } from 'ng2-charts';
     LoginComponent,
     UserhomeComponent,
     ModalBasicComponent,
-    ChartComponent
+    ChartComponent,
+    AdminReportPageComponent,
+    AdminUsersPageComponent,
+    AdminDatabasesPageComponent
   ],
   imports: [
     BrowserModule,

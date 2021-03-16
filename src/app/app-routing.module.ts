@@ -6,12 +6,18 @@ import {LoginComponent} from './login/login.component';
 import { UserhomeComponent } from './userhome/userhome.component';
 import {GuestGuard} from './guest.guard';
 import {LoggedInGuard} from './logged-in.guard';
+import {AdminReportPageComponent} from './admin-report-page/admin-report-page.component';
+import {AdminUsersPageComponent} from './admin-users-page/admin-users-page.component';
+import {AdminDatabasesPageComponent} from './admin-databases-page/admin-databases-page.component';
 
 export const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'userhome', component: UserhomeComponent, canActivate: [LoggedInGuard]},
   { path: 'home', component: HomeComponent},
+  {path: 'admin-report-page', component: AdminReportPageComponent},
+  {path: 'admin-users-page', component: AdminUsersPageComponent},
+  {path: 'admin-databases-page', component: AdminDatabasesPageComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 
