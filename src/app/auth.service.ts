@@ -30,6 +30,10 @@ export class AuthService {
     return this.Http.get('/api/auth/validate', {responseType: 'json'}).toPromise().then(data => {
       let adminValue = data as JSONObject;
       // @ts-ignore
+      if (!adminValue.data.admin){
+        return;
+      }
+      // @ts-ignore
       adminValue = adminValue.data.admin;
       // @ts-ignore
       this.bool = adminValue;

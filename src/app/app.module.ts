@@ -16,7 +16,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { EmployeesService } from './services/employees.service';
-import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from './auth.service';
 import {AuthTokenInterceptor} from './auth-token.interceptor';
@@ -24,6 +23,8 @@ import { ChartsModule } from 'ng2-charts';
 import { AdminReportPageComponent } from './admin-report-page/admin-report-page.component';
 import { AdminUsersPageComponent } from './admin-users-page/admin-users-page.component';
 import { AdminDatabasesPageComponent } from './admin-databases-page/admin-databases-page.component';
+import { ReportsPageComponent } from './reports-page/reports-page.component';
+import { ReportCreationComponent } from './report-creation/report-creation.component';
 
 @NgModule({
   declarations: [
@@ -35,11 +36,12 @@ import { AdminDatabasesPageComponent } from './admin-databases-page/admin-databa
     HomeComponent,
     LoginComponent,
     UserhomeComponent,
-    ModalBasicComponent,
     ChartComponent,
     AdminReportPageComponent,
     AdminUsersPageComponent,
-    AdminDatabasesPageComponent
+    AdminDatabasesPageComponent,
+    ReportsPageComponent,
+    ReportCreationComponent
   ],
   imports: [
     BrowserModule,

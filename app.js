@@ -21,6 +21,7 @@ app.use('/home', express.static(path.join(__dirname, 'dist')));
 app.use('/registration', express.static(path.join(__dirname, 'dist')));
 app.use('/login', express.static(path.join(__dirname, 'dist')));
 app.use('/userhome', express.static(path.join(__dirname, 'dist')));
+app.use('/reports', express.static(path.join(__dirname, 'dist')));
 app.use('/admin-report-page', express.static(path.join(__dirname, 'dist')));
 app.use('/admin-users-page', express.static(path.join(__dirname, 'dist')));
 app.use('/admin-databases-page', express.static(path.join(__dirname, 'dist')));

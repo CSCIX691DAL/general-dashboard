@@ -1,0 +1,36 @@
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+.title{
+  text-align: center;
+  margin: 15px;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.section > h4{
+  flex: 1;
+}
+
+.section > div{
+  flex: 2;
+  justify-content: center;
+}
+
+.form-buttons{
+  flex: 3;
+}
+
+.error-msg{
+  color:red;
+}
+
+
