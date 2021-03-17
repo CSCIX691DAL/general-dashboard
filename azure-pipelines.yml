@@ -23,11 +23,10 @@ steps:
   displayName: 'production build'
 - script: xvfb-run ng test --watch=false --sourceMap=false --browsers=ChromeHeadless
   displayName: 'execute headless tests'
-  continueOnError: true
+  continueOnError: false
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-    failTaskOnFailedTests: true # Optional
+    failTaskOnFailedTests: false # Optional
     testResultsFiles: 'testresults/junit/unit-test-result.xml'
   condition: succeededOrFailed()
-  continueOnError: false
