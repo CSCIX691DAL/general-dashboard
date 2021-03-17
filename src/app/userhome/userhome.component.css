@@ -2,6 +2,9 @@
   text-align:center;
 }
 
+/*
+CSS modified from:  https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
+ */
 body {
   overflow-x: hidden;
 }
