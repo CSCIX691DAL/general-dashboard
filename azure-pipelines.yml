@@ -30,4 +30,4 @@ steps:
     failTaskOnFailedTests: true # Optional
     testResultsFiles: 'testresults/junit/unit-test-result.xml'
   condition: succeededOrFailed()
-  continueOnError: true
+  continueOnError: false
