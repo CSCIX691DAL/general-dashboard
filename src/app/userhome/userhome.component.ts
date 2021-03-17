@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import * as $ from 'jquery';
 import { EmployeesService } from '../services/employees.service';
 import { Chart } from 'chart.js';
 import {Router} from '@angular/router';
@@ -20,6 +21,11 @@ export class UserhomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // tslint:disable-next-line:only-arrow-functions
+    $('#menu-toggle').click(function(e) {
+      e.preventDefault();
+      $('#wrapper').toggleClass('toggled');
+    });
     this.employees = this.employee.getAllEmployees();
     this.employee.getEmployeesGender().subscribe(data => {
       for (const item of data) {

@@ -1,17 +1,47 @@
 
-
-<div class="container-fluid">
-  <h1>User Homepage</h1>
-  <div class="row">
-    <div class="col-8">
-      <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h2>Dashboard</h2>
-      </div>
-      <div class="container" *ngFor="let widget of widgets">
-        <app-chart [chartInfo]="widget"></app-chart>
+<!-- Sidebar modified from:
+     https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
+     -->
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar -->
+  <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Widgets
+    </div>
+    <div class="list-group list-group-flush">
+      <!-- Add some sort of ngFor loop here to generate available widgets -->
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget1</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget2</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget3</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget4</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget5</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget6</a>
+      <hr>
+    </div>
+    <div class="sidebar-heading">Current Widgets</div>
+    <!-- Add some sort of ngFor loop here to generate current widgets -->
+      <a href="#" class="list-group-item list-group-item-action bg-light">EmployeeGenderCount</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget2</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget3</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget4</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Widget5</a>
+  </div>
+  <!-- /#sidebar-wrapper -->
+  <!-- Page Content -->
+  <div id="page-content-wrapper" class="container-fluid">
+    <h1>User Homepage</h1>
+    <div class="row">
+      <div class="col-8">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h2>Dashboard</h2>
+        </div>
+        <div class="container" *ngFor="let widget of widgets">
+          <app-chart [chartInfo]="widget"></app-chart>
+        </div>
       </div>
     </div>
+    <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
   </div>
+  <!-- /#page-content-wrapper -->
 </div>
-
+<!-- /#wrapper -->
