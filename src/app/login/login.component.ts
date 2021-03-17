@@ -11,6 +11,7 @@ import {AuthService} from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   valid = true;
+  error_msg = '';
 
   constructor(private router: Router, private auth: AuthService) {
   }
@@ -57,13 +58,22 @@ export class LoginComponent implements OnInit {
           login.valid = true;
           this.router.navigate(['/userhome']).then(() => {}).catch(e => console.error(e));
         }, rej => {
-          console.error(rej);
-          login.valid = false;
-        }).catch(err => {
-          console.error(err);
-          login.valid = false;
-        });
-    }
+			console.error(rej);
+			login.error_msg = '';
+			login.valid = false;
+			switch(rej.status) {
+				case 403:
+					login.error_msg = 'Invalid Credentials';
+				default:
+					login.error_msg = `Server Error: ${rej.status} ${rej.statusText}`;
+				break;
+			}
+		}).catch(err => {
+			console.error(err);
+			login.error_msg = JSON.stringify(err);
+			login.valid = false;
+		});
+	}
   }
 
   validForm(form): boolean {
