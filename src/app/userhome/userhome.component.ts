@@ -27,6 +27,11 @@ export class UserhomeComponent implements OnInit {
       e.preventDefault();
       $('#wrapper').toggleClass('toggled');
     });
+    $('#menu-toggle').click(function(event) {
+      event.preventDefault();
+      $('#barRight').toggle();
+      $('#barLeft').toggle();
+    });
     this.employees = this.employee.getAllEmployees();
     this.employee.getEmployeesGender().subscribe(data => {
       for (const item of data) {
