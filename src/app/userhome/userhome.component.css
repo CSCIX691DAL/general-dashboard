@@ -12,6 +12,10 @@ CSS modified from:  https://therichpost.com/how-to-make-simple-sidebar-template-
 body {
   overflow-x: hidden;
 }
+#menu-toggle {
+  position:fixed;
+  bottom:0;
+}
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
