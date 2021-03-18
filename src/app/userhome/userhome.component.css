@@ -1,6 +1,10 @@
 .container{
   text-align:center;
 }
+/*
+ To disable the blue link color of anchor tags in sidebar
+ */
+a { color: inherit; }
 
 /*
 CSS modified from:  https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
