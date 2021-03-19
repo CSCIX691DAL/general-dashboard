@@ -33,6 +33,20 @@ module.exports = sequelize => {
     }
   );
 
+  //  >>>>>>>>>>> DELETE USER <<<<<<<<<<
+  router.delete('/:user', auth.authParser(), function (req, res, next) {
+    auth.users.destroy({
+        where: {
+          ID: req.params.user
+        }
+      }).then(data => {
+        res.status(200).json(data);
+      }).catch(err => {
+        console.log(err)
+        res.status(500).append("Error", err);
+      });
+    }
+  );
 
   return router;
 };
