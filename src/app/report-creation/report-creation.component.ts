@@ -84,7 +84,14 @@ export class ReportCreationComponent implements OnInit {
     return true;
   }
 
-
+  ryanIsStinkyAndNeedsToShower(): void{
+    const values: string[] = [];
+    for (const param of this.selectedReport.input_params){
+      values.push(this.paramGroup.get(param.name).value);
+    }
+    console.log('FORM STUFF');
+    console.log(values);
+  }
 
 
 }

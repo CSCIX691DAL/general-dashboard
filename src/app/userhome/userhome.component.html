@@ -8,6 +8,10 @@
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2>Dashboard</h2>
       </div>
+      <button (click)="test1()">Generate</button>
+      <button (click)="test2()">Model</button>
+      <button (click)="test3()">Models</button>
+
       <div class="container" *ngFor="let widget of widgets">
         <app-chart [chartInfo]="widget"></app-chart>
       </div>

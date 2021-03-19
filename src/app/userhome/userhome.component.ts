@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {baseOptions, ChartInfo, WidgetInfo, Table} from '../services/Chart';
+import {SequelizeService} from '../services/sequelize.service';
 
 @Component({
   selector: 'app-userhome',
@@ -16,7 +17,7 @@ export class UserhomeComponent implements OnInit {
   private genderMap = new Map();
   public widgets: WidgetInfo[] = [];
 
-  constructor(private employee: EmployeesService, private chartFactory: ChartFactoryService) {
+  constructor(private seqService: SequelizeService, private employee: EmployeesService, private chartFactory: ChartFactoryService) {
   }
 
   ngOnInit(): void {
@@ -53,6 +54,16 @@ export class UserhomeComponent implements OnInit {
     for (const entry of this.genderMap) {
       console.log(entry);
     }
+  }
+
+  test1(): void{
+    this.seqService.generateModels().subscribe(data => console.log(data));
+  }
+  test2(): void{
+    this.seqService.getModel().subscribe(data => console.log(data));
+  }
+  test3(): void{
+    this.seqService.getModels().subscribe(data => console.log(data));
   }
 
 

@@ -18,6 +18,13 @@ module.exports = sequelize => {
       })
     }
   );
-
+  router.post('/reports', auth.authParser(), function (req, res, next) {
+      seqReports.findAll().then(data => {
+        res.status(200).json(data);
+      }).catch(err => {
+        res.status(500).append("Error", err);
+      })
+    }
+  );
   return router;
 };

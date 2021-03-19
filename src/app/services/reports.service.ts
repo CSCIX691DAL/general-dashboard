@@ -20,7 +20,7 @@ export class ReportsService {
     return params;
   }
 
-  public createReport(): Observable<any>{
+  public createReport(report: Report): Observable<any>{
     throw new Error('not implemented');
   }
 
