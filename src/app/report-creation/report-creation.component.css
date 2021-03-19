@@ -5,6 +5,7 @@
   justify-content: space-between;
 
 }
+
 .title{
   text-align: center;
   margin: 15px;
@@ -25,8 +26,13 @@
   justify-content: center;
 }
 
-.form-buttons{
-  flex: 3;
+.form-buttons-execute{
+  float: right;
+  margin: 2px;
+}
+.form-buttons-save{
+  float: right;
+  margin: 2px;
 }
 
 .error-msg{
