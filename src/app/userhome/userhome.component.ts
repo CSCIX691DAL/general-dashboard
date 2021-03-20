@@ -60,7 +60,6 @@ export class UserhomeComponent implements OnInit {
     this.seqService.generateModels().subscribe(data => console.log(data));
   }
   test2(): void{
-    this.seqService.getModel().subscribe(data => console.log(data));
   }
   test3(): void{
     this.seqService.getModels().subscribe(data => console.log(data));

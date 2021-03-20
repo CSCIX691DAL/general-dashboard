@@ -25,6 +25,7 @@ import { AdminUsersPageComponent } from './admin-users-page/admin-users-page.com
 import { AdminDatabasesPageComponent } from './admin-databases-page/admin-databases-page.component';
 import { ReportsPageComponent } from './reports-page/reports-page.component';
 import { ReportCreationComponent } from './report-creation/report-creation.component';
+import { ReportCreationBasicTemplateComponent } from './report-creation-basic-template/report-creation-basic-template.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ReportCreationComponent } from './report-creation/report-creation.compo
     AdminUsersPageComponent,
     AdminDatabasesPageComponent,
     ReportsPageComponent,
-    ReportCreationComponent
+    ReportCreationComponent,
+    ReportCreationBasicTemplateComponent
   ],
   imports: [
     BrowserModule,
