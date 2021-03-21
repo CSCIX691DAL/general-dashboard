@@ -1,21 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ModalBasicComponent } from './modal-basic.component';
 
-describe('ModalBasicComponent', () => {
-  let component: ModalBasicComponent;
-  let fixture: ComponentFixture<ModalBasicComponent>;
+import { ReportsPageComponent } from './reports-page.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+
+describe('ReportsPageComponent', () => {
+  let component: ReportsPageComponent;
+  let fixture: ComponentFixture<ReportsPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [ ModalBasicComponent]
+      declarations: [ ReportsPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalBasicComponent);
+    fixture = TestBed.createComponent(ReportsPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

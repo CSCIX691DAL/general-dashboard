@@ -1,19 +1,20 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup } from '@angular/forms';
-import {EmployeesService} from '../services/employees.service';
-import {ChartInfo, WidgetTypes, WidgetInfo} from '../services/Chart';
-import {ChartFactoryService} from '../services/chart-factory.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {WidgetInfo, WidgetTypes} from '../services/Chart';
 import {Report} from '../../models/report';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {EmployeesService} from '../services/employees.service';
+import {ChartFactoryService} from '../services/chart-factory.service';
 import {ReportsService} from '../services/reports.service';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'app-modal-basic',
-  templateUrl: './modal-basic.component.html',
-  styleUrls: ['./modal-basic.component.css']
+  selector: 'app-report-creation',
+  templateUrl: './report-creation.component.html',
+  styleUrls: ['./report-creation.component.css']
 })
-export class ModalBasicComponent implements OnInit {
+export class ReportCreationComponent implements OnInit {
+
+
   @Output() outputEvent = new EventEmitter<WidgetInfo>();
 
   selectedReport: Report;
@@ -23,10 +24,10 @@ export class ModalBasicComponent implements OnInit {
   closeResult = '';
 
   constructor(
-              private modalService: NgbModal,
-              private employeeService: EmployeesService,
-              private chartFactory: ChartFactoryService,
-              private reportsService: ReportsService) { }
+    private modalService: NgbModal,
+    private employeeService: EmployeesService,
+    private chartFactory: ChartFactoryService,
+    private reportsService: ReportsService) { }
 
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
@@ -34,17 +35,6 @@ export class ModalBasicComponent implements OnInit {
   differentAxisValues = false;
   async ngOnInit(): Promise<void> {
     this.reports = await this.reportsService.readReports();
-  }
-
-  open(content): void {
-    // reset variables
-    this.selectedReport = null;
-    this.isFormCompleted = true;
-    this.modalService.open(content, {size: 'lg', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
   }
 
   updateFormGroup(): void{
@@ -57,13 +47,8 @@ export class ModalBasicComponent implements OnInit {
     this.chartType = new FormGroup({});
 
   }
-  checkAxisValues(): void{
-    const xAxisSelect = document.getElementById('0') as HTMLSelectElement;
-    const xAxis = xAxisSelect.value;
-    const yAxisSelect = document.getElementById('1') as HTMLSelectElement;
-    const yAxis = yAxisSelect.value;
-    this.differentAxisValues = !(xAxis === yAxis);
-  }
+
+
   onSubmit(): void{
     if (this.selectedReport === undefined) { return; }
 
@@ -96,17 +81,10 @@ export class ModalBasicComponent implements OnInit {
       console.log(widget);
 
     });
-   return true;
+    return true;
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+
+
 
 }

@@ -12,9 +12,9 @@
         <div *ngIf="(getUserEmail().invalid && getUserEmail().touched)|| getUserEmail().dirty">
           <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">Please enter a valid email address</small>
         </div>
-        <div *ngIf="getUserEmail().touched|| getUserEmail().dirty">
-          <small *ngIf="valid && !usernameExisted && usernameExisted!=null" class="text-danger">The username doesn't exist. Please retry</small>
-        </div>
+<!--        <div *ngIf="getUserEmail().touched|| getUserEmail().dirty">-->
+<!--          <small *ngIf="valid && !usernameExisted && usernameExisted!=null" class="text-danger">The username doesn't exist. Please retry</small>-->
+<!--        </div>-->
       </div>
 
       <div [formGroup]="passwords" class="form-group">
@@ -23,25 +23,25 @@
           formControlName="password" placeholder="Enter Password:" id="password" required>
 
         <!--Displays this error messages if isn't a valid password-->
-        <div *ngIf="(getUserPassword().invalid && getUserPassword().touched)|| getUserPassword().dirty">
-          <small *ngIf="getUserPassword().errors?.pattern" class="text-danger">Password must contain at least one letter,
-            one symbol, and one number</small>
-        </div>
-        <!-- Displays error message when char length exceeds boundaries -->
-        <div *ngIf="(getUserPassword().invalid && getUserPassword().touched)|| getUserPassword().dirty">
-          <small *ngIf="getUserPassword().errors?.minlength || getUserPassword().errors?.maxlength" class="text-danger">
-            Password must be between 4 and 12 characters</small>
-        </div>
+<!--        <div *ngIf="(getUserPassword().invalid && getUserPassword().touched)|| getUserPassword().dirty">-->
+<!--          <small *ngIf="getUserPassword().errors?.pattern" class="text-danger">Password must contain at least one letter,-->
+<!--            one symbol, and one number</small>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Displays error message when char length exceeds boundaries &ndash;&gt;-->
+<!--        <div *ngIf="(getUserPassword().invalid && getUserPassword().touched)|| getUserPassword().dirty">-->
+<!--          <small *ngIf="getUserPassword().errors?.minlength || getUserPassword().errors?.maxlength" class="text-danger">-->
+<!--            Password must be between 4 and 12 characters</small>-->
+<!--        </div>-->
       </div>
 
       <!--Displays error message after pressing the login button -->
-      <div *ngIf="getUserPassword().touched">
-        <small *ngIf="correctPassword==false" class="text-danger">Password Is Incorrect</small>
-      </div>
+<!--      <div *ngIf="getUserPassword().touched">-->
+<!--        <small *ngIf="correctPassword==false" class="text-danger">Password Is Incorrect</small>-->
+<!--      </div>-->
 
     <!--Displays error message after pressing the login button -->
     <div *ngIf="!valid">
-      <small class="text-danger">Invalid Credentials</small>
+		<small class="text-danger">{{error_msg}}</small>
     </div>
 
     <button id="button" type="button" class="btn-primary" (click)="signIn()">Log in</button>

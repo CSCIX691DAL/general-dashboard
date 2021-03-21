@@ -55,7 +55,5 @@ export class UserhomeComponent implements OnInit {
     }
   }
 
-  isTable(obj: WidgetInfo): boolean{
-    return obj.name === 'table';
-  }
+
 }
