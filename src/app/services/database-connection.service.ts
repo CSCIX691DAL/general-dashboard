@@ -41,18 +41,6 @@ export class DatabaseService {
     return this.http.get('/api/users/' + user);
   }
 
-  deleteUser(user: string): Observable<any>{
-    return this.http.request('delete',
-      '/api/users/' + user,
-      {
-        headers: this.header,
-        body: {
-          user
-        }
-      }
-      );
-  }
-
   readHomepageJson(): Observable<any> {
     return this.http.get('/api/users/homepage');
   }

@@ -20,6 +20,9 @@
         <td>
           {{user.creation_date}}
         </td>
+        <td>
+          <button (click)="this.deleteUser(user.ID); this.ngOnInit()">Remove User</button>
+        </td>
       </tr>
 
 

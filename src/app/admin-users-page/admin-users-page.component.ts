@@ -3,6 +3,7 @@ import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {DatabaseService} from '../services/database-connection.service';
 import {User} from '../../models/users';
+import {UsersService} from '../services/users.service';
 
 @Component({
   selector: 'app-admin-users-page',
@@ -12,7 +13,7 @@ import {User} from '../../models/users';
 export class AdminUsersPageComponent implements OnInit {
 
   Users: User[];
-  constructor( public auth: AuthService, private router: Router, public conn: DatabaseService) {
+  constructor( public auth: AuthService, private router: Router, public conn: DatabaseService, public usersConn: UsersService) {
     if (auth.isAdmin() === false){
       this.router.navigate(['/home']);
     }
@@ -20,5 +21,9 @@ export class AdminUsersPageComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.Users = await this.conn.getUsers();
+  }
+
+  async deleteUser(user: string): Promise<void> {
+    await this.usersConn.deleteUser(user);
   }
 }
