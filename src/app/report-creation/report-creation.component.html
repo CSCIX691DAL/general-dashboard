@@ -2,24 +2,24 @@
 <div class="content">
 
   <div class="title">
-    <h2>List of Reports</h2>
+    <h2>List of Reports</h2> <hr>
   </div>
 
-
+  <!-- Report Search Type -->  
   <div class="section">
-    <h4>Report</h4>
     <div>
-      <label>
-        <select class="form-control reports" (change)="updateFormGroup()" [(ngModel)]="selectedReport">
-          <option *ngFor="let report of reports" [ngValue]="report">{{report.name}}</option>
-        </select>
-      </label>
+      <h4>Search Report Type</h4>
+      <select class="form-control reports" (change)="updateFormGroup()" [(ngModel)]="selectedReport" size="5">
+        <option selected> None </option>
+        <option *ngFor="let report of reports" [ngValue]="report">{{report.name}}</option>
+      </select>
     </div>
-  </div>
+  </div> <br>
 
+<!-- Report Configuaration --> 
   <div class="section" *ngIf="selectedReport">
-    <h4>Parameters</h4>
     <div>
+      <h4>Parameters</h4>
       <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
         <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.input_params">
           <div class="input-group-prepend">
@@ -30,7 +30,7 @@
         </div>
       </form>
     </div>
-  </div>
+  </div> <br>
 
 
   <div class="section" *ngIf="selectedReport">
@@ -44,24 +44,34 @@
         </label>
       </form>
     </div>
-  </div>
+  </div> <br>
 
   <div class="section" *ngIf="selectedReport">
+    <h4>Database Connection: </h4> <br>
+    <div>
+      <p>To be determined!</p>
+    </div>
+  </div> <br>
+
+  <div *ngIf="selectedReport">
     <h4></h4>
-    <div class="form-buttons">
-      <button class="btn btn-outline-dark">Save</button>
-      <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark">Execute</button>
+    <div class="form-buttons-save">
+      <button class="btn btn-outline-dark">Save to account</button>
+    </div>
+    <div class="form-buttons-execute">
+      <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark">View Report Execution</button>
     </div>
   </div>
 
+  <!-- List of Reports user messaging -->
   <div class="section errors">
     <h4></h4>
     <div>
       <span class="error-msg" *ngIf="!isFormCompleted">Please fill out all the fields</span>
     </div>
-  </div>
+  </div> <br>
 
-
+  
 </div>
 
 
