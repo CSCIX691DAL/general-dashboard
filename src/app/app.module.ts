@@ -26,6 +26,7 @@ import { AdminDatabasesPageComponent } from './admin-databases-page/admin-databa
 import { ReportsPageComponent } from './reports-page/reports-page.component';
 import { ReportCreationComponent } from './report-creation/report-creation.component';
 import { ReportCreationBasicTemplateComponent } from './report-creation-basic-template/report-creation-basic-template.component';
+import { WidgetSidebarComponent } from './widget-sidebar/widget-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ReportCreationBasicTemplateComponent } from './report-creation-basic-te
     ReportsPageComponent,
     ReportCreationComponent,
     ReportCreationBasicTemplateComponent
+    WidgetSidebarComponent
   ],
   imports: [
     BrowserModule,
