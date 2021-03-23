@@ -40,6 +40,7 @@
     "mysql": "2.18.1",
     "mysql2": "^2.2.5",
     "ng2-charts": "^2.4.2",
+    "ngx-bootstrap": "^6.2.0",
     "ngx-timeline": "5.0.0",
     "node-ssh-forward": "^0.7.2",
     "popper.js": "^1.16.1",
