@@ -43,7 +43,7 @@
     </div>
 
     <div *ngIf="selectedFunc && selectedFunc !== 'All'">
-      <div class="body-header"><h4>On Table</h4></div>
+      <div class="body-header"><h4>On Column</h4></div>
       <div class="body-content">
         <label>
           <select class="form-control reports" [(ngModel)]="selectedForFunc">
@@ -59,6 +59,7 @@
     <button type="button" id="exit-btn" class="btn btn-outline-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">Close</span>
     </button>
+    <button type="submit" (click)="submit()" class="btn btn-outline-dark">Save</button>
   </div>
 
 </ng-template>
