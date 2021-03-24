@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {JSONObject} from "puppeteer";
+import {JSONObject} from 'puppeteer';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  bool = false;
+  bool;
+  // To fix admin refresh bug - gets called in ngOnInit() of navbar.component.ts
+  checkAdmin(): void{
+    if (this.hasToken()){
+      this.getAdmin();
+    }
+  }
   constructor(private Http: HttpClient) { }
 
   getToken(): string | null {
