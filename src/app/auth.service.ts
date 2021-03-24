@@ -7,7 +7,7 @@ import {JSONObject} from 'puppeteer';
 })
 
 export class AuthService {
-  bool;
+  bool = false;
   // To fix admin refresh bug - gets called in ngOnInit() of navbar.component.ts
   checkAdmin(): void{
     if (this.hasToken()){
