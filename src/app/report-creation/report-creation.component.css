@@ -6,9 +6,14 @@
 
 }
 
-.title{
+.title {
   text-align: center;
-  margin: 15px;
+  margin: 10px;
+}
+
+.form-control_reports-DB, .form-control_reports-charts {
+  width: 250px;
+  float: right;
 }
 
 .section {
@@ -17,26 +22,20 @@
   align-items: center;
 }
 
-.section > h4{
+.section > h4 {
   flex: 1;
 }
 
-.section > div{
+.section > div {
   flex: 2;
   justify-content: center;
 }
 
-.form-buttons-execute{
-  float: right;
-  margin: 2px;
-}
-.form-buttons-save{
+.form-buttons-execute_and_save {
   float: right;
   margin: 2px;
 }
 
-.error-msg{
+.error-msg {
   color:red;
 }
-
-
