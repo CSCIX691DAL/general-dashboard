@@ -1,15 +1,33 @@
 const BackendAuth = require("../backend/BackendAuth");
 const express = require('express');
+const stringify = require("karma");
+const {Sequelize} = require("sequelize");
 
 module.exports = sequelize => {
   const router = express.Router();
   const userStruc = require('../src/models/user');
+  const empStruc = require('../src/models/employees');
+  const userGeneratedReportStruc = require('../src/models/userGeneratedReports');
+  const reportsStruc = require('../src/models/reports');
+  const databaseConnStruc = require('../src/models/databaseConnections');
+
+  const seqEmployee = sequelize.define("employees", empStruc, { timestamps: false });
 
   const seqUser = sequelize.define("User", userStruc, {timestamps: false});
 
+  const seqUserGeneratedReport = sequelize.define("user_generated_reports", userGeneratedReportStruc, {timestamps: false});
+  const seqReports = sequelize.define("reports", reportsStruc, {timestamps: false});
+  const seqDbConn = sequelize.define("database_connections", databaseConnStruc, {timestamps: false});
+
+  seqReports.hasMany(seqUserGeneratedReport,{foreignKey: 'report_id_fk'});
+  seqUserGeneratedReport.belongsTo(seqReports, {foreignKey: 'report_id_fk'})
+
+  seqDbConn.hasMany(seqReports,{foreignKey: 'database_connection_fk'});
+  seqReports.belongsTo(seqDbConn, {foreignKey: 'database_connection_fk'});
 
   // these routes require authentication
   const auth = new BackendAuth(sequelize);
+  let dbConnInfo;
 
   router.get('/homepage', auth.authParser(), function (req, res, next) {
     auth.users
@@ -48,5 +66,94 @@ module.exports = sequelize => {
     }
   );
 
-  return router;
+  router.get('/:userID/execute', auth.authParser(), function (req, res, next) {
+    const userId = req.params.userID;
+    const reportId = req.query.reportId;
+    const dbConnId = req.query.dbConnId;
+    let sql;
+
+    //get user generated report using inner join
+    seqUserGeneratedReport.findAll({
+      where: {
+        UserID: userId,
+        ReportId: reportId
+      },
+      include: [{
+        model: seqReports,
+        where: {
+          id: reportId,
+          database_connection_fk: dbConnId
+        }
+      }],
+      raw: true
+    }).then(data => {
+      console.log(data);
+      const result = data[0];
+      let input_params = JSON.parse(result['input_params']);
+      sql = result['report.sql'];
+
+      //process sql: replace report sql with input params
+      for (let element of input_params['params']) {
+        for (let key in element) {
+          sql = sql.replace('@', element[key]);
+        }
+      }
+      console.log('SQL: ' + sql);
+    }).catch(err => {
+      console.log(err)
+      res.status(500).append("Error", err);
+    });
+
+    //get dbConnection information
+    seqDbConn.findAll({
+      where: {
+        id: dbConnId
+      },
+      raw: true
+    }).then(data => {
+      console.log(data);
+      dbConnInfo = data[0];
+    }).catch(err => {
+      console.log(err)
+      res.status(500).append("Error", err);
+    });
+
+    //create new sequelize connection
+    const sequelizeForReport = new Sequelize(
+      dbConnInfo['schema'],
+      dbConnInfo['username'],
+      dbConnInfo['password'],
+      {
+        host: '127.0.0.1',
+        dialect: 'mysql',
+        port: dbConnInfo['port'],
+        pool: {
+          max: 10,
+          min: 0,
+          idle: 20000
+        }
+      }
+    );
+
+    const routerForReport = express.Router();
+    routerForReport.use('/users', require('./users')(sequelizeForReport));
+    routerForReport.use('/reports', require('./reports')(sequelizeForReport));
+
+    //run sql in this db and generate report
+    sequelizeForReport.query(sql, {
+      model: seqEmployee,
+      mapToModel: true // pass true here if you have any mapped fields
+    }).then(data => {
+      console.log('reportData: ' + data);
+      // resultData = data;
+      res.status(200).json(data);
+    }).catch(err => {
+      console.log(err)
+      res.status(500).append("Error", err);
+    });
+
+    sequelizeForReport.close();
+
+    return router;
+  });
 };

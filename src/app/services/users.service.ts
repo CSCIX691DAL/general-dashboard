@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Employee} from '../../models/employee';
+import {DatabaseService} from './database-connection.service';
+import {Observable, Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,7 @@ export class UsersService {
     'Accept': 'application/json'
   });
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private conn: DatabaseService) { }
 
   public async deleteUser(email: string): Promise<any>{
     return new Promise<any>((resolve, reject) => this.http.delete('/api/users/' + email,
@@ -20,5 +23,20 @@ export class UsersService {
       }).subscribe(reports => {
       resolve(reports);
     }));
+  }
+
+  public getUserGeneratedReport(userId: string, reportId: string, dbConnId: string): Promise<any[]> {
+    const empReport = [];
+    return new Promise<any>((resolve, reject) => this.conn.getUserGeneratedReport(userId, reportId, dbConnId)
+      .subscribe(data => {
+        for (const item of data) {
+          const itemAttr = [];
+          for (const key in item){
+            itemAttr.push(item[key]);
+          }
+          empReport.push(new Employee(itemAttr));
+        }
+        resolve(empReport);
+      }));
   }
 }
