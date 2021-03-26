@@ -63,7 +63,6 @@ module.exports = sequelize => {
   const options = {
     tableName: "database_connections",
     comment: "",
-    timestamps: false,
     indexes: []
   };
   const DatabaseConnectionsModel = sequelize.define("database_connections_model", attributes, options);

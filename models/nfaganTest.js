@@ -26,7 +26,6 @@ module.exports = sequelize => {
   const options = {
     tableName: "nfagan_test",
     comment: "",
-    timestamps: false,
     indexes: []
   };
   const NfaganTestModel = sequelize.define("nfagan_test_model", attributes, options);

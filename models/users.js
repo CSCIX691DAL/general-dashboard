@@ -6,12 +6,13 @@ module.exports = sequelize => {
   const attributes = {
     ID: {
       type: DataTypes.STRING(45),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
-      primaryKey: true,
+      primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ID"
+      field: "ID",
+      unique: "ID_UNIQUE"
     },
     Password: {
       type: DataTypes.STRING(45),
@@ -48,12 +49,21 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "creation_date"
+    },
+    user_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: true,
+      autoIncrement: true,
+      comment: null,
+      field: "user_id",
+      unique: "user_id_UNIQUE"
     }
   };
   const options = {
     tableName: "Users",
     comment: "",
-    timestamps: false,
     indexes: []
   };
   const UsersModel = sequelize.define("Users_model", attributes, options);

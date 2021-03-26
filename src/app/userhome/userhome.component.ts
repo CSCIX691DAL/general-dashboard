@@ -7,6 +7,7 @@ import {AuthService} from '../auth.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {baseOptions, ChartInfo, WidgetInfo, Table} from '../services/Chart';
 import {SequelizeService} from '../services/sequelize.service';
+import {DatabaseService} from '../services/database-connection.service';
 
 @Component({
   selector: 'app-userhome',
@@ -18,7 +19,8 @@ export class UserhomeComponent implements OnInit {
   private genderMap = new Map();
   public widgets: WidgetInfo[] = [];
 
-  constructor(private seqService: SequelizeService, private employee: EmployeesService, private chartFactory: ChartFactoryService) {
+  constructor(private test: DatabaseService,
+    private seqService: SequelizeService, private employee: EmployeesService, private chartFactory: ChartFactoryService) {
   }
 
   ngOnInit(): void {
@@ -66,5 +68,14 @@ export class UserhomeComponent implements OnInit {
     this.seqService.getModels().subscribe(data => console.log(data));
   }
 
+  testExecuteReport(): void{
+    this.test.getDatabaseConnections().then(data => {
+      console.log(data[0].host_name);
+      console.log(data[0].id);
+      console.log(data[0].password);
+      console.log(data[0].port);
+      console.log(data[0].schema);
+    });
+  }
 
 }

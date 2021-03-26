@@ -27,4 +27,7 @@ export class SequelizeService {
     return this.http.post('/api/sequelize/generate', {headers: this.header});
   }
 
+  public executeReport(userId: number, reportId: number, dbID: number): void{
+    // DO stuff
+  }
 }

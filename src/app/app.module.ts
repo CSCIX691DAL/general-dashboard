@@ -44,7 +44,7 @@ import { WidgetSidebarComponent } from './widget-sidebar/widget-sidebar.componen
     AdminDatabasesPageComponent,
     ReportsPageComponent,
     ReportCreationComponent,
-    ReportCreationBasicTemplateComponent
+    ReportCreationBasicTemplateComponent,
     WidgetSidebarComponent
   ],
   imports: [

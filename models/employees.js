@@ -62,7 +62,6 @@ module.exports = sequelize => {
   const options = {
     tableName: "employees",
     comment: "",
-    timestamps: false,
     indexes: []
   };
   const EmployeesModel = sequelize.define("employees_model", attributes, options);
