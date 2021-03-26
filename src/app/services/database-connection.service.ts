@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import { stringify } from 'querystring';
+import {Database} from '../../models/database';
 
 @Injectable({
   providedIn: 'root'
@@ -82,5 +83,9 @@ export class DatabaseService {
     const result = escape(sql);
     const query = `?sql=${result}`;
     return this.http.get('/api/employees/execute' + query);
+  }
+
+  getDatabaseConnections(): Promise<Database[]>{
+    return this.http.get<Database[]>('/api/databases').toPromise();
   }
 }
