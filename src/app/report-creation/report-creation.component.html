@@ -13,13 +13,8 @@
     <h4>Select your Database Connection: </h4>
     <select class="form-control_reports-DB" (change)="updateFormGroup()" [(ngModel)]="selectedDatabase">
       <option value= "" selected> Please select a database </option>
-      <!-- NOTE: Temp. options until proper connections are set up -->
-     
-      <option value=" "> Database 1 </option>    
-      <option value=" "> Database 2 </option>
-      <option value=" "> Database 3 </option>
-      <option value=" "> Database 4 </option>
-      <option value=" "> Database 5 </option>  
+      <!-- Utilizes Reports tables DB foreign key -->
+      <option *ngFor="let report of reports" [ngValue]="report.">{{report.database_connections_fk}}</option>
     </select>
   </div> <br>
 

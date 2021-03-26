@@ -18,7 +18,7 @@ export class ReportCreationComponent implements OnInit {
   @Output() outputEvent = new EventEmitter<WidgetInfo>();
 
   selectedReport: Report;
-  selectedDatabase: string;
+  selectedDatabase: Report;
   selectedChartType: string;
   chartTypes = WidgetTypes;
   reports: Report[] = [];
