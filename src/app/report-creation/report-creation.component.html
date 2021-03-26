@@ -3,7 +3,7 @@
   <div class="title">
     <h2>List of Reports</h2> 
     <p> 
-      Connect to your database & begin configure your own table!
+      Connect to your database & begin configuring your own table!
     </p> <hr>
   </div>
 
@@ -14,7 +14,7 @@
     <select class="form-control_reports-DB" (change)="updateFormGroup()" [(ngModel)]="selectedDatabase">
       <option value= "" selected> Please select a database </option>
       <!-- Utilizes Reports tables DB foreign key -->
-      <option *ngFor="let report of reports" [ngValue]="report.">{{report.database_connections_fk}}</option>
+      <option *ngFor="let report of reports" [ngValue]="report">{{report.database_connections_fk}}</option>
     </select>
   </div> <br>
 
@@ -51,7 +51,7 @@
 
 
     <div class="section" *ngIf="selectedReport">
-      <h4>Select the chart type you'd like to use</h4>
+      <h4>Select the chart type you'd like to use: </h4>
         <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
             <select class="form-control_reports-charts" [(ngModel)]="selectedChartType" [ngModelOptions]="{standalone: true}">
               <option *ngFor="let type of chartTypes" [ngValue]="type">{{type}}</option>
