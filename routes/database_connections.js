@@ -3,7 +3,7 @@ const express = require('express');
 
 module.exports = sequelize => {
   const router = express.Router();
-  const databaseConn = require('../src/app/models/databaseConnections');
+  const databaseConn = require('../src/models/databaseConnections');
 
   const dbSeq = databaseConn(sequelize);
 

@@ -6,6 +6,7 @@ import {EmployeesService} from '../services/employees.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {ReportsService} from '../services/reports.service';
 import {FormControl, FormGroup} from '@angular/forms';
+import {DatabaseService} from '../services/database-connection.service';
 
 @Component({
   selector: 'app-report-creation',
@@ -28,7 +29,8 @@ export class ReportCreationComponent implements OnInit {
     private modalService: NgbModal,
     private employeeService: EmployeesService,
     private chartFactory: ChartFactoryService,
-    private reportsService: ReportsService) { }
+    private reportsService: ReportsService,
+    private dbService: DatabaseService) { }
 
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
@@ -36,6 +38,9 @@ export class ReportCreationComponent implements OnInit {
   differentAxisValues = false;
   async ngOnInit(): Promise<void> {
     this.reports = await this.reportsService.readReports();
+    this.dbService.getDatabaseConnections().then(data => {
+      console.log(data);
+    });
   }
 
   updateFormGroup(): void{
