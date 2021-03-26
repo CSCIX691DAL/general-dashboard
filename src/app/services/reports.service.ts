@@ -20,8 +20,20 @@ export class ReportsService {
     return params;
   }
 
-  public createReport(): Observable<any>{
-    throw new Error('not implemented');
+  public createReport(id: number, name: string, displayName: string, sql: string, inputParams: Parameter[]): Observable<any>{
+    return this.http.request('post',
+      'api/reports',
+      {
+        body: {
+          ID: id,
+          Name: name,
+          Display_name: displayName,
+          Input_params: inputParams,
+          Model_name: 'employees.js', // this will have to change from hardcode to user input via parameter from form, when implemented.
+          Database_connection_fk: 1, // this will have to change from hardcode to user input via parameter from form, when implemented.
+        }
+      }
+    );
   }
 
   /**
