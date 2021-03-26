@@ -61,6 +61,8 @@ export class ReportCreationComponent implements OnInit {
     // close modal if form is completed
     if (this.isFormCompleted){
       this.processReport(values);
+      const report = this.selectedReport;
+      this.reportsService.createReport(report.id, report.name, report.display_name, report.sql, report.input_params);
       this.modalService.dismissAll();
     }
   }
@@ -79,12 +81,9 @@ export class ReportCreationComponent implements OnInit {
         ['Count']);
       this.outputEvent.emit(widget);
       console.log(widget);
-
     });
+
     return true;
   }
-
-
-
 
 }
