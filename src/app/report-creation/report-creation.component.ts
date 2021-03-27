@@ -63,27 +63,14 @@ export class ReportCreationComponent implements OnInit {
     this.isFormCompleted = !values.includes('');
     // close modal if form is completed
     if (this.isFormCompleted){
-      const result = this.usersService.getUserGeneratedReport('5', '4', '2').then(data => {
-        const widget = this.chartFactory.processChartType(this.selectedChartType, data,
-          [this.selectedReport.display_name],
-          ['Count']);
-        this.outputEvent.emit(widget);
-        console.log(widget);
-
-      });
+      // @Todo need to replace the hardcoded userId and reportId
+      this.generateUserReport('5', '4');
       this.modalService.dismissAll();
     }
   }
 
-  private processReport(values: string[]): boolean{
-    // replace sql identifiers with the inputted values
-    let sql = this.selectedReport.sql;
-    values.forEach(val => {
-      // replace the delimiters with inputted values
-      sql = sql.replace('@', val);
-    });
-
-    this.employeeService.getEmployeesReport(sql).then(data => {
+  private generateUserReport(userId: string, reportId: string) : void{
+    this.usersService.getUserGeneratedReport(userId, reportId, '2').then(data => {
       const widget = this.chartFactory.processChartType(this.selectedChartType, data,
         [this.selectedReport.display_name],
         ['Count']);
@@ -91,6 +78,5 @@ export class ReportCreationComponent implements OnInit {
       console.log(widget);
 
     });
-    return true;
   }
 }

@@ -77,13 +77,6 @@ export class DatabaseService {
     return this.http.get('/api/employees/countByGender');
   }
 
-  getEmployeesReport(sql: string): Observable<any>{
-    console.log('SQL ' + sql);
-    const result = escape(sql);
-    const query = `?sql=${result}`;
-    return this.http.get('/api/employees/execute' + query);
-  }
-
   getUserGeneratedReport(userId: string, reportId: string, dbConnId: string): Observable<any>{
     return this.http.get('/api/users/' + userId + '/execute?reportId=' + reportId + '&dbConnId=' + dbConnId);
   }

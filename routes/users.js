@@ -110,6 +110,7 @@ module.exports = sequelize => {
       },
       raw: true
     }).then(data => {
+      console.log(data);
       dbConnInfo = data[0];
       // console.log('dbConnInfo: ' + dbConnInfo['hostname'] + '\t' + dbConnInfo['schema']
       //   + '\t' + dbConnInfo['username'] + '\t' + dbConnInfo['password'] + '\t' + dbConnInfo['port']);
@@ -118,7 +119,7 @@ module.exports = sequelize => {
       console.log(err)
       res.status(500).append("Error", err);
     });
-    next()
+    next();
   }, function (req, res) {
 
     //create new sequelize connection
