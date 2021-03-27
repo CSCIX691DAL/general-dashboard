@@ -27,7 +27,7 @@ module.exports = sequelize => {
 
   // these routes require authentication
   const auth = new BackendAuth(sequelize);
-  let dbConnInfo;
+  let dbConnInfo, sql, result;
 
   router.get('/homepage', auth.authParser(), function (req, res, next) {
     auth.users
@@ -70,7 +70,6 @@ module.exports = sequelize => {
     const userId = req.params.userID;
     const reportId = req.query.reportId;
     const dbConnId = req.query.dbConnId;
-    let sql;
 
     //get user generated report using inner join
     seqUserGeneratedReport.findAll({
@@ -98,7 +97,7 @@ module.exports = sequelize => {
           sql = sql.replace('@', element[key]);
         }
       }
-      console.log('SQL: ' + sql);
+      console.log('processed SQL: ' + sql);
     }).catch(err => {
       console.log(err)
       res.status(500).append("Error", err);
@@ -111,12 +110,16 @@ module.exports = sequelize => {
       },
       raw: true
     }).then(data => {
-      console.log(data);
       dbConnInfo = data[0];
+      // console.log('dbConnInfo: ' + dbConnInfo['hostname'] + '\t' + dbConnInfo['schema']
+      //   + '\t' + dbConnInfo['username'] + '\t' + dbConnInfo['password'] + '\t' + dbConnInfo['port']);
+      // console.log('pass sql: '+sql);
     }).catch(err => {
       console.log(err)
       res.status(500).append("Error", err);
     });
+    next()
+  }, function (req, res) {
 
     //create new sequelize connection
     const sequelizeForReport = new Sequelize(
@@ -124,36 +127,46 @@ module.exports = sequelize => {
       dbConnInfo['username'],
       dbConnInfo['password'],
       {
-        host: '127.0.0.1',
+        host: dbConnInfo['hostname'],
         dialect: 'mysql',
-        port: dbConnInfo['port'],
-        pool: {
-          max: 10,
-          min: 0,
-          idle: 20000
-        }
+        port: dbConnInfo['port']
       }
     );
 
-    const routerForReport = express.Router();
-    routerForReport.use('/users', require('./users')(sequelizeForReport));
-    routerForReport.use('/reports', require('./reports')(sequelizeForReport));
+    const empStructure = require('../src/models/employees');
+    const seqEmployeeForReport = sequelizeForReport.define("employees", empStructure, { timestamps: false });
 
-    //run sql in this db and generate report
-    sequelizeForReport.query(sql, {
-      model: seqEmployee,
-      mapToModel: true // pass true here if you have any mapped fields
-    }).then(data => {
-      console.log('reportData: ' + data);
-      // resultData = data;
-      res.status(200).json(data);
-    }).catch(err => {
-      console.log(err)
-      res.status(500).append("Error", err);
+    //test connection
+    sequelizeForReport.authenticate()
+      .then(() => {
+        console.log('Connection has been established successfully.');
+      }).catch(err => {
+      console.error('Unable to connect to the database:', err);
+    }).then(() => {
+      //run sql in this db and generate report
+      sequelizeForReport.authenticate()
+        .then(() => {
+          console.log('Connection has been established successfully.');
+        }).catch(err => {
+        console.error('Unable to connect to the database:', err);
+      }).then(() => {
+        console.log('run sql query:' + sql);
+        sequelizeForReport.query(sql, {
+          model: seqEmployeeForReport,
+          mapToModel: true, // pass true here if you have any mapped fields
+          raw:true
+        }).then(data => {
+          console.log(data);
+          res.status(200).json(data);
+          sequelizeForReport.close().then(()=>{
+            console.log('sequelizeForReport connection closed');
+          });
+        }).catch(err => {
+          console.log(err);
+        });
+      });
     });
-
-    sequelizeForReport.close();
-
-    return router;
   });
+
+  return router;
 };

@@ -63,17 +63,14 @@ export class ReportCreationComponent implements OnInit {
     this.isFormCompleted = !values.includes('');
     // close modal if form is completed
     if (this.isFormCompleted){
-      const ob = this.usersService.getUserGeneratedReport('5', '3', '1')
-        .then(data => {
-          const widget = this.chartFactory.processChartType(this.selectedChartType, data,
-            [this.selectedReport.display_name],
-            ['Count']);
-          this.outputEvent.emit(widget);
-          console.log(widget);
+      const result = this.usersService.getUserGeneratedReport('5', '4', '2').then(data => {
+        const widget = this.chartFactory.processChartType(this.selectedChartType, data,
+          [this.selectedReport.display_name],
+          ['Count']);
+        this.outputEvent.emit(widget);
+        console.log(widget);
 
-        });
-      console.log(ob);
-      // this.processReport(values);
+      });
       this.modalService.dismissAll();
     }
   }
