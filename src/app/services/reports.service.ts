@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Parameter, Report} from '../../models/report';
 
@@ -7,7 +7,10 @@ import {Parameter, Report} from '../../models/report';
   providedIn: 'root'
 })
 export class ReportsService {
-
+  header = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
   constructor(private http: HttpClient) {
   }
 
@@ -20,10 +23,11 @@ export class ReportsService {
     return params;
   }
 
-  public createReport(id: number, name: string, displayName: string, sql: string, inputParams: Parameter[]): Observable<any>{
-    return this.http.request('post',
+  public createReport(id: number, name: string, displayName: string, sql: string, inputParams: Parameter[]): Promise<any>{
+    return this.http.post(
       '/api/reports/execute',
       {
+        headers: this.header,
         body: {
           ID: id,
           Name: name,
@@ -33,7 +37,7 @@ export class ReportsService {
           Database_connection_fk: 2, // this will have to change from hardcode to user input via parameter from form, when implemented.
         }
       }
-    );
+    ).toPromise();
   }
 
   /**
