@@ -1,19 +1,12 @@
 const BackendAuth = require("../backend/BackendAuth");
 const express = require('express');
-const stringify = require("karma");
 const {Sequelize} = require("sequelize");
 
 module.exports = sequelize => {
   const router = express.Router();
-  const userStruc = require('../src/models/user');
-  const empStruc = require('../src/models/employees');
   const userGeneratedReportStruc = require('../src/models/userGeneratedReports');
   const reportsStruc = require('../src/models/reports');
   const databaseConnStruc = require('../src/models/databaseConnections');
-
-  const seqEmployee = sequelize.define("employees", empStruc, { timestamps: false });
-
-  const seqUser = sequelize.define("User", userStruc, {timestamps: false});
 
   const seqUserGeneratedReport = sequelize.define("user_generated_reports", userGeneratedReportStruc, {timestamps: false});
   const seqReports = sequelize.define("reports", reportsStruc, {timestamps: false});
@@ -27,7 +20,7 @@ module.exports = sequelize => {
 
   // these routes require authentication
   const auth = new BackendAuth(sequelize);
-  let dbConnInfo, sql, result;
+  let dbConnInfo, sql;
 
   router.get('/homepage', auth.authParser(), function (req, res, next) {
     auth.users
@@ -120,7 +113,7 @@ module.exports = sequelize => {
       res.status(500).append("Error", err);
     });
     next();
-  }, function (req, res) {
+  }, function (req, res, next) {
 
     //create new sequelize connection
     const sequelizeForReport = new Sequelize(
