@@ -25,7 +25,7 @@ export class UsersService {
     }));
   }
 
-  public getUserGeneratedReport(userId: string, reportId: string, dbConnId: string): Promise<any[]> {
+  public async getUserGeneratedReport(userId: string, reportId: string, dbConnId: string): Promise<any[]> {
     const empReport = [];
     return new Promise<any>((resolve, reject) => this.conn.getUserGeneratedReport(userId, reportId, dbConnId)
       .subscribe(data => {

@@ -64,13 +64,13 @@ export class ReportCreationComponent implements OnInit {
     // close modal if form is completed
     if (this.isFormCompleted){
       // @Todo need to replace the hardcoded userId and reportId
-      this.generateUserReport('5', '4');
+      this.generateUserReport('5', '4', '2');
       this.modalService.dismissAll();
     }
   }
 
-  private generateUserReport(userId: string, reportId: string) : void{
-    this.usersService.getUserGeneratedReport(userId, reportId, '2').then(data => {
+  private generateUserReport(userId: string, reportId: string, dbConnId: string) : void{
+    this.usersService.getUserGeneratedReport(userId, reportId, dbConnId).then(data => {
       const widget = this.chartFactory.processChartType(this.selectedChartType, data,
         [this.selectedReport.display_name],
         ['Count']);
