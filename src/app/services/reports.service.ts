@@ -22,7 +22,7 @@ export class ReportsService {
 
   public createReport(id: number, name: string, displayName: string, sql: string, inputParams: Parameter[]): Observable<any>{
     return this.http.request('post',
-      'api/reports',
+      '/api/reports/execute',
       {
         body: {
           ID: id,
@@ -30,7 +30,7 @@ export class ReportsService {
           Display_name: displayName,
           Input_params: inputParams,
           Model_name: 'employees.js', // this will have to change from hardcode to user input via parameter from form, when implemented.
-          Database_connection_fk: 1, // this will have to change from hardcode to user input via parameter from form, when implemented.
+          Database_connection_fk: 2, // this will have to change from hardcode to user input via parameter from form, when implemented.
         }
       }
     );
