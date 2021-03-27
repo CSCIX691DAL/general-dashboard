@@ -79,12 +79,11 @@
       <hr>
     </div>
     <div class="sidebar-heading">Current Widgets</div>
-    <!-- Add some sort of ngFor loop here to generate current widgets -->
-    <a href="#" class="list-group-item list-group-item-action bg-light">EmployeeGenderCount</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Widget2</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Widget3</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Widget4</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Widget5</a>
+    <div *ngFor="let widget of widgets">
+      <!-- Add some sort of ngFor loop here to generate current widgets -->
+      <a href="#" class="list-group-item list-group-item-action bg-light">{{widget.name}}</a>
+    </div>
+
   </div>
   <!-- /#sidebar-wrapper -->
   <!-- Page Content -->
