@@ -7,6 +7,7 @@ import {ChartFactoryService} from '../services/chart-factory.service';
 import {ReportsService} from '../services/reports.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {DatabaseService} from '../services/database-connection.service';
+import { Database } from 'src/models/database';
 
 @Component({
   selector: 'app-report-creation',
@@ -19,10 +20,11 @@ export class ReportCreationComponent implements OnInit {
   @Output() outputEvent = new EventEmitter<WidgetInfo>();
 
   selectedReport: Report;
-  selectedDatabase: Report;
+  selectedDatabase: Database;
   selectedChartType: string;
   chartTypes = WidgetTypes;
   reports: Report[] = [];
+  databases: Database[] = [];
   closeResult = '';
 
   constructor(
@@ -36,22 +38,29 @@ export class ReportCreationComponent implements OnInit {
   chartType = new FormGroup({});
   isFormCompleted = true;
   differentAxisValues = false;
+  
   async ngOnInit(): Promise<void> {
     this.reports = await this.reportsService.readReports();
+    console.log(this.reports);
+
     this.dbService.getDatabaseConnections().then(data => {
-      console.log(data);
+    this.databases = data;
+    console.log(this.databases);
     });
   }
 
   updateFormGroup(): void{
     this.isFormCompleted = true;
+    if (this.selectedDatabase === undefined) {return;}
     if (this.selectedReport === undefined) { return; }
     this.paramGroup = new FormGroup({});
     for (const param of this.selectedReport.input_params){
       this.paramGroup.addControl(param.name, new FormControl(''));
     }
     this.chartType = new FormGroup({});
-
+    
+    console.log(this.selectedDatabase);
+    console.log(this.selectedReport);
   }
 
 
@@ -85,12 +94,7 @@ export class ReportCreationComponent implements OnInit {
         ['Count']);
       this.outputEvent.emit(widget);
       console.log(widget);
-
     });
     return true;
   }
-
-
-
-
 }

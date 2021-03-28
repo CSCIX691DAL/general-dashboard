@@ -3,7 +3,7 @@
   <div class="title">
     <h2>List of Reports</h2> 
     <p> 
-      Connect to your database & begin configuring your own table!
+      Connect to your database & begin configuring your own report!
     </p> <hr>
   </div>
 
@@ -13,8 +13,8 @@
     <h4>Select your Database Connection: </h4>
     <select class="form-control_reports-DB" (change)="updateFormGroup()" [(ngModel)]="selectedDatabase">
       <option value= "" selected> Please select a database </option>
-      <!-- Utilizes Reports tables DB foreign key -->
-      <option *ngFor="let report of reports" [ngValue]="report">{{report.database_connections_fk}}</option>
+      <!-- Utilizes Database values -->
+     <option *ngFor="let database of databases" [ngValue]="database">{{database.id}}</option>
     </select>
   </div> <br>
 
@@ -78,7 +78,7 @@
   <div class="section" *ngIf="selectedReport">
     <div>
       <strong>Your chart should be shown below: </strong> <br>
-      If you see an empty chart then your query returned no results. <br>
+      If you see an empty chart then your query is returning null results. <br>
     </div> <br>
   </div> <br>
 </div>
