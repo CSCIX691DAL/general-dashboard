@@ -57,12 +57,4 @@ export class UserhomeComponent implements OnInit {
       console.log(entry);
     }
   }
-
-  testMe(): void{
-    this.reportService.createReport(1, 'a', 'a', 'sql', null).then(data =>{
-      console.log('hey');
-      console.log(data);
-    });
-  }
-
 }

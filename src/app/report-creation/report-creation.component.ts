@@ -6,6 +6,7 @@ import {EmployeesService} from '../services/employees.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {ReportsService} from '../services/reports.service';
 import {FormControl, FormGroup} from '@angular/forms';
+import {UsersService} from '../services/users.service';
 
 @Component({
   selector: 'app-report-creation',
@@ -27,7 +28,8 @@ export class ReportCreationComponent implements OnInit {
     private modalService: NgbModal,
     private employeeService: EmployeesService,
     private chartFactory: ChartFactoryService,
-    private reportsService: ReportsService) { }
+    private reportsService: ReportsService,
+    private userReportsService: UsersService) { }
 
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
@@ -61,8 +63,7 @@ export class ReportCreationComponent implements OnInit {
     // close modal if form is completed
     if (this.isFormCompleted){
       this.processReport(values);
-      const report = this.selectedReport;
-      this.reportsService.createReport(report.id, report.name, report.display_name, report.sql, report.input_params);
+      // this.userReportsService.createUserReport(userid, this.selectedReport.id, this.selectedReport.input_params);
       this.modalService.dismissAll();
     }
   }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Parameter} from '../../models/report';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,19 @@ export class UsersService {
       }).subscribe(reports => {
       resolve(reports);
     }));
+  }
+  public createUserReport(userID: number, reportID: number, inputParamsValues: Parameter[]): Promise<any>{
+    return this.http.post(
+      '/api/user_reports/execute',
+      {
+        headers: this.header,
+        body: {
+          user_id_fk: userID,
+          report_id_fk: reportID,
+          isActive: true,
+          input_params_values: inputParamsValues
+        }
+      }
+    ).toPromise();
   }
 }

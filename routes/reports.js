@@ -20,7 +20,6 @@ module.exports = sequelize => {
   );
 
   router.post('/execute', auth.authParser(), function(req, res, ) {
-    console.log("HEY I MADE IT");
     seqReports.create({
       id: req.body.id,
       name: req.body.name,
