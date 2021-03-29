@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import { stringify } from 'querystring';
 import {Database} from '../../models/database';
 
@@ -32,24 +32,14 @@ export class DatabaseService {
       );
   }
 
-  getUsers(): Observable<any>{
-    return this.http.get('/api/users');
+  public async getUsers(): Promise<User[]>{
+    return new Promise<User[]>((resolve, reject) => this.http.get<User[]>('/api/users/getAllUsers').subscribe(reports => {
+      resolve(reports);
+    }));
   }
 
   getUser(user: string): Observable<any>{
     return this.http.get('/api/users/' + user);
-  }
-
-  deleteUser(user: string): Observable<any>{
-    return this.http.request('delete',
-      '/api/users/' + user,
-      {
-        headers: this.header,
-        body: {
-          user
-        }
-      }
-      );
   }
 
   readHomepageJson(): Observable<any> {
@@ -67,7 +57,6 @@ export class DatabaseService {
         }
       }
     );
-
   }
 
   getAllEmployees(): Observable<any>{

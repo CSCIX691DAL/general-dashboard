@@ -33,6 +33,17 @@ module.exports = sequelize => {
     }
   );
 
+  router.get('/getAllUsers', auth.authParser(), function (req, res, next) {
+      seqUser.findAll({ attributes: ['ID', 'Admin', 'creation_date']
+      }).then(data => {
+        res.status(200).json(data);
+      }).catch(err => {
+        console.log(err)
+        res.status(500).append("Error", err);
+      });
+    }
+  );
+
   //  >>>>>>>>>>> DELETE USER <<<<<<<<<<
   router.delete('/:user', auth.authParser(), function (req, res, next) {
     auth.users.destroy({
