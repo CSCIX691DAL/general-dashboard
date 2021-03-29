@@ -12,7 +12,7 @@ module.exports = sequelize => {
 
   router.post('/execute', auth.authParser(), function(req, res, ) {
     seqUserReports.create({
-      user_id_fk: req.body.user_id_fk,
+      user_id_fk: req.token.data.email,
       report_id_fk: req.body.report_id_fk,
       isActive: true,
       input_params_values: req.body.input_params_values

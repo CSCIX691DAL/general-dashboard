@@ -47,7 +47,6 @@ export class ReportCreationComponent implements OnInit {
       this.paramGroup.addControl(param.name, new FormControl(''));
     }
     this.chartType = new FormGroup({});
-
   }
 
 
@@ -63,7 +62,9 @@ export class ReportCreationComponent implements OnInit {
     // close modal if form is completed
     if (this.isFormCompleted){
       this.processReport(values);
-      // this.userReportsService.createUserReport(userid, this.selectedReport.id, this.selectedReport.input_params);
+      this.userReportsService.createUserReport(this.selectedReport.id, this.selectedReport.input_params).then(data => {
+        console.log('created user report');
+      });
       this.modalService.dismissAll();
     }
   }
