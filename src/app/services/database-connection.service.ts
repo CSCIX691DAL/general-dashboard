@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { stringify } from 'querystring';
 import {Database} from '../../models/database';
+import { User } from 'src/models/users';
 
 @Injectable({
   providedIn: 'root'
