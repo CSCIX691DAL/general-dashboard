@@ -11,7 +11,7 @@
   <!-- Database Connection -->
   <div class="section">
     <h4>Select your Database Connection: </h4>
-    <select class="form-control_reports-DB" (change)="updateFormGroup()" [(ngModel)]="selectedDatabase">
+    <select class="form-control_reports-DB" (change)="updateFormGroup()" (change)="upadateReportType()" [(ngModel)]="selectedDatabase">
       <option value= "" selected> Please select a database </option>
       <!-- Utilizes Database values -->
      <option *ngFor="let database of databases" [ngValue]="database">{{database.id}}</option>
@@ -36,7 +36,7 @@
     <!-- Report Configuarations --> 
     <div class="section" *ngIf="selectedReport">
       <div>
-        <h4>Parameters</h4>
+        <h4>Report Parameters</h4>
         <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
           <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.input_params">
             <div class="input-group-prepend">
@@ -54,6 +54,7 @@
       <h4>Select the chart type you'd like to use: </h4>
         <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
             <select class="form-control_reports-charts" [(ngModel)]="selectedChartType" [ngModelOptions]="{standalone: true}">
+              <option value= "" selected> Please select a chart type </option>
               <option *ngFor="let type of chartTypes" [ngValue]="type">{{type}}</option>
             </select>
         </form>
@@ -77,7 +78,7 @@
 
   <div class="section" *ngIf="selectedReport">
     <div>
-      <strong>Your chart should be shown below: </strong> <br>
+      <strong>Your chart is shown below: </strong> <br>
       If you see an empty chart then your query is returning null results. <br>
     </div> <br>
   </div> <br>
