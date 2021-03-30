@@ -2,7 +2,9 @@ const {
   DataTypes
 } = require('sequelize');
 
-module.exports = {
+
+module.exports = sequelize => {
+  const attributes = {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -10,9 +12,11 @@ module.exports = {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "id"
+
+      field: "id",
+      unique: "id_UNIQUE"
     },
-    hostname: {
+    host_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
       defaultValue: null,
@@ -57,4 +61,15 @@ module.exports = {
       comment: null,
       field: "schema"
     }
+
+  };
+  const options = {
+    tableName: "database_connections",
+    comment: "",
+    timestamps: false,
+    indexes: []
+  };
+  const DatabaseConnectionsModel = sequelize.define("database_connections_model", attributes, options);
+  return DatabaseConnectionsModel;
 };
+

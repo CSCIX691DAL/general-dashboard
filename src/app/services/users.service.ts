@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 import {Employee} from '../../models/employee';
 import {DatabaseService} from './database-connection.service';
 import {Observable, Subscription} from 'rxjs';
+import {Parameter} from '../../models/report';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,7 @@ export class UsersService {
     }));
   }
 
+
   public async getUserGeneratedReport(userId: string, reportId: string, dbConnId: string): Promise<any[]> {
     const empReport = [];
     return new Promise<any>((resolve, reject) => this.conn.getUserGeneratedReport(userId, reportId, dbConnId)
@@ -40,5 +43,23 @@ export class UsersService {
         }
         resolve(data);
       }));
+
+  public createUserReport(reportID: number, inputParamsValues: Parameter[]): Promise<any>{
+    const params = this.inputParamRevert(inputParamsValues);
+    return this.http.post(
+      '/api/user_generated_reports/create',
+      {
+        body: {
+          report_id_fk: reportID,
+          isActive: true,
+          input_params_values: params
+        }
+      }
+    ).toPromise();
+  }
+  public inputParamRevert(inputParamsValues: Parameter[]): string
+  {
+    return '{"params":' + JSON.stringify(inputParamsValues) + '}';
+
   }
 }

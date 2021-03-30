@@ -61,7 +61,6 @@ module.exports = sequelize => {
   const options = {
     tableName: "user_generated_reports",
     comment: "",
-    timestamps: false,
     indexes: [{
       name: "user_generated_reports_FK_1",
       unique: false,
@@ -71,8 +70,6 @@ module.exports = sequelize => {
       name: "user_generated_reports_FK_2",
       unique: false,
       type: "BTREE",
-      timestamps: false,
-      timestamp: false,
       fields: ["user_id_fk"]
     }]
   };

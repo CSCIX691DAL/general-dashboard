@@ -48,6 +48,7 @@ module.exports = {
       comment: null,
       field: "input_params"
     },
+
     model_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -58,13 +59,19 @@ module.exports = {
       field: "model_name"
     },
     database_connection_fk: {
+
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "database_connection_fk"
+
+      field: "database_connection_fk",
+      references: {
+        key: "id",
+        model: "database_model"
+      }
     }
 
 };
