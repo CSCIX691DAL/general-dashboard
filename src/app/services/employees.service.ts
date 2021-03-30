@@ -32,20 +32,6 @@ export class EmployeesService {
     return this.conn.getEmployeesGender();
   }
 
-  getEmployeesReport(sql: string): Promise<any[]>{
-    const empReport = [];
-    return new Promise<any>((resolve, reject) => this.conn.getEmployeesReport(sql).subscribe(data => {
-      for (const item of data) {
-        const itemAttr = [];
-        for (const key in item){
-          itemAttr.push(item[key]);
-        }
-        empReport.push(new Employee(itemAttr));
-      }
-      resolve(empReport);
-    }));
-  }
-
   public setReport(report: Report): void{
     this.selectedReport = report;
   }

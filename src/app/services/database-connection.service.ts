@@ -70,12 +70,7 @@ export class DatabaseService {
     return this.http.get('/api/employees/countByGender');
   }
 
-  getEmployeesReport(sql: string): Observable<any>{
-    console.log('SQL ' + sql);
-    const result = escape(sql);
-    const query = `?sql=${result}`;
-    return this.http.get('/api/employees/execute' + query);
-  }
+
 
   public async getUserRecords(): Promise<UserGeneratedReport[]> {
     return new Promise<UserGeneratedReport[]>((resolve, reject) => this.http.get<UserGeneratedReport[]>('/api/user_generated_reports/generatedReports').subscribe(reports => {

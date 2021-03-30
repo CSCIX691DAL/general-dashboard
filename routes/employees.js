@@ -52,30 +52,5 @@ module.exports = sequelize => {
     }
   );
 
-  router.get('/:id/execute', auth.authParser(), function (req, res, next) {
-
-    // GET user_generated_report record using inputted IDs
-
-    // create sequelize connection using database_connection information
-
-    // RUN SQL IN SEQUELIZE CONNECTION
-
-    // RETURN RESULTS IN JSON
-
-    const sql = req.query.sql;
-    //use raw queries pass from query for type 1 and 2 report
-    sequelize.query(sql, {
-      model: seqEmployee,
-      mapToModel: true // pass true here if you have any mapped fields
-    })
-      .then(data => {
-        res.status(200).json(data);
-      }).catch(err => {
-        console.log(err)
-        res.status(500).append("Error", err);
-      });
-    }
-  );
-
   return router;
 };
