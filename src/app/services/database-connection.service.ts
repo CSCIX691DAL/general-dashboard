@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { User } from '../../models/users';
+import { UserGeneratedReport } from '../../models/userGeneratedReport';
 import { stringify } from 'querystring';
 import {Database} from '../../models/database';
-import { User } from 'src/models/users';
+
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +77,13 @@ export class DatabaseService {
     return this.http.get('/api/employees/execute' + query);
   }
 
-  getDatabaseConnections(): Promise<Database[]>{
-    return this.http.get<Database[]>('/api/databases').toPromise();
+  public async getUserRecords(): Promise<UserGeneratedReport[]> {
+    return new Promise<UserGeneratedReport[]>((resolve, reject) => this.http.get<UserGeneratedReport[]>('/api/user_generated_reports/generatedReports').subscribe(reports => {
+      resolve(reports);
+    }));
   }
+    getDatabaseConnections(): Promise<Database[]>{
+      return this.http.get<Database[]>('/api/databases').toPromise();
+
+    }
 }

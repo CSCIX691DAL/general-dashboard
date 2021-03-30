@@ -42,8 +42,8 @@ module.exports={
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "creation_date" },
-
+      field: "creation_date" 
+  },
   user_id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
@@ -52,5 +52,5 @@ module.exports={
     autoIncrement: true,
     comment: null,
     field: "user_id"
-  },
+  }
 };
