@@ -131,7 +131,7 @@ module.exports = sequelize => {
       }
     );
     const modelStruc = result['reports_model.model_name']
-    const model = require('./' + modelStruc);
+    const model = require('../src/models/' + modelStruc);
 
     //test connection
     await sequelizeForReport.authenticate()
@@ -146,7 +146,6 @@ module.exports = sequelize => {
       mapToModel: true, // pass true here if you have any mapped fields
       raw: true
     }).then(data => {
-      console.log(data);
       res.status(200).json(data);
       sequelizeForReport.close().then(() => {
         console.log('sequelizeForReport connection closed');

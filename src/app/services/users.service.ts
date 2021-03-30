@@ -38,6 +38,7 @@ export class UsersService {
         console.log(data);
         for (const item of data) {
           const itemAttr = [];
+          // tslint:disable-next-line:forin
           for (const key in item) {
             // console.log('key: ' + key + '\t' + item[key]);
             itemAttr.push(item[key]);
@@ -48,11 +49,11 @@ export class UsersService {
       }));
   }
 
-  public createUserReport(reportID: number, inputParamsValues: Parameter[]): Promise<any>{
-    const params = this.inputParamRevert(inputParamsValues);
+  public createUserReport(reportID: number, inputParamsValues: string): Promise<any>{
     return this.http.post(
       '/api/userGeneratedReports/create',
       {
+        headers: this.header,
         body: {
           report_id_fk: reportID,
           isActive: true,
@@ -61,9 +62,6 @@ export class UsersService {
       }
     ).toPromise();
   }
-  public inputParamRevert(inputParamsValues: Parameter[]): string
-  {
-    return '{"params":' + JSON.stringify(inputParamsValues) + '}';
 
-  }
+
 }

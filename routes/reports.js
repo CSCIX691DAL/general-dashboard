@@ -29,7 +29,7 @@ module.exports = sequelize => {
       model_name: req.body.body.model_name,
       database_connection_fk: req.body.body.database_connection_fk
     }).then(resp => {
-      res.status(200);
+      res.status(200).json(resp);
     }).catch(err => {
       console.log(err);
       res.status(500).append("Error", err);
