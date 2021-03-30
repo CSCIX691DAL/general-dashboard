@@ -7,8 +7,10 @@
     </p> <hr>
   </div>
 
-  
+
+ 
   <!-- Database Connection -->
+
   <div class="section">
     <h4>Select your Database Connection: </h4>
     <select class="form-control_reports-DB" (change)="updateFormGroup()" (change)="upadateReportType()" [(ngModel)]="selectedDatabase">
@@ -17,7 +19,6 @@
      <option *ngFor="let database of databases" [ngValue]="database">{{database.id}}</option>
     </select>
   </div> <br>
-
 
   <!-- List of Reports Configurations -->
   <div *ngIf="selectedDatabase">
@@ -75,6 +76,7 @@
       </span>
     </div>
   </div>
+
 
   <div class="section" *ngIf="selectedReport">
     <div>

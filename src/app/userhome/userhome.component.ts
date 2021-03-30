@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {baseOptions, ChartInfo, WidgetInfo, Table} from '../services/Chart';
+import {ReportsService} from '../services/reports.service';
 
 @Component({
   selector: 'app-userhome',
@@ -17,7 +18,8 @@ export class UserhomeComponent implements OnInit {
   private genderMap = new Map();
   public widgets: WidgetInfo[] = [];
 
-  constructor(private employee: EmployeesService, private chartFactory: ChartFactoryService) {
+  constructor(private reportService: ReportsService,
+    private employee: EmployeesService, private chartFactory: ChartFactoryService) {
   }
 
   ngOnInit(): void {
@@ -57,6 +59,4 @@ export class UserhomeComponent implements OnInit {
       console.log(entry);
     }
   }
-
-
 }
