@@ -10,7 +10,7 @@ const userType = require('../src/models/user');
 // Handle user database interactions and auth token generation / validation.
 class BackendAuth {
   constructor(sequelize) {
-    this.users = sequelize.define("Users", userType, { timestamps: false });
+    this.users = userType(sequelize);
   }
 
   // register a user.
