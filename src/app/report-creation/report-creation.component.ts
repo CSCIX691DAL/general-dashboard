@@ -79,15 +79,20 @@ export class ReportCreationComponent implements OnInit {
     if (this.selectedReport === undefined) { return; }
 
     const values: string[] = [];
+    let userReportParams = '{"params": [';
+    let params = '';
     // required field check because 'required' tag wasn't working
     for (const param of this.selectedReport.input_params){
       values.push(this.paramGroup.get(param.name).value);
+      params += ('{"' + param.name + '": ' + '"' + this.paramGroup.get(param.name).value + '"},');
     }
     this.isFormCompleted = !values.includes('');
     // close modal if form is completed
     if (this.isFormCompleted){
       this.processReport(values);
-      this.userReportsService.createUserReport(this.selectedReport.id, this.selectedReport.input_params).then(data => {
+      params = params.substring(0, params.length - 1);
+      userReportParams += params + ']}';
+      this.userReportsService.createUserReport(this.selectedReport.id, userReportParams).then(data => {
         console.log('created user report');
       });
       this.modalService.dismissAll();

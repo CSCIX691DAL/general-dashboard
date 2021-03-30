@@ -22,15 +22,14 @@ export class UsersService {
       resolve(reports);
     }));
   }
-  public createUserReport(reportID: number, inputParamsValues: Parameter[]): Promise<any>{
-    const params = this.inputParamRevert(inputParamsValues);
+  public createUserReport(reportID: number, inputParamsValues: string): Promise<any>{
     return this.http.post(
       '/api/user_generated_reports/create',
       {
         body: {
           report_id_fk: reportID,
           isActive: true,
-          input_params_values: params
+          input_params_values: inputParamsValues
         }
       }
     ).toPromise();
