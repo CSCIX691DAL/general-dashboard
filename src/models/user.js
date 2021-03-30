@@ -42,15 +42,15 @@ module.exports={
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "creation_date"
-    },
-  user_id:
-    {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "user_id"
-    }
+      field: "creation_date" 
+  },
+  user_id: {
+    type: DataTypes.INTEGER(11),
+    allowNull: false,
+    defaultValue: null,
+    primaryKey: true,
+    autoIncrement: true,
+    comment: null,
+    field: "user_id"
+  }
 };
