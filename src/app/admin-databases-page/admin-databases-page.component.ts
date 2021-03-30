@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
+import {DatabaseService} from '../services/database-connection.service';
+import {Database} from '../../models/database';
 
 @Component({
   selector: 'app-admin-databases-page',
@@ -9,13 +11,14 @@ import {Router} from '@angular/router';
 })
 export class AdminDatabasesPageComponent implements OnInit {
 
-  constructor(public auth: AuthService, private router: Router) {
+  dataBases: Database[];
+  constructor(public auth: AuthService, private router: Router, public conn: DatabaseService) {
     if (auth.isAdmin() === false){
       this.router.navigate(['/home']);
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.dataBases = await this.conn.getDatabaseConnections();
   }
-
 }
