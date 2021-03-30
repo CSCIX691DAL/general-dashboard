@@ -56,7 +56,7 @@ export class UsersService {
         body: {
           report_id_fk: reportID,
           isActive: true,
-          input_params_values: params
+          input_params_values: inputParamsValues
         }
       }
     ).toPromise();
