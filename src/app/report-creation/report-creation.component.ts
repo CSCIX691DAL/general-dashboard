@@ -7,8 +7,11 @@ import {ChartFactoryService} from '../services/chart-factory.service';
 import {ReportsService} from '../services/reports.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {UsersService} from '../services/users.service';
+import {Observable, Subscription} from 'rxjs';
 import {DatabaseService} from '../services/database-connection.service';
 import { Database } from 'src/models/database';
+import {AuthService} from '../auth.service';
+
 
 
 @Component({
@@ -34,8 +37,9 @@ export class ReportCreationComponent implements OnInit {
     private employeeService: EmployeesService,
     private chartFactory: ChartFactoryService,
     private reportsService: ReportsService,
-    private userReportsService: UsersService,
-    private dbService: DatabaseService){}
+    private userService: UsersService,
+    private dbService: DatabaseService,
+    private auth: AuthService){}
 
 
   paramGroup = new FormGroup({});
@@ -61,14 +65,13 @@ export class ReportCreationComponent implements OnInit {
         matchedItem++;
     }
   }
-  console.log(this.dataList); // Useful Debugging line.
-  console.log(this.reports);
+
   }
 
 
   updateFormGroup(): void{
     this.isFormCompleted = true;
-    if (this.selectedDatabase === undefined || this.selectedReport === undefined) {return;}
+    if (this.selectedDatabase === undefined || this.selectedReport === undefined) {return; }
     this.paramGroup = new FormGroup({});
     for (const param of this.selectedReport.input_params){
       this.paramGroup.addControl(param.name, new FormControl(''));
@@ -78,13 +81,16 @@ export class ReportCreationComponent implements OnInit {
   }
 
 
-  onSubmit(): void{
+  onSubmit(): Promise<void>{
     if (this.selectedReport === undefined) { return; }
 
     const values: string[] = [];
+    let userReportParams = '{"params": [';
+    let params = '';
     // required field check because 'required' tag wasn't working
     for (const param of this.selectedReport.input_params){
       values.push(this.paramGroup.get(param.name).value);
+      params += ('{"' + param.name + '": ' + '"' + this.paramGroup.get(param.name).value + '"},');
     }
 
     //Module checks if all parameters as well as a chart type to suit are selected and updates form completion check. 
@@ -95,23 +101,18 @@ export class ReportCreationComponent implements OnInit {
 
     // close modal if form is completed
     if (this.isFormCompleted){
-      this.processReport(values);
-      this.userReportsService.createUserReport(this.selectedReport.id, this.selectedReport.input_params).then(data => {
-        console.log('created user report');
+
+      params = params.substring(0, params.length - 1);
+      userReportParams += params + ']}';
+      this.userService.createUserReport(this.selectedReport.id, userReportParams).then(data => {
+        this.generateUserReport(this.selectedReport.id + '', this.selectedDatabase.id + '');
+
       });
-      this.modalService.dismissAll();
     }
   }
 
-  private processReport(values: string[]): boolean{
-    // replace sql identifiers with the inputted values
-    let sql = this.selectedReport.sql;
-    values.forEach(val => {
-      // replace the delimiters with inputted values
-      sql = sql.replace('@', val);
-    });
-
-    this.employeeService.getEmployeesReport(sql).then(data => {
+  private generateUserReport(reportId: string, dbConnId: string) : void{
+    this.userService.getUserGeneratedReport(reportId, dbConnId).then(data => {
       const widget = this.chartFactory.processChartType(this.selectedChartType, data,
         [this.selectedReport.display_name],
         ['Count']);
@@ -119,7 +120,6 @@ export class ReportCreationComponent implements OnInit {
       console.log(widget);
     });
 
-    return true;
   }
 
 }
