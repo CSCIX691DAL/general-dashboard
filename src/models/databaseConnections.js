@@ -69,7 +69,7 @@ module.exports = sequelize => {
     timestamps: false,
     indexes: []
   };
-  const DatabaseConnectionsModel = sequelize.define("database_connections_model", attributes, options);
+  const DatabaseConnectionsModel = sequelize.define("database_connections", attributes, options);
   return DatabaseConnectionsModel;
 };
 

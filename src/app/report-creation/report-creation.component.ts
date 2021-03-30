@@ -65,7 +65,7 @@ export class ReportCreationComponent implements OnInit {
 
   updateFormGroup(): void{
     this.isFormCompleted = true;
-    if (this.selectedDatabase === undefined || this.selectedReport === undefined) {return;}
+    if (this.selectedDatabase === undefined || this.selectedReport === undefined) { return; }
     this.paramGroup = new FormGroup({});
     for (const param of this.selectedReport.input_params){
       this.paramGroup.addControl(param.name, new FormControl(''));
@@ -92,12 +92,14 @@ export class ReportCreationComponent implements OnInit {
       this.userReportsService.createUserReport(this.selectedReport.id, this.selectedReport.input_params).then(data => {
         console.log('created user report');
       });
+      // @Todo: replace this hardcoded
+      this.generateUserReport('1', '2');
       this.modalService.dismissAll();
     }
   }
 
-  private generateUserReport(userId: string, reportId: string, dbConnId: string) : void{
-    this.usersService.getUserGeneratedReport(userId, reportId, dbConnId).then(data => {
+  public generateUserReport(reportId: string, dbConnId: string) : void{
+    this.userReportsService.getUserGeneratedReport(reportId, dbConnId).then(data => {
       const widget = this.chartFactory.processChartType(this.selectedChartType, data,
         [this.selectedReport.display_name],
         ['Count']);
@@ -105,6 +107,17 @@ export class ReportCreationComponent implements OnInit {
       console.log(widget);
     });
 
+  }
+
+  private processReport(values: string[]): boolean{
+    // replace sql identifiers with the inputted values
+    let sql = this.selectedReport.sql;
+    values.forEach(val => {
+      // replace the delimiters with inputted values
+      sql = sql.replace('@', val);
+    });
+
+    return true;
   }
 
 }

@@ -4,19 +4,19 @@ const {Sequelize} = require("sequelize");
 
 module.exports = sequelize => {
   const router = express.Router();
-  const userGeneratedReportStruc = require('../src/models/userGeneratedReports');
   const reportsStruc = require('../src/models/reports');
-  const databaseConnStruc = require('../src/models/databaseConnections');
+  const databaseConn = require('../src/models/databaseConnections');
+  const seqUserGeneratedReportStuc = require('../src/models/userGeneratedReports');
 
-  const seqUserGeneratedReport = sequelize.define("user_generated_reports", userGeneratedReportStruc, {timestamps: false});
+  const dbSeq = databaseConn(sequelize);
+  const seqUserGeneratedReport = seqUserGeneratedReportStuc(sequelize);
   const seqReports = sequelize.define("reports", reportsStruc, {timestamps: false});
-  const seqDbConn = sequelize.define("database_connections", databaseConnStruc, {timestamps: false});
 
   seqReports.hasMany(seqUserGeneratedReport,{foreignKey: 'report_id_fk'});
   seqUserGeneratedReport.belongsTo(seqReports, {foreignKey: 'report_id_fk'})
 
-  seqDbConn.hasMany(seqReports,{foreignKey: 'database_connection_fk'});
-  seqReports.belongsTo(seqDbConn, {foreignKey: 'database_connection_fk'});
+  dbSeq.hasMany(seqReports,{foreignKey: 'database_connection_fk'});
+  seqReports.belongsTo(dbSeq, {foreignKey: 'database_connection_fk'});
 
   // these routes require authentication
   const auth = new BackendAuth(sequelize);
@@ -70,17 +70,12 @@ module.exports = sequelize => {
     }
   );
 
-  router.get('/:userID/execute', auth.authParser(), function (req, res, next) {
-    const userId = req.params.userID;
+  router.get('/execute', auth.authParser(), function (req, res, next) {
     const reportId = req.query.reportId;
     const dbConnId = req.query.dbConnId;
 
     //get user generated report using inner join
     seqUserGeneratedReport.findAll({
-      where: {
-        UserID: userId,
-        ReportId: reportId
-      },
       include: [{
         model: seqReports,
         where: {
@@ -88,11 +83,13 @@ module.exports = sequelize => {
           database_connection_fk: dbConnId
         }
       }],
+      // @Todo: use user_generated_report_id to replace report.id and remove this limit
+      limit: 1,
       raw: true
     }).then(data => {
       console.log(data);
       const result = data[0];
-      let input_params = JSON.parse(result['input_params']);
+      let input_params = JSON.parse(result['input_params_values']);
       sql = result['report.sql'];
 
       //process sql: replace report sql with input params
@@ -101,6 +98,7 @@ module.exports = sequelize => {
           sql = sql.replace('@', element[key]);
         }
       }
+
       console.log('processed SQL: ' + sql);
     }).catch(err => {
       console.log(err)
@@ -108,7 +106,7 @@ module.exports = sequelize => {
     });
 
     //get dbConnection information
-    seqDbConn.findAll({
+    dbSeq.findAll({
       where: {
         id: dbConnId
       },
@@ -116,7 +114,7 @@ module.exports = sequelize => {
     }).then(data => {
       console.log(data);
       dbConnInfo = data[0];
-      // console.log('dbConnInfo: ' + dbConnInfo['hostname'] + '\t' + dbConnInfo['schema']
+      // console.log('dbConnInfo: ' + dbConnInfo['host_name'] + '\t' + dbConnInfo['schema']
       //   + '\t' + dbConnInfo['username'] + '\t' + dbConnInfo['password'] + '\t' + dbConnInfo['port']);
       // console.log('pass sql: '+sql);
     }).catch(err => {
@@ -132,7 +130,7 @@ module.exports = sequelize => {
       dbConnInfo['username'],
       dbConnInfo['password'],
       {
-        host: dbConnInfo['hostname'],
+        host: dbConnInfo['host_name'],
         dialect: 'mysql',
         port: dbConnInfo['port']
       }
@@ -140,7 +138,6 @@ module.exports = sequelize => {
 
     const empStructure = require('../src/models/employees');
     const seqEmployeeForReport = sequelizeForReport.define("employees", empStructure, { timestamps: false });
-
     //test connection
     sequelizeForReport.authenticate()
       .then(() => {

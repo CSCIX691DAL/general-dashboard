@@ -76,6 +76,6 @@ module.exports = sequelize => {
       fields: ["user_id_fk"]
     }]
   };
-  const UserGeneratedReportsModel = sequelize.define("user_generated_reports_model", attributes, options);
+  const UserGeneratedReportsModel = sequelize.define("user_generated_reports", attributes, options);
   return UserGeneratedReportsModel;
 };

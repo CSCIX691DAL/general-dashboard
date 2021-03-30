@@ -3,7 +3,7 @@ const express = require('express');
 
 module.exports = sequelize => {
   const router = express.Router();
-  const userReportStruc = require('../src/models/user_generated_reports');
+  const userReportStruc = require('../src/models/userGeneratedReports');
 
   const seqUserReports = sequelize.define("user_generated_reports", userReportStruc, {timestamps: false});
 

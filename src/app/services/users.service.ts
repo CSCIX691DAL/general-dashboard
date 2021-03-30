@@ -28,14 +28,14 @@ export class UsersService {
   }
 
 
-  public async getUserGeneratedReport(userId: string, reportId: string, dbConnId: string): Promise<any[]> {
+  public async getUserGeneratedReport(reportId: string, dbConnId: string): Promise<any[]> {
     const empReport = [];
-    return new Promise<any>((resolve, reject) => this.conn.getUserGeneratedReport(userId, reportId, dbConnId)
+    return new Promise<any>((resolve, reject) => this.conn.getUserGeneratedReport(reportId, dbConnId)
       .subscribe(data => {
         console.log(data);
         for (const item of data) {
           const itemAttr = [];
-          for (const key in item){
+          for (const key in item) {
             // console.log('key: ' + key + '\t' + item[key]);
             itemAttr.push(item[key]);
           }
@@ -43,6 +43,7 @@ export class UsersService {
         }
         resolve(data);
       }));
+  }
 
   public createUserReport(reportID: number, inputParamsValues: Parameter[]): Promise<any>{
     const params = this.inputParamRevert(inputParamsValues);
