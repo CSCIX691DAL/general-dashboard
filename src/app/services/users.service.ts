@@ -27,6 +27,7 @@ export class UsersService {
     }));
   }
 
+
   getUserGeneratedReportsRaw(reportId: string, dbConnId: string): Observable<any>{
     return this.http.get('/api/users/execute?reportId=' + reportId + '&dbConnId=' + dbConnId);
   }
@@ -48,6 +49,7 @@ export class UsersService {
         resolve(data);
       }));
   }
+
 
   public createUserReport(reportID: number, inputParamsValues: string): Promise<any>{
     return this.http.post(
