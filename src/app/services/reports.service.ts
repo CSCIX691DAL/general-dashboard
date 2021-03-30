@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Parameter, Report} from '../../models/report';
 
@@ -7,7 +7,10 @@ import {Parameter, Report} from '../../models/report';
   providedIn: 'root'
 })
 export class ReportsService {
-
+  header = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
   constructor(private http: HttpClient) {
   }
 
@@ -20,8 +23,26 @@ export class ReportsService {
     return params;
   }
 
-  public createReport(report: Report): Observable<any>{
-    throw new Error('not implemented');
+  public createReport(id: number, name: string, displayName: string, sql: string, inputParams: Parameter[]): Promise<any>{
+    const params = this.inputParamRevert(inputParams);
+    return this.http.post(
+      '/api/reports/create',
+      {
+        headers: this.header,
+        body: {
+          ID: id,
+          Name: name,
+          Display_name: displayName,
+          Input_params: params,
+          Model_name: 'employees.js', // this will have to change from hardcode to user input via parameter from form, when implemented.
+          Database_connection_fk: 2, // this will have to change from hardcode to user input via parameter from form, when implemented.
+        }
+      }
+    ).toPromise();
+  }
+  public inputParamRevert(inputParamsValues: Parameter[]): string
+  {
+    return '{"params":' + JSON.stringify(inputParamsValues) + '}';
   }
 
   /**

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
+import { User } from '../../models/users';
+import { UserGeneratedReport } from '../../models/userGeneratedReport';
 import { stringify } from 'querystring';
 import {Database} from '../../models/database';
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,24 +35,14 @@ export class DatabaseService {
       );
   }
 
-  getUsers(): Observable<any>{
-    return this.http.get('/api/users');
+  public async getUsers(): Promise<User[]>{
+    return new Promise<User[]>((resolve, reject) => this.http.get<User[]>('/api/users/getAllUsers').subscribe(reports => {
+      resolve(reports);
+    }));
   }
 
   getUser(user: string): Observable<any>{
     return this.http.get('/api/users/' + user);
-  }
-
-  deleteUser(user: string): Observable<any>{
-    return this.http.request('delete',
-      '/api/users/' + user,
-      {
-        headers: this.header,
-        body: {
-          user
-        }
-      }
-      );
   }
 
   readHomepageJson(): Observable<any> {
@@ -67,7 +60,6 @@ export class DatabaseService {
         }
       }
     );
-
   }
 
   getAllEmployees(): Observable<any>{
@@ -85,7 +77,13 @@ export class DatabaseService {
     return this.http.get('/api/employees/execute' + query);
   }
 
-  getDatabaseConnections(): Promise<Database[]>{
-    return this.http.get<Database[]>('/api/databases').toPromise();
+  public async getUserRecords(): Promise<UserGeneratedReport[]> {
+    return new Promise<UserGeneratedReport[]>((resolve, reject) => this.http.get<UserGeneratedReport[]>('/api/user_generated_reports/generatedReports').subscribe(reports => {
+      resolve(reports);
+    }));
   }
+    getDatabaseConnections(): Promise<Database[]>{
+      return this.http.get<Database[]>('/api/databases').toPromise();
+
+    }
 }

@@ -35,5 +35,22 @@ module.exports={
     autoIncrement: false,
     comment: null,
     field: "Admin"
+  },
+  creation_date:
+    { type: DataTypes.DATE,
+      allowNull: true,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "creation_date" 
+  },
+  user_id: {
+    type: DataTypes.INTEGER(11),
+    allowNull: false,
+    defaultValue: null,
+    primaryKey: true,
+    autoIncrement: true,
+    comment: null,
+    field: "user_id"
   }
 };

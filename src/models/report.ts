@@ -9,4 +9,5 @@ export interface Report{
   sql: string;
   input_params: Parameter[];
   id: number;
+  database_connection_fk: number;
 }

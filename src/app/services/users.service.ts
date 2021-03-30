@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Parameter} from '../../models/report';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,20 @@ export class UsersService {
       resolve(reports);
     }));
   }
-
-
+  public createUserReport(reportID: number, inputParamsValues: string): Promise<any>{
+    return this.http.post(
+      '/api/user_generated_reports/create',
+      {
+        body: {
+          report_id_fk: reportID,
+          isActive: true,
+          input_params_values: inputParamsValues
+        }
+      }
+    ).toPromise();
+  }
+  public inputParamRevert(inputParamsValues: Parameter[]): string
+  {
+    return '{"params":' + JSON.stringify(inputParamsValues) + '}';
+  }
 }
