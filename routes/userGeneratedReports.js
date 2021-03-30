@@ -5,7 +5,7 @@ module.exports = sequelize => {
   const router = express.Router();
   const userGenReportsStruc = require("../src/models/userGeneratedReports");
 
-  const seqUserGenReports = sequelize.define("user_generated_reports", userGenReportsStruc, {timestamps: false});
+  const seqUserGenReports = userGenReportsStruc(sequelize);
 
   const auth = new BackendAuth(sequelize);
 
@@ -21,6 +21,22 @@ module.exports = sequelize => {
     })
     }
   );
+
+  router.post('/create', auth.authParser(), async function(req, res, ) {
+    auth.users.findAll({where: {ID: req.token.data.email} }).then(data =>{
+      seqUserGenReports.create({
+        user_id_fk: data[0].user_id,
+        report_id_fk: req.body.body.report_id_fk,
+        isActive: true,
+        input_params_values: req.body.body.input_params_values
+      }).then(resp => {
+        res.status(200);
+      }).catch(err => {
+        console.log(err);
+        res.status(500).append("Error", err);
+      })
+    });
+  })
 
   return router;
 }

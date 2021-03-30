@@ -5,7 +5,7 @@ module.exports = sequelize => {
   const router = express.Router();
   const reportsStruc = require('../src/models/reports');
 
-  const seqReports = sequelize.define("reports", reportsStruc, {timestamps: false});
+  const seqReports = reportsStruc(sequelize);
 
   // these routes require authentication
   const auth = new BackendAuth(sequelize);

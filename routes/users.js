@@ -1,5 +1,6 @@
 const BackendAuth = require("../backend/BackendAuth");
 const express = require('express');
+const {Model} = require("sequelize");
 const {Sequelize} = require("sequelize");
 
 module.exports = sequelize => {
@@ -8,9 +9,9 @@ module.exports = sequelize => {
   const reportsStruc = require('../src/models/reports');
   const databaseConnStruc = require('../src/models/databaseConnections');
 
-  const seqUserGeneratedReport = sequelize.define("user_generated_reports", userGeneratedReportStruc, {timestamps: false});
-  const seqReports = sequelize.define("reports", reportsStruc, {timestamps: false});
-  const seqDbConn = sequelize.define("database_connections", databaseConnStruc, {timestamps: false});
+  const seqUserGeneratedReport = userGeneratedReportStruc(sequelize);
+  const seqReports = reportsStruc(sequelize);
+  const seqDbConn = databaseConnStruc(sequelize);
 
   seqReports.hasMany(seqUserGeneratedReport,{foreignKey: 'report_id_fk'});
   seqUserGeneratedReport.belongsTo(seqReports, {foreignKey: 'report_id_fk'})
@@ -45,7 +46,7 @@ module.exports = sequelize => {
   );
 
   router.get('/getAllUsers', auth.authParser(), function (req, res, next) {
-      seqUser.findAll({ attributes: ['ID', 'Admin', 'creation_date']
+      auth.users.findAll({ attributes: ['ID', 'Admin', 'creation_date']
       }).then(data => {
         res.status(200).json(data);
       }).catch(err => {
@@ -70,16 +71,19 @@ module.exports = sequelize => {
     }
   );
 
-  router.get('/:userID/execute', auth.authParser(), function (req, res, next) {
-    const userId = req.params.userID;
+  router.get('/execute', auth.authParser(), async function (req, res, next) {
+    console.log("PENIS")
     const reportId = req.query.reportId;
+    const rawUser = await auth.users.findAll({where: { ID: req.token.data.email }});
+    const userId = rawUser[0].user_id;
     const dbConnId = req.query.dbConnId;
 
+
     //get user generated report using inner join
-    seqUserGeneratedReport.findAll({
+    const rawData = await seqUserGeneratedReport.findAll({
       where: {
-        UserID: userId,
-        ReportId: reportId
+        user_id_fk: userId,
+        report_id_fk: reportId
       },
       include: [{
         model: seqReports,
@@ -89,42 +93,31 @@ module.exports = sequelize => {
         }
       }],
       raw: true
-    }).then(data => {
-      console.log(data);
-      const result = data[0];
-      let input_params = JSON.parse(result['input_params']);
-      sql = result['report.sql'];
-
-      //process sql: replace report sql with input params
-      for (let element of input_params['params']) {
-        for (let key in element) {
-          sql = sql.replace('@', element[key]);
-        }
-      }
-      console.log('processed SQL: ' + sql);
     }).catch(err => {
-      console.log(err)
-      res.status(500).append("Error", err);
-    });
+      res.status(500).append("Error", err)
+    })
+
+    //process sql: replace report sql with input params
+    const result = rawData[0];
+    let input_params = JSON.parse(result['input_params_values']);
+    let sql = result['reports_model.sql'];
+
+    for (let element of input_params['params']) {
+      for (let key in element) {
+        sql = sql.replace('@', element[key]);
+      }
+    }
+    console.log('processed SQL: ' + sql);
 
     //get dbConnection information
-    seqDbConn.findAll({
+    const rawDbConnInfo = await seqDbConn.findAll({
       where: {
         id: dbConnId
       },
       raw: true
-    }).then(data => {
-      console.log(data);
-      dbConnInfo = data[0];
-      // console.log('dbConnInfo: ' + dbConnInfo['hostname'] + '\t' + dbConnInfo['schema']
-      //   + '\t' + dbConnInfo['username'] + '\t' + dbConnInfo['password'] + '\t' + dbConnInfo['port']);
-      // console.log('pass sql: '+sql);
-    }).catch(err => {
-      console.log(err)
-      res.status(500).append("Error", err);
     });
-    next();
-  }, function (req, res, next) {
+
+    const dbConnInfo = rawDbConnInfo[0];
 
     //create new sequelize connection
     const sequelizeForReport = new Sequelize(
@@ -132,45 +125,33 @@ module.exports = sequelize => {
       dbConnInfo['username'],
       dbConnInfo['password'],
       {
-        host: dbConnInfo['hostname'],
+        host: dbConnInfo['host_name'],
         dialect: 'mysql',
         port: dbConnInfo['port']
       }
     );
-
-    const empStructure = require('../src/models/employees');
-    const seqEmployeeForReport = sequelizeForReport.define("employees", empStructure, { timestamps: false });
+    const modelStruc = result['reports_model.model_name']
+    const model = require('./' + modelStruc);
 
     //test connection
-    sequelizeForReport.authenticate()
+    await sequelizeForReport.authenticate()
       .then(() => {
         console.log('Connection has been established successfully.');
       }).catch(err => {
-      console.error('Unable to connect to the database:', err);
-    }).then(() => {
-      //run sql in this db and generate report
-      sequelizeForReport.authenticate()
-        .then(() => {
-          console.log('Connection has been established successfully.');
-        }).catch(err => {
         console.error('Unable to connect to the database:', err);
-      }).then(() => {
-        console.log('run sql query:' + sql);
-        sequelizeForReport.query(sql, {
-          model: seqEmployeeForReport,
-          mapToModel: true, // pass true here if you have any mapped fields
-          raw:true
-        }).then(data => {
-          console.log(data);
-          res.status(200).json(data);
-          sequelizeForReport.close().then(()=>{
-            console.log('sequelizeForReport connection closed');
-          });
-        }).catch(err => {
-          console.log(err);
-        });
       });
-    });
+
+    sequelizeForReport.query(sql, {
+      model: model,
+      mapToModel: true, // pass true here if you have any mapped fields
+      raw: true
+    }).then(data => {
+      console.log(data);
+      res.status(200).json(data);
+      sequelizeForReport.close().then(() => {
+        console.log('sequelizeForReport connection closed');
+      });
+    })
   });
 
   return router;

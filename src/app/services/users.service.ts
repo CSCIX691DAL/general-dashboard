@@ -13,7 +13,7 @@ import {Parameter} from '../../models/report';
 export class UsersService {
   header = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    Accept: 'application/json'
   });
 
   constructor(private http: HttpClient, private conn: DatabaseService) { }
@@ -27,15 +27,18 @@ export class UsersService {
     }));
   }
 
+  getUserGeneratedReportsRaw(reportId: string, dbConnId: string): Observable<any>{
+    return this.http.get('/api/users/execute?reportId=' + reportId + '&dbConnId=' + dbConnId);
+  }
 
-  public async getUserGeneratedReport(userId: string, reportId: string, dbConnId: string): Promise<any[]> {
+  public async getUserGeneratedReport(reportId: string, dbConnId: string): Promise<any[]> {
     const empReport = [];
-    return new Promise<any>((resolve, reject) => this.conn.getUserGeneratedReport(userId, reportId, dbConnId)
+    return new Promise<any>((resolve, reject) => this.getUserGeneratedReportsRaw(reportId, dbConnId)
       .subscribe(data => {
         console.log(data);
         for (const item of data) {
           const itemAttr = [];
-          for (const key in item){
+          for (const key in item) {
             // console.log('key: ' + key + '\t' + item[key]);
             itemAttr.push(item[key]);
           }
@@ -43,11 +46,12 @@ export class UsersService {
         }
         resolve(data);
       }));
+  }
 
   public createUserReport(reportID: number, inputParamsValues: Parameter[]): Promise<any>{
     const params = this.inputParamRevert(inputParamsValues);
     return this.http.post(
-      '/api/user_generated_reports/create',
+      '/api/userGeneratedReports/create',
       {
         body: {
           report_id_fk: reportID,

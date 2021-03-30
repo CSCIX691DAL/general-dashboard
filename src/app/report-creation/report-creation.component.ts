@@ -10,6 +10,7 @@ import {UsersService} from '../services/users.service';
 import {Observable, Subscription} from 'rxjs';
 import {DatabaseService} from '../services/database-connection.service';
 import { Database } from 'src/models/database';
+import {AuthService} from '../auth.service';
 
 
 
@@ -36,8 +37,9 @@ export class ReportCreationComponent implements OnInit {
     private employeeService: EmployeesService,
     private chartFactory: ChartFactoryService,
     private reportsService: ReportsService,
-    private userReportsService: UsersService,
-    private dbService: DatabaseService){}
+    private userService: UsersService,
+    private dbService: DatabaseService,
+    private auth: AuthService){}
 
 
   paramGroup = new FormGroup({});
@@ -59,25 +61,21 @@ export class ReportCreationComponent implements OnInit {
         this.reports[i] = this.dataList[i];
     }
   }
-  console.log(this.dataList); // Useful Debugging line.
-  console.log(this.reports);
+
   }
 
   updateFormGroup(): void{
     this.isFormCompleted = true;
-    if (this.selectedDatabase === undefined || this.selectedReport === undefined) {return;}
+    if (this.selectedDatabase === undefined || this.selectedReport === undefined) {return; }
     this.paramGroup = new FormGroup({});
     for (const param of this.selectedReport.input_params){
       this.paramGroup.addControl(param.name, new FormControl(''));
     }
     this.chartType = new FormGroup({});
-
-    console.log(this.selectedReport); // Useful Debugging line.
-
   }
 
 
-  onSubmit(): void{
+  onSubmit(): Promise<void>{
     if (this.selectedReport === undefined) { return; }
 
     const values: string[] = [];
@@ -88,16 +86,16 @@ export class ReportCreationComponent implements OnInit {
     this.isFormCompleted = !values.includes('');
     // close modal if form is completed
     if (this.isFormCompleted){
-      this.processReport(values);
-      this.userReportsService.createUserReport(this.selectedReport.id, this.selectedReport.input_params).then(data => {
-        console.log('created user report');
+      this.userService.createUserReport(this.selectedReport.id, this.selectedReport.input_params).then(res => {
+        console.log('HERE');
+        this.generateUserReport(this.selectedReport.id + '', this.selectedDatabase.id + '');
       });
-      this.modalService.dismissAll();
+
     }
   }
 
-  private generateUserReport(userId: string, reportId: string, dbConnId: string) : void{
-    this.usersService.getUserGeneratedReport(userId, reportId, dbConnId).then(data => {
+  private generateUserReport(reportId: string, dbConnId: string) : void{
+    this.userService.getUserGeneratedReport(reportId, dbConnId).then(data => {
       const widget = this.chartFactory.processChartType(this.selectedChartType, data,
         [this.selectedReport.display_name],
         ['Count']);

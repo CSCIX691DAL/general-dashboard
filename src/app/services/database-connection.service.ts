@@ -70,9 +70,7 @@ export class DatabaseService {
     return this.http.get('/api/employees/countByGender');
   }
 
-  getUserGeneratedReport(userId: string, reportId: string, dbConnId: string): Observable<any>{
-    return this.http.get('/api/users/' + userId + '/execute?reportId=' + reportId + '&dbConnId=' + dbConnId);
-  }
+
 
   public async getUserRecords(): Promise<UserGeneratedReport[]> {
     return new Promise<UserGeneratedReport[]>((resolve, reject) => this.http.get<UserGeneratedReport[]>('/api/user_generated_reports/generatedReports').subscribe(reports => {

@@ -49,7 +49,7 @@ const automate = new Automate(dbOptions, options);
   // console.log(definitions);
 
   // or generate codes
-  // const code = await automate.run();
+  const code = await automate.run();
   // console.log(code);
 const x = await automate.getDefinitions();
 
