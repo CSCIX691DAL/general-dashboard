@@ -26,7 +26,7 @@ export class ReportsService {
   public createReport(id: number, name: string, displayName: string, sql: string, inputParams: Parameter[]): Promise<any>{
     const params = this.inputParamRevert(inputParams);
     return this.http.post(
-      '/api/reports/execute',
+      '/api/reports/create',
       {
         headers: this.header,
         body: {

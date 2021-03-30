@@ -10,7 +10,7 @@ module.exports = sequelize => {
   // these routes require authentication
   const auth = new BackendAuth(sequelize);
 
-  router.post('/execute', auth.authParser(), function(req, res, ) {
+  router.post('/create', auth.authParser(), function(req, res, ) {
     const user = auth.users.findAll({where: {ID: req.token.data.email} }).then(data =>{
       console.log(data);
       seqUserReports.create({

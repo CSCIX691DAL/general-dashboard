@@ -25,7 +25,7 @@ export class UsersService {
   public createUserReport(reportID: number, inputParamsValues: Parameter[]): Promise<any>{
     const params = this.inputParamRevert(inputParamsValues);
     return this.http.post(
-      '/api/user_generated_reports/execute',
+      '/api/user_generated_reports/create',
       {
         body: {
           report_id_fk: reportID,
