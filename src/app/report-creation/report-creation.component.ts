@@ -35,15 +35,14 @@ export class ReportCreationComponent implements OnInit {
     private chartFactory: ChartFactoryService,
     private reportsService: ReportsService,
     private userReportsService: UsersService,
-    private dbService: DatabaseService
+    private dbService: DatabaseService){}
 
 
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
   isFormCompleted = true;
   differentAxisValues = false;
-  dataList = []; //Temp. var for reports.
-  
+  dataList = []; // Temp. var for reports.
   async ngOnInit(): Promise<void> {
     this.dbService.getDatabaseConnections().then(data => {
     this.databases = data;
@@ -58,7 +57,7 @@ export class ReportCreationComponent implements OnInit {
         this.reports[i] = this.dataList[i];
     }
   }
-  console.log(this.dataList); //Useful Debugging line.
+  console.log(this.dataList); // Useful Debugging line.
   console.log(this.reports);
   }
 
@@ -71,7 +70,7 @@ export class ReportCreationComponent implements OnInit {
     }
     this.chartType = new FormGroup({});
 
-    console.log(this.selectedReport); //Useful Debugging line.
+    console.log(this.selectedReport); // Useful Debugging line.
 
   }
 
