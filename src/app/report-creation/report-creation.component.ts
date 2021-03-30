@@ -43,6 +43,8 @@ export class ReportCreationComponent implements OnInit {
   isFormCompleted = true;
   differentAxisValues = false;
   dataList = []; // Temp. var for reports.
+
+  
   async ngOnInit(): Promise<void> {
     this.dbService.getDatabaseConnections().then(data => {
     this.databases = data;
@@ -63,6 +65,7 @@ export class ReportCreationComponent implements OnInit {
   console.log(this.reports);
   }
 
+
   updateFormGroup(): void{
     this.isFormCompleted = true;
     if (this.selectedDatabase === undefined || this.selectedReport === undefined) {return;}
@@ -71,9 +74,7 @@ export class ReportCreationComponent implements OnInit {
       this.paramGroup.addControl(param.name, new FormControl(''));
     }
     this.chartType = new FormGroup({});
-
     console.log(this.selectedReport); // Useful Debugging line.
-
   }
 
 
@@ -85,7 +86,13 @@ export class ReportCreationComponent implements OnInit {
     for (const param of this.selectedReport.input_params){
       values.push(this.paramGroup.get(param.name).value);
     }
-    this.isFormCompleted = !values.includes('');
+
+    //Module checks if all parameters as well as a chart type to suit are selected and updates form completion check. 
+    if ((this.isFormCompleted = !values.includes('')) === true && this.selectedChartType) {
+      this.isFormCompleted = true;
+    }
+    else {this.isFormCompleted = false;}
+
     // close modal if form is completed
     if (this.isFormCompleted){
       this.processReport(values);
