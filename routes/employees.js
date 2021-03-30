@@ -35,21 +35,5 @@ module.exports = sequelize => {
     }
   );
 
-  router.get('/execute', auth.authParser(), function (req, res, next) {
-    const sql = req.query.sql;
-    //use raw queries pass from query for type 1 and 2 report
-    sequelize.query(sql, {
-      model: seqEmployee,
-      mapToModel: true // pass true here if you have any mapped fields
-    })
-      .then(data => {
-        res.status(200).json(data);
-      }).catch(err => {
-        console.log(err)
-        res.status(500).append("Error", err);
-      });
-    }
-  );
-
   return router;
 };

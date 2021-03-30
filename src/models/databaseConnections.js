@@ -2,6 +2,7 @@ const {
   DataTypes
 } = require('sequelize');
 
+
 module.exports = sequelize => {
   const attributes = {
     id: {
@@ -11,6 +12,7 @@ module.exports = sequelize => {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
+
       field: "id",
       unique: "id_UNIQUE"
     },
@@ -59,6 +61,7 @@ module.exports = sequelize => {
       comment: null,
       field: "schema"
     }
+
   };
   const options = {
     tableName: "database_connections",
@@ -69,3 +72,4 @@ module.exports = sequelize => {
   const DatabaseConnectionsModel = sequelize.define("database_connections_model", attributes, options);
   return DatabaseConnectionsModel;
 };
+
