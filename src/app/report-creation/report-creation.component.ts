@@ -52,9 +52,11 @@ export class ReportCreationComponent implements OnInit {
 
   async upadateReportType() : Promise<void> {
     this.reports = [];
-    for (let i = 0; i < this.dataList.length; i++) {
-      if (this.selectedDatabase.id === this.dataList[i].database_connection_fk) {
-        this.reports[i] = this.dataList[i];
+    let matchedItem = 0;
+    for (let listItem = 0; listItem < this.dataList.length; listItem++) {
+      if (this.selectedDatabase.id === this.dataList[listItem].database_connection_fk) {
+        this.reports[matchedItem] = this.dataList[listItem];
+        matchedItem++;
     }
   }
   console.log(this.dataList); // Useful Debugging line.
