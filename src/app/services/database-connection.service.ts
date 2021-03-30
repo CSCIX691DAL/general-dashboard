@@ -81,9 +81,9 @@ export class DatabaseService {
     return new Promise<UserGeneratedReport[]>((resolve, reject) => this.http.get<UserGeneratedReport[]>('/api/user_generated_reports/generatedReports').subscribe(reports => {
       resolve(reports);
     }));
-
-  getDatabaseConnections(): Promise<Database[]>{
-    return this.http.get<Database[]>('/api/databases').toPromise();
-
   }
+    getDatabaseConnections(): Promise<Database[]>{
+      return this.http.get<Database[]>('/api/databases').toPromise();
+
+    }
 }
