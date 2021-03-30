@@ -3,7 +3,7 @@ export interface Parameter{
   type: string;
 }
 
-export interface user_report{
+export interface user_generated_reports {
   id: number;
   user_id_fk: number;
   report_id_fk: number;

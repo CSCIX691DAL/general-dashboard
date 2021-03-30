@@ -23,16 +23,20 @@ export class UsersService {
     }));
   }
   public createUserReport(reportID: number, inputParamsValues: Parameter[]): Promise<any>{
+    const params = this.inputParamRevert(inputParamsValues);
     return this.http.post(
-      '/api/user_reports/execute',
+      '/api/user_generated_reports/execute',
       {
-        headers: this.header,
         body: {
           report_id_fk: reportID,
           isActive: true,
-          input_params_values: inputParamsValues
+          input_params_values: params
         }
       }
     ).toPromise();
+  }
+  public inputParamRevert(inputParamsValues: Parameter[]): string
+  {
+    return '{"params":' + JSON.stringify(inputParamsValues) + '}';
   }
 }

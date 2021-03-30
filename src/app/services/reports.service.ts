@@ -24,6 +24,7 @@ export class ReportsService {
   }
 
   public createReport(id: number, name: string, displayName: string, sql: string, inputParams: Parameter[]): Promise<any>{
+    const params = this.inputParamRevert(inputParams);
     return this.http.post(
       '/api/reports/execute',
       {
@@ -32,12 +33,16 @@ export class ReportsService {
           ID: id,
           Name: name,
           Display_name: displayName,
-          Input_params: inputParams,
+          Input_params: params,
           Model_name: 'employees.js', // this will have to change from hardcode to user input via parameter from form, when implemented.
           Database_connection_fk: 2, // this will have to change from hardcode to user input via parameter from form, when implemented.
         }
       }
     ).toPromise();
+  }
+  public inputParamRevert(inputParamsValues: Parameter[]): string
+  {
+    return '{"params":' + JSON.stringify(inputParamsValues) + '}';
   }
 
   /**
