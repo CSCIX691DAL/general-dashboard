@@ -2,7 +2,8 @@ const {
   DataTypes
 } = require('sequelize');
 
-module.exports = {
+module.exports = sequelize => {
+  const attributes = {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -10,56 +11,61 @@ module.exports = {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "id"
+      field: "id",
+      unique: "id_UNIQUE"
     },
-    name: {
+    host_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "name"
+      field: "host_name"
     },
-    display_name: {
-      type: DataTypes.STRING(45),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "display_name"
-    },
-    sql: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "sql"
-    },
-    input_params: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "input_params"
-    },
-    database_connection_fk: { 
+    port: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "database_connection_fk",
-      references: {
-        key: "id",
-        model: "database_model"
-      }
+      field: "port"
+    },
+    username: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "username"
+    },
+    password: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "password"
+    },
+    schema: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "schema"
     }
-
+  };
+  const options = {
+    tableName: "database_connections",
+    comment: "",
+    timestamps: false,
+    indexes: []
+  };
+  const DatabaseConnectionsModel = sequelize.define("database_connections_model", attributes, options);
+  return DatabaseConnectionsModel;
 };

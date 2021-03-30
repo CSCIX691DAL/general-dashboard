@@ -6,6 +6,8 @@ import {EmployeesService} from '../services/employees.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {ReportsService} from '../services/reports.service';
 import {FormControl, FormGroup} from '@angular/forms';
+import {DatabaseService} from '../services/database-connection.service';
+import { Database } from 'src/models/database';
 
 @Component({
   selector: 'app-report-creation',
@@ -18,34 +20,53 @@ export class ReportCreationComponent implements OnInit {
   @Output() outputEvent = new EventEmitter<WidgetInfo>();
 
   selectedReport: Report;
+  selectedDatabase: Database;
   selectedChartType: string;
   chartTypes = WidgetTypes;
   reports: Report[] = [];
+  databases: Database[] = [];
   closeResult = '';
 
   constructor(
     private modalService: NgbModal,
     private employeeService: EmployeesService,
     private chartFactory: ChartFactoryService,
-    private reportsService: ReportsService) { }
+    private reportsService: ReportsService,
+    private dbService: DatabaseService) { }
 
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
   isFormCompleted = true;
   differentAxisValues = false;
+  dataList = []; //Temp. var for reports.
+  
   async ngOnInit(): Promise<void> {
-    this.reports = await this.reportsService.readReports();
+    this.dbService.getDatabaseConnections().then(data => {
+    this.databases = data;
+    });
+    this.dataList = await this.reportsService.readReports();
+  }
+
+  async upadateReportType() : Promise<void> {
+    this.reports = [];
+    for (let i = 0; i < this.dataList.length; i++) {
+      if (this.selectedDatabase.id === this.dataList[i].database_connection_fk) {
+        this.reports[i] = this.dataList[i];
+    }
+  }
+  console.log(this.dataList); //Useful Debugging line.
+  console.log(this.reports);
   }
 
   updateFormGroup(): void{
     this.isFormCompleted = true;
-    if (this.selectedReport === undefined) { return; }
+    if (this.selectedDatabase === undefined || this.selectedReport === undefined) {return;}
     this.paramGroup = new FormGroup({});
     for (const param of this.selectedReport.input_params){
       this.paramGroup.addControl(param.name, new FormControl(''));
     }
     this.chartType = new FormGroup({});
-
+    console.log(this.selectedReport); //Useful Debugging line.
   }
 
 
@@ -79,12 +100,7 @@ export class ReportCreationComponent implements OnInit {
         ['Count']);
       this.outputEvent.emit(widget);
       console.log(widget);
-
     });
     return true;
   }
-
-
-
-
 }
