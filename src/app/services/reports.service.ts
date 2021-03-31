@@ -23,14 +23,13 @@ export class ReportsService {
     return params;
   }
 
-  public createReport(id: number, name: string, displayName: string, sql: string, inputParams: Parameter[]): Promise<any>{
+  public createReport( name: string, displayName: string, sql: string, inputParams: Parameter[]): Promise<any>{
     const params = this.inputParamRevert(inputParams);
     return this.http.post(
       '/api/reports/create',
       {
         headers: this.header,
         body: {
-          ID: id,
           Name: name,
           Display_name: displayName,
           Input_params: params,

@@ -9,6 +9,30 @@
 
   <div class="modal-body">
     <div class="top">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Name</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="reportName">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Display Name</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="reportDisplayName">
+      </div>
+    </div> <br>
+
+    <div class="top">
+      <h4>Select your Database Connection: </h4>
+        <select class="form-control_reports-DB" [(ngModel)]="selectedDatabase" (ngModelChange)="databaseChange($event)" >
+          <option value= "" selected> Please select a database </option>
+          <!-- Utilizes Database values -->
+          <option *ngFor="let database of databases" [ngValue]="database">{{database.id}}</option>
+        </select>
+    </div> <br>
+
+    <div class="top" *ngIf="selectedDatabase">
       <div class="body-header"><h4>Table</h4></div>
       <div class="body-content">
         <label>
@@ -19,7 +43,7 @@
       </div>
     </div>
 
-    <div >
+    <div>
       <div class="body-header"><h4>User Input</h4></div>
       <div class="body-content" id="userInput">
         <div *ngFor="let param of selectedModelStructure">

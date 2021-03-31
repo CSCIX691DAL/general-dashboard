@@ -21,7 +21,6 @@ module.exports = sequelize => {
 
   router.post('/create', auth.authParser(), function(req, res, ) {
     seqReports.create({
-      id: req.body.body.id,
       name: req.body.body.name,
       display_name: req.body.body.display_name,
       sql: req.body.body.sql,

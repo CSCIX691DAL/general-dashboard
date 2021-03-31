@@ -15,16 +15,16 @@ export class SequelizeService {
 
   constructor(private http: HttpClient) { }
 
-  public getModels(): Observable<any>{
-    return this.http.get('/api/sequelize/models');
+  public getModels(databaseId: number): Promise<string[]>{
+    return this.http.get<string[]>('/api/sequelize/' + databaseId + '/models').toPromise();
   }
 
-  public async getModel(model: string): Promise<any>{
-    return this.http.get('/api/sequelize/models/' + model).toPromise();
+  public async getModel(databaseId: number, model: string): Promise<any>{
+    return this.http.get('/api/sequelize/' + databaseId + '/models/' + model).toPromise();
   }
 
-  public generateModels(): Observable<any>{
-    return this.http.post('/api/sequelize/generate', {headers: this.header});
+  public generateModels(databaseId: number): Promise<any>{
+    return this.http.post('/api/sequelize/' + databaseId + '/generate', {headers: this.header}).toPromise();
   }
 
   public executeReport(userId: number, reportId: number, dbID: number): void{

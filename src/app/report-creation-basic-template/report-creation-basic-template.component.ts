@@ -4,6 +4,9 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Json} from 'sequelize/types/lib/utils';
 import {Parameter} from '../../models/report';
 import {col} from 'sequelize';
+import {Database} from '../../models/database';
+import {DatabaseService} from '../services/database-connection.service';
+import {ReportsService} from '../services/reports.service';
 
 @Component({
   selector: 'app-report-creation-basic-template',
@@ -16,16 +19,21 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
   closeResult = '';
   selectedModel: string;
   selectedModelStructure: string[];
-  functions = ['All', 'Distinct', 'Sum'];
+  functions = ['All', 'Distinct', 'Count'];
   selectedFunc: string;
   selectedForFunc: string;
-  constructor(private seq: SequelizeService, private modalService: NgbModal) { }
+  databases: Database[] = [];
+  selectedDatabase: Database;
+  reportName: string;
+  reportDisplayName: string;
 
-  ngOnInit(): void {
+  constructor(private reportService: ReportsService,
+              private dbService: DatabaseService,
+              private seq: SequelizeService,
+              private modalService: NgbModal) { }
 
-    this.seq.getModels().subscribe(data => {
-      this.models = data;
-    });
+  async ngOnInit(): Promise<void> {
+    this.databases = await this.dbService.getDatabaseConnections();
   }
 
   open(content): void {
@@ -37,11 +45,15 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
     });
   }
 
+  async databaseChange(event: any): Promise<void>{
+    this.selectedDatabase = event;
+    this.models = await this.seq.getModels(this.selectedDatabase.id);
+  }
 
   onModelChange(): void{
     if (!this.selectedModel){ return; }
 
-    this.seq.getModel(this.selectedModel).then(data => {
+    this.seq.getModel(this.selectedDatabase.id, this.selectedModel).then(data => {
       this.selectedModelStructure = [];
       for (const key in data){
         if (data.hasOwnProperty(key)) {
@@ -66,6 +78,9 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
     if (this.selectedFunc === 'Distinct'){
       sql += this.selectColumns().replace(this.selectedForFunc,  'DISTINCT ' + this.selectedForFunc);
     }
+    else if (this.selectedFunc === 'Count'){
+      sql += 'count(' + this.selectedForFunc + ')';
+    }
     else {
       sql += ' * ';
     }
@@ -78,6 +93,7 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
     console.log(this.parseInputParams());
     console.log(sql);
 
+    this.reportService.createReport(this.reportName, this.reportDisplayName, sql, )
   }
 
   private selectColumns(): string {
@@ -124,4 +140,13 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
     return str;
   }
 
+  createInputParamsJsonString(): string{
+    let str = '{"params": [';
+    for (const param of this.selectedModelStructure){
+      const element = document.getElementById(param) as HTMLInputElement;
+      if (element.checked){
+        str +=
+      }
+    }
+  }
 }

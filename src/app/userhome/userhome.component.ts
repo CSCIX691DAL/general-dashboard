@@ -62,23 +62,5 @@ export class UserhomeComponent implements OnInit {
     }
   }
 
-  test1(): void{
-    this.seqService.generateModels().subscribe(data => console.log(data));
-  }
-  test2(): void{
-  }
-  test3(): void{
-    this.seqService.getModels().subscribe(data => console.log(data));
-  }
-
-  testExecuteReport(): void{
-    this.test.getDatabaseConnections().then(data => {
-      console.log(data[0].host_name);
-      console.log(data[0].id);
-      console.log(data[0].password);
-      console.log(data[0].port);
-      console.log(data[0].schema);
-    });
-  }
 
 }
