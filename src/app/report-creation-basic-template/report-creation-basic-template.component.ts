@@ -93,7 +93,17 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
     console.log(this.parseInputParams());
     console.log(sql);
 
-    this.reportService.createReport(this.reportName, this.reportDisplayName, sql, )
+    this.reportService.createReport(this.reportName,
+      this.reportDisplayName,
+      sql,
+      this.createInputParamsJsonString(),
+      this.selectedModel,
+      this.selectedDatabase.id).then(resp => {
+        alert('report has been created');
+    })
+      .catch(err => {
+      alert(err.msg);
+    });
   }
 
   private selectColumns(): string {
@@ -145,8 +155,10 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
     for (const param of this.selectedModelStructure){
       const element = document.getElementById(param) as HTMLInputElement;
       if (element.checked){
-        str +=
+        str += '{"name":"' + param + '","type":"text"},';
       }
     }
+    str = str.substring(0, str.length - 1) + ']}';
+    return str;
   }
 }

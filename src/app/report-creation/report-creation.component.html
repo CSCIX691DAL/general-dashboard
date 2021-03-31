@@ -13,7 +13,7 @@
 
   <div class="section">
     <h4>Select your Database Connection: </h4>
-    <select class="form-control_reports-DB" (change)="updateFormGroup()" (change)="upadateReportType()" [(ngModel)]="selectedDatabase">
+    <select class="form-control_reports-DB" (change)="updateFormGroup()" (change)="updateReportType()" [(ngModel)]="selectedDatabase">
       <option value= "" selected> Please select a database </option>
       <!-- Utilizes Database values -->
      <option *ngFor="let database of databases" [ngValue]="database">{{database.id}}</option>
@@ -26,8 +26,7 @@
     <div class="section">
       <div>
         <h4>Search By Report Type</h4>
-        <select class="form-control reports" (change)="updateFormGroup()" [(ngModel)]="selectedReport" size="5">
-          <option> None </option>
+        <select class="form-control reports" (change)="updateFormGroup()" [(ngModel)]="selectedReport" size="{{reports.length}}">
           <option *ngFor="let report of reports" [ngValue]="report">{{report.name}}</option>
         </select>
       </div>

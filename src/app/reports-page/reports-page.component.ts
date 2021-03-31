@@ -1,11 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {WidgetInfo, WidgetTypes} from '../services/Chart';
-import {Report} from '../../models/report';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {EmployeesService} from '../services/employees.service';
-import {ChartFactoryService} from '../services/chart-factory.service';
-import {ReportsService} from '../services/reports.service';
-import {FormControl, FormGroup} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {WidgetInfo} from '../services/Chart';
 
 @Component({
   selector: 'app-reports-page',

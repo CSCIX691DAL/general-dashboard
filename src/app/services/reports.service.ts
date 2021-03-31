@@ -23,18 +23,24 @@ export class ReportsService {
     return params;
   }
 
-  public createReport( name: string, displayName: string, sql: string, inputParams: Parameter[]): Promise<any>{
-    const params = this.inputParamRevert(inputParams);
+  public createReport(name: string,
+                      displayName: string,
+                      sql: string,
+                      inputParamsJson: string,
+                      modelName: string,
+                      databaseID: number): Promise<any>{
+    // const params = this.inputParamRevert(inputParams);
     return this.http.post(
       '/api/reports/create',
       {
         headers: this.header,
         body: {
-          Name: name,
-          Display_name: displayName,
-          Input_params: params,
-          Model_name: 'employees.js', // this will have to change from hardcode to user input via parameter from form, when implemented.
-          Database_connection_fk: 2, // this will have to change from hardcode to user input via parameter from form, when implemented.
+          name,
+          display_name: displayName,
+          sql,
+          input_params: inputParamsJson,
+          model_name: modelName,
+          database_connection_fk: databaseID
         }
       }
     ).toPromise();
@@ -53,6 +59,14 @@ export class ReportsService {
    */
   public async readReports(): Promise<Report[]>{
     return new Promise<Report[]>((resolve, reject) => this.http.get<Report[]>('/api/reports').subscribe(reports => {
+      // need to parse the nested parameter array from string to json to a valid parameter object array
+      reports.forEach(report => report.input_params = this.parseParams(report.input_params.toString()));
+      resolve(reports);
+    }));
+  }
+
+  public async readReportsForDatabase(databaseID: number): Promise<Report[]>{
+    return new Promise<Report[]>((resolve, reject) => this.http.get<Report[]>('/api/reports/' + databaseID).subscribe(reports => {
       // need to parse the nested parameter array from string to json to a valid parameter object array
       reports.forEach(report => report.input_params = this.parseParams(report.input_params.toString()));
       resolve(reports);

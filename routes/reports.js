@@ -19,6 +19,19 @@ module.exports = sequelize => {
     }
   );
 
+  router.get('/:databaseID', auth.authParser(), function (req, res, next) {
+      seqReports.findAll({
+        where: {
+          database_connection_fk: req.params.databaseID
+        }
+      }).then(data => {
+        res.status(200).json(data);
+      }).catch(err => {
+        res.status(500).append("Error", err);
+      })
+    }
+  );
+
   router.post('/create', auth.authParser(), function(req, res, ) {
     seqReports.create({
       name: req.body.body.name,
