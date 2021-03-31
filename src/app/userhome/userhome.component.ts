@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Employee } from '../models/employee';
+import * as $ from 'jquery';
 import { EmployeesService } from '../services/employees.service';
 import { Chart } from 'chart.js';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {baseOptions, ChartInfo, WidgetInfo, Table} from '../services/Chart';
+import {SequelizeService} from '../services/sequelize.service';
+import {DatabaseService} from '../services/database-connection.service';
+import {ReportsService} from '../services/reports.service';
 
 @Component({
   selector: 'app-userhome',
@@ -17,7 +20,8 @@ export class UserhomeComponent implements OnInit {
   private genderMap = new Map();
   public widgets: WidgetInfo[] = [];
 
-  constructor(private employee: EmployeesService, private chartFactory: ChartFactoryService) {
+  constructor(private reportService: ReportsService,
+    private employee: EmployeesService, private chartFactory: ChartFactoryService) {
   }
 
   ngOnInit(): void {
@@ -27,19 +31,21 @@ export class UserhomeComponent implements OnInit {
         this.genderMap.set(item.gender, item.SumOfGender);
       }
 
-      // example chart for genders
-      this.widgets.push({
-        name: 'chart',
-        chartOptions: baseOptions,
-        labels: ['Count'],
-        data: [
-          {data: [this.genderMap.get('M')], label: 'Male'},
-          {data: [this.genderMap.get('F')], label: 'Female'},
-        ],
-        chartType: 'bar',
-        showLegends: true
-      });
-
+      // example Charts (to test flexgrid)
+      for (let i = 0; i < 4; i++){
+        // example chart for genders
+        this.widgets.push({
+          name: 'chart',
+          chartOptions: baseOptions,
+          labels: ['Count'],
+          data: [
+            {data: [this.genderMap.get('M')], label: 'Male'},
+            {data: [this.genderMap.get('F')], label: 'Female'},
+          ],
+          chartType: 'bar',
+          showLegends: true
+        });
+      }
     });
   }
 
@@ -56,7 +62,5 @@ export class UserhomeComponent implements OnInit {
     }
   }
 
-  isTable(obj: WidgetInfo): boolean{
-    return obj.name === 'table';
-  }
+
 }

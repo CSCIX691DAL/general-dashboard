@@ -32,6 +32,15 @@ input[type=text], input[type=password], input[type=email] {
   box-sizing: border-box;
 }
 
+input[type=checkbox]{
+  width: 85%;
+  padding: 12px 20px;
+  margin: 8px auto;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
 .center {
   width: 40%;
   height: 40%;

@@ -10,19 +10,19 @@ const userType = require('../src/models/user');
 // Handle user database interactions and auth token generation / validation.
 class BackendAuth {
   constructor(sequelize) {
-    this.users = sequelize.define("Users", userType, { timestamps: false });
+    this.users = userType(sequelize);
   }
 
   // register a user.
-  register(email, password) {
+  register(email, password, adminAccount) {
     const auth = this;
     return new Promise(function(resolve, reject){
       // create the user in the database, then create and return an auth token
       return auth.users
-        .create({ID: email, Password: password})
+        .create({ID: email, Password: password, Admin: adminAccount})
         .then(_ => {
           return jwt.sign(
-            { data: {email: email} },
+            { data: {email: email, admin: adminAccount} },
             privateKey,
             signOptions,
             function(err, token) {
@@ -47,7 +47,7 @@ class BackendAuth {
         .then(resp => {
           if(resp[0].ID === email && resp[0].Password === password) {
             return jwt.sign(
-              { data: {email: email} },
+              { data: {email: email, admin: resp[0].Admin} },
               privateKey,
               signOptions,
               function(err, token) {

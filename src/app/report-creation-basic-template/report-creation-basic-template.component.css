@@ -6,18 +6,23 @@
   flex-direction: row;
 }
 
-.report-header{
+.body-header{
   flex: 1;
 }
-.report-content{
+.body-content{
   flex:2;
-}
-.report-content label{
-  width:75%;
 }
 
 .error-msg{
   color:red;
 }
 
+
+
+#userInput {
+  margin:10px;
+  display:flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
 

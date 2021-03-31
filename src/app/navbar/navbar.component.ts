@@ -8,17 +8,17 @@ import {Router} from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
   constructor(public auth: AuthService, private router: Router ) { }
 
   ngOnInit(): void {
+    this.auth.checkAdmin();
   }
 
   logout(): void {
     if (confirm('Are you sure you wish to logout?\nYou will be taken to the home page')) {
       this.auth.removeToken();
+      this.auth.bool = false;
       this.router.navigate(['/home']).catch(e => console.error(e));
     }
   }
-
 }

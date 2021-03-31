@@ -4,57 +4,66 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    ID: {
-      type: DataTypes.STRING(32),
+    emp_no: {
+      type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "ID"
+      field: "emp_no"
     },
-    FirstName: {
+    birth_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "birth_date"
+    },
+    first_name: {
+      type: DataTypes.STRING(14),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "first_name"
+    },
+    last_name: {
       type: DataTypes.STRING(16),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "FirstName"
+      field: "last_name"
     },
-    LastName: {
-      type: DataTypes.STRING(16),
+    gender: {
+      type: DataTypes.ENUM('M', 'F'),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "LastName"
+      field: "gender"
     },
-    Password: {
-      type: DataTypes.STRING(45),
+    hire_date: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Password"
-    },
-    homepage_contents: {
-      type: DataTypes.STRING(160),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: true,
-      autoIncrement: false,
-      comment: null,
-      field: "homepage_contents"
+      field: "hire_date"
     }
   };
   const options = {
-    tableName: "Users",
+    tableName: "employees",
     comment: "",
     indexes: []
   };
-  const UsersModel = sequelize.define("Users_model", attributes, options);
-  return UsersModel;
+  const EmployeesModel = sequelize.define("employees_model", attributes, options);
+  return EmployeesModel;
 };

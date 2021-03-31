@@ -8,7 +8,7 @@ module.exports = sequelize => {
   router.post('/register', function (req, res, next) {
     if(req.body && req.body.hasOwnProperty('username') && typeof req.body.username === 'string' && req.body.username.match('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
       && req.body.hasOwnProperty('password') && typeof req.body.password === 'string') {
-      auth.register(req.body.username, req.body.password).then(token => {
+      auth.register(req.body.username, req.body.password, req.body.adminAccount).then(token => {
         res.status(201).send(token); // OK (created) and add token string to body
       }).catch(e => {
         res.header('X-Status-Reason', 'Duplicate User').sendStatus(403); // Forbidden (duplicate user)

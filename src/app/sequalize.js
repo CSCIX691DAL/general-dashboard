@@ -4,7 +4,7 @@ const Automate = require('sequelize-automate');
 const sequelize = new Sequelize('x691_G_dashboard', 'x691_G_student', 'yED3IX83k3BDYrCS', {
   host: 'db.cs.dal.ca',
   dialect: 'mysql',
-  logging:false
+
 });
 
 const dbOptions = {
@@ -23,7 +23,6 @@ const dbOptions = {
     dialectOptions: {
       collate: 'utf8_general_ci',
     },
-    timestamps: false,
   },
 };
 
@@ -44,23 +43,36 @@ const options = {
 const automate = new Automate(dbOptions, options);
 
 (async function main() {
+
+
   // // get table definitions
   // const definitions = await automate.getDefinitions();
   // console.log(definitions);
 
   // or generate codes
-  // const code = await automate.run();
-  // console.log(code);
-const x = await automate.getDefinitions();
+  const code = await automate.run( {timestamps: false});
+  // const y = await automate.getDefinitions({timestamps: false});
 
-  const model = require('../app/models/users')
+  var fs = require('fs');
+  var files = fs.readdirSync('../app/models/');
 
-  const db = sequelize.define("Users", require('./user'),{
-      timestamps:false
-    });
+  console.log(files)
 
-  const test = await db.findAll();
-  console.log(test)
+  const model = require( '../app/models/' + files[4]);
+  const x = model(sequelize);
+  await x.findAll().then(data => console.log(data));
+
+
+
+
+  //
+  // const model = require('../app/models/users');
+  // const x = model(sequelize);
+
+  // await x.findAll().then(data => console.log(data));
+
+
+
 })()
 
   /*async function main() {

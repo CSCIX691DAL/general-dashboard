@@ -21,6 +21,10 @@ app.use('/home', express.static(path.join(__dirname, 'dist')));
 app.use('/registration', express.static(path.join(__dirname, 'dist')));
 app.use('/login', express.static(path.join(__dirname, 'dist')));
 app.use('/userhome', express.static(path.join(__dirname, 'dist')));
+app.use('/reports', express.static(path.join(__dirname, 'dist')));
+app.use('/admin-report-page', express.static(path.join(__dirname, 'dist')));
+app.use('/admin-users-page', express.static(path.join(__dirname, 'dist')));
+app.use('/admin-databases-page', express.static(path.join(__dirname, 'dist')));
 app.use('/api', api);
 
 // catch 404 and forward to error handler
@@ -38,7 +42,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json('error');
 });
 
 module.exports = app;

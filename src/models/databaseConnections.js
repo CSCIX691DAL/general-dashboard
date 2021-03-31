@@ -2,68 +2,74 @@ const {
   DataTypes
 } = require('sequelize');
 
+
 module.exports = sequelize => {
   const attributes = {
-    EmployeeID: {
+    id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
       comment: null,
-      field: "emp_no"
+
+      field: "id",
+      unique: "id_UNIQUE"
     },
-    BirthDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: true,
-      autoIncrement: false,
-      comment: null,
-      field: "birth_date"
-    },
-    FirstName: {
-      type: DataTypes.STRING(14),
+    host_name: {
+      type: DataTypes.STRING(100),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "first_name"
+      field: "host_name"
     },
-    LastName: {
-      type: DataTypes.STRING(16),
+    port: {
+      type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "last_name"
+      field: "port"
     },
-    Gender: {
-      type: DataTypes.ENUM('M', 'F'),
+    username: {
+      type: DataTypes.STRING(50),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "gender"
+      field: "username"
     },
-    HireDate: {
-      type: DataTypes.DATEONLY,
+    password: {
+      type: DataTypes.STRING(50),
       allowNull: false,
       defaultValue: null,
-      primaryKey: true,
+      primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "hire_date"
+      field: "password"
+    },
+    schema: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "schema"
     }
+
   };
   const options = {
-    tableName: "employees",
+    tableName: "database_connections",
     comment: "",
+    timestamps: false,
     indexes: []
   };
-  const EmployeesModel = sequelize.define("Employees_model", attributes, options);
-  return EmployeesModel;
+  const DatabaseConnectionsModel = sequelize.define("database_connections_model", attributes, options);
+  return DatabaseConnectionsModel;
 };
+

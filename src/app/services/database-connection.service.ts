@@ -1,21 +1,16 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
+import { User } from '../../models/users';
+import { UserGeneratedReport } from '../../models/userGeneratedReport';
 import { stringify } from 'querystring';
+import {Database} from '../../models/database';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
-/*
-  URLs for http requests are prefixed with the type of request they are.
-  E.G:
-    GET requests are /gets/<RESOURCE>
-    POST requests are /posts/<RESOURCE>
-
-  This is to get around CORS Policy blocking when we try to redirect to another domain directly,
-  so we send the request through a proxy
- */
 export class DatabaseService {
 
   header = new HttpHeaders({
@@ -26,7 +21,7 @@ export class DatabaseService {
   constructor(private http: HttpClient) {
   }
 
-  createUser(id: string, password: string ): Observable<any>{
+  createUser(id: string, password: string, adminAccount: boolean): Observable<any>{
 
     return this.http.request('post',
        '/api/user',
@@ -34,30 +29,37 @@ export class DatabaseService {
          headers: this.header,
          body: {
            ID: id,
-           Password: password
+           Password: password,
          }
        }
       );
   }
 
-  getUsers(): Observable<any>{
-    return this.http.get('/api/users');
+  public async getUsers(): Promise<User[]>{
+    return new Promise<User[]>((resolve, reject) => this.http.get<User[]>('/api/users/getAllUsers').subscribe(reports => {
+      resolve(reports);
+    }));
   }
 
   getUser(user: string): Observable<any>{
     return this.http.get('/api/users/' + user);
   }
 
-  deleteUser(user: string): Observable<any>{
-    return this.http.request('delete',
-      '/api/users/' + user,
+  readHomepageJson(): Observable<any> {
+    return this.http.get('/api/users/homepage');
+  }
+
+
+  updateHomepage(jsonString: string): Observable<any> {
+    return this.http.put(
+      '/api/users/homepage',
       {
         headers: this.header,
         body: {
-          user
+          homepageContents: jsonString
         }
       }
-      );
+    );
   }
 
   getAllEmployees(): Observable<any>{
@@ -68,10 +70,15 @@ export class DatabaseService {
     return this.http.get('/api/employees/countByGender');
   }
 
-  getEmployeesReport(sql: string): Observable<any>{
-    console.log('SQL ' + sql);
-    const result = escape(sql);
-    const query = `?sql=${result}`;
-    return this.http.get('/api/employees/execute' + query);
+
+
+  public async getUserRecords(): Promise<UserGeneratedReport[]> {
+    return new Promise<UserGeneratedReport[]>((resolve, reject) => this.http.get<UserGeneratedReport[]>('/api/user_generated_reports/generatedReports').subscribe(reports => {
+      resolve(reports);
+    }));
   }
+    getDatabaseConnections(): Promise<Database[]>{
+      return this.http.get<Database[]>('/api/databases').toPromise();
+
+    }
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from './database-connection.service';
 import { HttpClient } from '@angular/common/http';
-import { Employee } from '../models/employee';
-import {Report} from '../modal-basic/Report';
+import { Employee } from '../../models/employee';
 import {Observable} from 'rxjs';
+import {Report} from '../../models/report';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,7 @@ export class EmployeesService {
     this.conn.getAllEmployees().subscribe(data => {
       for (const item of data) {
         const itemAttr = [];
+        // tslint:disable-next-line:forin
         for (const key in item){
           itemAttr.push(item[key]);
         }
@@ -30,20 +31,6 @@ export class EmployeesService {
 
   getEmployeesGender(): Observable<any>{
     return this.conn.getEmployeesGender();
-  }
-
-  getEmployeesReport(sql: string): Promise<any[]>{
-    const empReport = [];
-    return new Promise<any>((resolve, reject) => this.conn.getEmployeesReport(sql).subscribe(data => {
-      for (const item of data) {
-        const itemAttr = [];
-        for (const key in item){
-          itemAttr.push(item[key]);
-        }
-        empReport.push(new Employee(itemAttr));
-      }
-      resolve(empReport);
-    }));
   }
 
   public setReport(report: Report): void{
