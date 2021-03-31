@@ -131,7 +131,7 @@ module.exports = sequelize => {
       }
     );
     const modelStruc = result['reports_model.model_name']
-    const model = require('../src/models/' + modelStruc);
+    const model = require('../models/' + dbConnId + '/' + modelStruc);
 
     //test connection
     await sequelizeForReport.authenticate()
