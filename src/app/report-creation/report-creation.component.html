@@ -7,10 +7,7 @@
     </p> <hr>
   </div>
 
-
-
   <!-- Database Connection -->
-
   <div class="section">
     <h4>Select your Database Connection: </h4>
     <select class="form-control_reports-DB" (change)="updateFormGroup()" (change)="updateReportType()" [(ngModel)]="selectedDatabase">
@@ -19,6 +16,7 @@
      <option *ngFor="let database of databases" [ngValue]="database">{{database.id}}</option>
     </select>
   </div> <br>
+
 
   <!-- List of Reports Configurations -->
   <div *ngIf="selectedDatabase">
@@ -32,8 +30,6 @@
         </select>
       </div>
     </div> <br>
-
-  </div>
 
     <!-- Report Configuarations -->
     <div class="section" *ngIf="selectedReport">
@@ -51,7 +47,6 @@
       </div>
     </div> <br>
 
-
     <div class="section" *ngIf="selectedReport">
       <h4>Select the chart type you'd like to use: </h4>
         <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
@@ -62,12 +57,14 @@
         </form>
     </div> <br>
 
+    <!-- List of Reports Submission Button -->
     <div *ngIf="selectedReport">
       <div class="form-buttons-execute_and_save">
         <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark">View & Save Report</button>
       </div> <br> <br>
     </div> <hr>
   </div>
+
 
   <!-- List of Reports user messaging -->
   <div class="section errors">
@@ -77,7 +74,6 @@
       </span>
     </div>
   </div>
-
 
   <div class="section" *ngIf="selectedReport">
     <div>
