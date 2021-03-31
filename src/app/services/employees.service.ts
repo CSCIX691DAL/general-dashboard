@@ -19,6 +19,7 @@ export class EmployeesService {
     this.conn.getAllEmployees().subscribe(data => {
       for (const item of data) {
         const itemAttr = [];
+        // tslint:disable-next-line:forin
         for (const key in item){
           itemAttr.push(item[key]);
         }

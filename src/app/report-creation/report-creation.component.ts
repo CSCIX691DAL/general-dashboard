@@ -46,26 +46,17 @@ export class ReportCreationComponent implements OnInit {
   chartType = new FormGroup({});
   isFormCompleted = true;
   differentAxisValues = false;
-  dataList = []; // Temp. var for reports.
 
-  
   async ngOnInit(): Promise<void> {
     this.dbService.getDatabaseConnections().then(data => {
     this.databases = data;
     });
-    this.dataList = await this.reportsService.readReports();
   }
 
-  async upadateReportType() : Promise<void> {
-    this.reports = [];
-    let matchedItem = 0;
-    for (let listItem = 0; listItem < this.dataList.length; listItem++) {
-      if (this.selectedDatabase.id === this.dataList[listItem].database_connection_fk) {
-        this.reports[matchedItem] = this.dataList[listItem];
-        matchedItem++;
-    }
-  }
-
+  async updateReportType() : Promise<void> {
+    this.reportsService.readReportsForDatabase(this.selectedDatabase.id)
+      .then(reports => this.reports = reports)
+      .catch(err => console.log(err));
   }
 
 

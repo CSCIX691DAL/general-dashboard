@@ -1,0 +1,28 @@
+
+.modal-body > div {
+  margin:10px;
+  display:flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.body-header{
+  flex: 1;
+}
+.body-content{
+  flex:2;
+}
+
+.error-msg{
+  color:red;
+}
+
+
+
+#userInput {
+  margin:10px;
+  display:flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
