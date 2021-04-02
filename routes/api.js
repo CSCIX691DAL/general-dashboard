@@ -37,6 +37,7 @@ sshConnection.forward({
   router.use('/reports', require('./reports')(sequelize));
   router.use('/userGeneratedReports', require('./userGeneratedReports')(sequelize));
   router.use('/databases', require('./database_connections')(sequelize));
+  router.use('/sequelize', require('./sequelize')(sequelize));
 
 });
 

@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {ChartFactoryService} from '../services/chart-factory.service';
 import {baseOptions, ChartInfo, WidgetInfo, Table} from '../services/Chart';
+import {SequelizeService} from '../services/sequelize.service';
+import {DatabaseService} from '../services/database-connection.service';
 import {ReportsService} from '../services/reports.service';
 
 @Component({
@@ -59,4 +61,6 @@ export class UserhomeComponent implements OnInit {
       console.log(entry);
     }
   }
+
+
 }
