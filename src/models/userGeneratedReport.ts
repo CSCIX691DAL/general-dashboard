@@ -7,4 +7,5 @@ export interface UserGeneratedReport{
   report_id_fk: integer;
   isActive: integer;
   input_param_values: Text;
+  chart_type: Text;
 }

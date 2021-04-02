@@ -13,7 +13,7 @@ module.exports = sequelize => {
     auth.users.findAll({where: { ID: req.token.data.email }}).then(data => {
     const userID = data[0].user_id;
     seqUserGenReports.findAll({ where:{ user_id_fk: userID },
-      attributes:['id', 'user_id_fk', 'isActive', 'input_params_values']})
+      attributes:['id', 'user_id_fk', 'isActive', 'input_params_values', 'chart_type']})
       .then(resp => {
         console.log(resp);
         res.status(200).json(resp);
@@ -36,7 +36,8 @@ module.exports = sequelize => {
           user_id_fk: data[0].user_id,
           report_id_fk: req.body.body.report_id_fk,
           isActive: true,
-          input_params_values: req.body.body.input_params_values
+          input_params_values: req.body.body.input_params_values,
+          chart_type: req.body.body.chart_type
         }).then(resp => {
           res.status(200).json(resp);
         }).catch(err => {

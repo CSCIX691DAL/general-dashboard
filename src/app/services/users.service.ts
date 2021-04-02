@@ -51,7 +51,7 @@ export class UsersService {
   }
 
 
-  public createUserReport(reportID: number, inputParamsValues: string): Promise<any>{
+  public createUserReport(reportID: number, inputParamsValues: string, selectedChartType: string): Promise<any>{
     return this.http.post(
       '/api/userGeneratedReports/create',
       {
@@ -59,7 +59,8 @@ export class UsersService {
         body: {
           report_id_fk: reportID,
           isActive: true,
-          input_params_values: inputParamsValues
+          input_params_values: inputParamsValues,
+          chart_type: selectedChartType
         }
       }
     ).toPromise();

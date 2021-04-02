@@ -87,7 +87,7 @@ export class ReportCreationComponent implements OnInit {
 
       params = params.substring(0, params.length - 1);
       userReportParams += params + ']}';
-      this.userService.createUserReport(this.selectedReport.id, userReportParams).then(data => {
+      this.userService.createUserReport(this.selectedReport.id, userReportParams, this.selectedChartType).then(data => {
         this.generateUserReport(this.selectedReport.id + '', this.selectedDatabase.id + '');
 
       });
