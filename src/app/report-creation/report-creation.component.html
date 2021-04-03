@@ -23,18 +23,16 @@
     <!-- Report Search By Type -->
     <div class="section">
       <div>
-        <h4>Search By Report Type</h4>
+        <h4>Choose a report to search by: </h4>
         <select class="form-control reports" (change)="updateFormGroup()" [(ngModel)]="selectedReport" size="{{reports.length}}">
-          <option value= ""> None </option>
           <option *ngFor="let report of reports" [ngValue]="report">{{report.name}}</option>
         </select>
       </div>
     </div> <br>
-
-    <!-- Report Configuarations -->
+    <!-- Report parameter configuarations -->
     <div class="section" *ngIf="selectedReport">
       <div>
-        <h4>Report Parameters</h4>
+        <h4>Report Parameters: </h4>
         <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
           <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.input_params">
             <div class="input-group-prepend">
@@ -46,7 +44,7 @@
         </form>
       </div>
     </div> <br>
-
+    <!-- Report chart type configuaration -->
     <div class="section" *ngIf="selectedReport">
       <h4>Select the chart type you'd like to use: </h4>
         <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
@@ -56,7 +54,6 @@
             </select>
         </form>
     </div> <br>
-
     <!-- List of Reports Submission Button -->
     <div *ngIf="selectedReport">
       <div class="form-buttons-execute_and_save">
@@ -67,14 +64,13 @@
 
 
   <!-- List of Reports user messaging -->
-  <div class="section errors">
+  <div class="section-errors">
     <div>
       <span class="error-msg" *ngIf="!isFormCompleted">
         <h4>Please fill out all the fields </h4>
       </span>
     </div>
   </div>
-
   <div class="section" *ngIf="selectedReport">
     <div>
       <strong>Your chart is shown below: </strong> <br>
