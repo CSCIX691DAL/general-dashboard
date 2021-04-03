@@ -18,6 +18,20 @@ module.exports = sequelize => {
   }
   );
 
-
+  router.post('/databases', auth.authParser(), function (req, res, next) {
+    dbSeq.create({
+      host_name: req.body.body.host_name,
+      port: req.body.body.port,
+      username: req.body.body.username,
+      password: req.body.body.password,
+      schema: req.body.body.schema
+    }).then(resp => {
+      res.status(200);
+    }).catch(err => {
+      console.log(err);
+      res.status(500).append("Error", err);
+    })
+    }
+  );
   return router;
 };

@@ -1,1 +1,48 @@
-<h1>Databases</h1>
+<div class="content">
+  <div class="title">
+    <h1>Admin Database Manager</h1>
+  </div>
+  <div class="title">
+    <h1>List of Existing Databases</h1>
+  </div>
+  <div class="container" >
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Host Name</th>
+        <th scope="col">Port</th>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+        <th scope="col">Schema</th>
+      </tr>
+      </thead>
+
+      <tbody *ngFor="let database of dataBases">
+      <tr>
+        <td>
+          {{database.id}}
+        </td>
+        <td>
+          {{database.host_name}}
+        </td>
+        <td>
+          {{database.port}}
+        </td>
+        <td>
+          {{database.username}}
+        </td>
+        <td>
+          {{database.password}}
+        </td>
+        <td>
+          {{database.schema}}
+        </td>
+        <td>
+          <button>Remove Database</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
