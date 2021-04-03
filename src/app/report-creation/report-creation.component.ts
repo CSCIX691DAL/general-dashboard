@@ -46,7 +46,8 @@ export class ReportCreationComponent implements OnInit {
   chartType = new FormGroup({});
   isFormCompleted = true;
   differentAxisValues = false;
-  ngOnInit(): void {
+
+  async ngOnInit(): Promise<void> {
     this.dbService.getDatabaseConnections().then(data => {
     this.databases = data;
     });
@@ -56,8 +57,8 @@ export class ReportCreationComponent implements OnInit {
     this.reportsService.readReportsForDatabase(this.selectedDatabase.id)
       .then(reports => this.reports = reports)
       .catch(err => console.log(err));
-
   }
+
 
   updateFormGroup(): void{
     this.isFormCompleted = true;
@@ -67,6 +68,7 @@ export class ReportCreationComponent implements OnInit {
       this.paramGroup.addControl(param.name, new FormControl(''));
     }
     this.chartType = new FormGroup({});
+    console.log(this.selectedReport); // Useful Debugging line.
   }
 
 
@@ -81,7 +83,13 @@ export class ReportCreationComponent implements OnInit {
       values.push(this.paramGroup.get(param.name).value);
       params += ('{"' + param.name + '": ' + '"' + this.paramGroup.get(param.name).value + '"},');
     }
-    this.isFormCompleted = !values.includes('');
+
+    //Module checks if all parameters as well as a chart type to suit are selected and updates form completion check. 
+    if ((this.isFormCompleted = !values.includes('')) === true && this.selectedChartType) {
+      this.isFormCompleted = true;
+    }
+    else {this.isFormCompleted = false;}
+
     // close modal if form is completed
     if (this.isFormCompleted){
 
