@@ -50,7 +50,7 @@ export class UsersService {
   }
 
   getUserGeneratedReportsByUserIdRaw(): Observable<any>{
-    return this.http.get('/api/users/getUserGeneratedReports');
+    return this.http.get('/api/userGeneratedReports/getReportsByUserId');
   }
 
   public async getUserGeneratedReportsByUserId(): Promise<any[]> {

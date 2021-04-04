@@ -153,28 +153,5 @@ module.exports = sequelize => {
     })
   });
 
-  router.get('/getUserGeneratedReports', auth.authParser(), async function (req, res, next) {
-    const rawUser = await auth.users.findAll({where: {ID: req.token.data.email}});
-    const userId = rawUser[0].user_id;
-    console.log('user id' + userId);
-
-    //get user generated report using left join
-    seqUserGeneratedReport.findAll({
-      where: {
-        user_id_fk: userId
-      },
-      include: [{
-        model: seqReports
-      }],
-      raw: true
-    }).then(data => {
-      console.log(JSON.stringify(data));
-      res.status(200).json(data);
-    }).catch(err => {
-      res.status(500).append("Error", err)
-    })
-
-  });
-
   return router;
 };
