@@ -9,6 +9,7 @@ import {baseOptions, ChartInfo, WidgetInfo, Table} from '../services/Chart';
 import {SequelizeService} from '../services/sequelize.service';
 import {DatabaseService} from '../services/database-connection.service';
 import {ReportsService} from '../services/reports.service';
+import {UsersService} from '../services/users.service';
 
 @Component({
   selector: 'app-userhome',
@@ -20,7 +21,7 @@ export class UserhomeComponent implements OnInit {
   private genderMap = new Map();
   public widgets: WidgetInfo[] = [];
 
-  constructor(private reportService: ReportsService,
+  constructor(private reportService: ReportsService, private userService: UsersService,
     private employee: EmployeesService, private chartFactory: ChartFactoryService) {
   }
 
@@ -47,6 +48,10 @@ export class UserhomeComponent implements OnInit {
         });
       }
     });
+
+    this.userService.getUserGeneratedReportsByUserId().then(r => {
+      console.log(r);
+    });
   }
 
   printEmployees(): void {
@@ -61,6 +66,5 @@ export class UserhomeComponent implements OnInit {
       console.log(entry);
     }
   }
-
 
 }
