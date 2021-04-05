@@ -72,7 +72,7 @@ module.exports = sequelize => {
   );
 
   router.get('/execute', auth.authParser(), async function (req, res, next) {
-    console.log("PENIS")
+    console.log("Execute")
     const reportId = req.query.reportId;
     const rawUser = await auth.users.findAll({where: { ID: req.token.data.email }});
     const userId = rawUser[0].user_id;

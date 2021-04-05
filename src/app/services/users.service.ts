@@ -39,6 +39,26 @@ export class UsersService {
         console.log(data);
         for (const item of data) {
           const itemAttr = [];
+          for (const key in item) {
+            // console.log('key: ' + key + '\t' + item[key]);
+            itemAttr.push(item[key]);
+          }
+          empReport.push(new Employee(itemAttr));
+        }
+        resolve(data);
+      }));
+  }
+
+  getUserGeneratedReportsByUserIdRaw(): Observable<any>{
+    return this.http.get('/api/userGeneratedReports/getReportsByUserId');
+  }
+
+  public async getUserGeneratedReportsByUserId(): Promise<any[]> {
+    const empReport = [];
+    return new Promise<any>((resolve, reject) => this.getUserGeneratedReportsByUserIdRaw()
+      .subscribe(data => {
+        for (const item of data) {
+          const itemAttr = [];
           // tslint:disable-next-line:forin
           for (const key in item) {
             // console.log('key: ' + key + '\t' + item[key]);
