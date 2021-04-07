@@ -26,6 +26,17 @@ export class UserhomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // function taken from:  https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
+    // tslint:disable-next-line:only-arrow-functions
+    $('#menu-toggle').click(function(e) {
+      e.preventDefault();
+      $('#wrapper').toggleClass('toggled');
+    });
+    $('#menu-toggle').click(function(event) {
+      event.preventDefault();
+      $('#barRight').toggle();
+      $('#barLeft').toggle();
+    });
     this.employees = this.employee.getAllEmployees();
     this.employee.getEmployeesGender().subscribe(data => {
       for (const item of data) {
