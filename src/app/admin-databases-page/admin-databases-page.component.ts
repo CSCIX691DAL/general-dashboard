@@ -3,6 +3,7 @@ import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {DatabaseService} from '../services/database-connection.service';
 import {Database} from '../../models/database';
+import {SequelizeService} from '../services/sequelize.service';
 
 @Component({
   selector: 'app-admin-databases-page',
@@ -11,14 +12,29 @@ import {Database} from '../../models/database';
 })
 export class AdminDatabasesPageComponent implements OnInit {
 
-  dataBases: Database[];
-  constructor(public auth: AuthService, private router: Router, public conn: DatabaseService) {
+  databases: Database[];
+  constructor(public auth: AuthService,
+              public conn: DatabaseService,
+              private router: Router,
+              private seqService: SequelizeService) {
+
     if (auth.isAdmin() === false){
       this.router.navigate(['/home']);
     }
   }
 
   async ngOnInit(): Promise<void> {
-    this.dataBases = await this.conn.getDatabaseConnections();
+    this.databases = await this.conn.getDatabaseConnections();
+  }
+
+  updateDatabases(): void{
+    this.databases.forEach(db => {
+      this.seqService.generateModels(db.id).then(resp => {
+        alert('Databases updated');
+      }).catch(err => {
+        alert(err);
+      });
+    });
+
   }
 }

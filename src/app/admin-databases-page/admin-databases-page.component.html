@@ -18,7 +18,7 @@
       </tr>
       </thead>
 
-      <tbody *ngFor="let database of dataBases">
+      <tbody *ngFor="let database of databases">
       <tr>
         <td>
           {{database.id}}
@@ -44,5 +44,8 @@
       </tr>
       </tbody>
     </table>
+  </div>
+  <div>
+    <button class="btn btn-lg btn-outline-primary" (click)="updateDatabases()">Sync Databases</button>
   </div>
 </div>
