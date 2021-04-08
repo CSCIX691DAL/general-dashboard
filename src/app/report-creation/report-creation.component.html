@@ -57,11 +57,17 @@
     <!-- List of Reports Submission Button -->
     <div *ngIf="selectedReport">
       <div class="form-buttons-execute_and_save">
-        <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark">View & Save Report</button>
+        <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark" [disabled]="isLoading" >View & Save Report</button>
       </div> <br> <br>
     </div> <hr>
   </div>
 
+  <!--  spinner-->
+  <div class="text-center" *ngIf="isLoading">
+    <div class="spinner-border col-md-12" role="status">
+      <span class="visually-hidden"></span>
+    </div>
+  </div>
 
   <!-- List of Reports user messaging -->
   <div class="section-errors">
@@ -71,9 +77,10 @@
       </span>
     </div>
   </div>
-  <div class="section" *ngIf="selectedReport">
+  <div class="section" *ngIf="selectedReport && !isLoading">
     <div>
       <strong>Your chart is shown below: </strong> <br>
       If you see an empty chart then your query is returning null results. <br>
     </div> <br>
   </div> <br>
+</div>

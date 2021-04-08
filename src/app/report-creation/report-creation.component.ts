@@ -31,6 +31,7 @@ export class ReportCreationComponent implements OnInit {
   reports: Report[] = [];
   databases: Database[] = [];
   closeResult = '';
+  isLoading = false;
 
   constructor(
     private modalService: NgbModal,
@@ -84,7 +85,7 @@ export class ReportCreationComponent implements OnInit {
       params += ('{"' + param.name + '": ' + '"' + this.paramGroup.get(param.name).value + '"},');
     }
 
-    //Module checks if all parameters as well as a chart type to suit are selected and updates form completion check. 
+    //Module checks if all parameters as well as a chart type to suit are selected and updates form completion check.
     if ((this.isFormCompleted = !values.includes('')) === true && this.selectedChartType) {
       this.isFormCompleted = true;
     }
@@ -95,6 +96,7 @@ export class ReportCreationComponent implements OnInit {
 
       params = params.substring(0, params.length - 1);
       userReportParams += params + ']}';
+      this.isLoading = true;
       this.userService.createUserReport(this.selectedReport.id, userReportParams, this.selectedChartType).then(data => {
         this.generateUserReport(this.selectedReport.id + '', this.selectedDatabase.id + '');
 
@@ -108,6 +110,7 @@ export class ReportCreationComponent implements OnInit {
         [this.selectedReport.display_name],
         ['Count']);
       this.outputEvent.emit(widget);
+      this.isLoading = false;
       console.log(widget);
     });
 
