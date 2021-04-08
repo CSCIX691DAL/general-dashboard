@@ -28,7 +28,6 @@ module.exports = sequelize => {
   );
 
   router.post('/create', auth.authParser(), function(req, res, ) {
-
     auth.users.findAll({where: {ID: req.token.data.email} }).then(data => {
       console.log("predelete");
 
@@ -75,6 +74,21 @@ module.exports = sequelize => {
     }).then(data => {
       console.log(JSON.stringify(data));
       res.status(200).json(data);
+    }).catch(err => {
+      res.status(500).append("Error", err)
+    })
+
+  });
+
+  router.put('/:id/update', auth.authParser(), async function (req, res, next) {
+    const id = req.params.id;
+    const isActive = req.body.body.isActive;
+
+    seqUserGenReports.update(
+      {isActive: isActive}, {
+      where: {id: id}
+    }).then(resp => {
+      res.status(200).json(resp)
     }).catch(err => {
       res.status(500).append("Error", err)
     })
