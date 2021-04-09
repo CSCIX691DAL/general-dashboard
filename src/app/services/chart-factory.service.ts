@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {baseOptions, ChartInfo, Table, WidgetInfo} from './Chart';
 import {ChartDataSets, ChartType} from 'chart.js';
+import {UserGeneratedReport} from '../../models/userGeneratedReport';
 
 @Injectable({
   providedIn: 'root'
@@ -94,4 +95,5 @@ export class ChartFactoryService {
     const dataSet = this.convertToChartDataSet([data.length], seriesLabel);
     return this.generateBaseChart(type, dataSet, labels);
   }
+
 }

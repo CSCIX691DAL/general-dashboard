@@ -9,3 +9,4 @@ export interface UserGeneratedReport{
   input_param_values: Text;
   chart_type: Text;
 }
+

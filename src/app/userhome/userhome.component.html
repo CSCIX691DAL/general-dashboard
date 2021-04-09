@@ -9,66 +9,10 @@
     <div class="list-group list-group-flush">
       <!-- Add some sort of ngFor loop here to generate available widgets -->
       <!-- Code for an individual widget text + dropright menu starts -->
-      <div class="dropright list-group-item list-group-item-action bg-light">
+      <div *ngFor="let report of allUserGeneratedReports" class="dropright list-group-item list-group-item-action bg-light">
         <a class="dropright dropdown-toggle" href="#"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Widget1
-        </a>
-        <div class="dropdown-menu">
-          <!-- Dropdown menu links -->
-          <a class="dropdown-item" href="#">Add</a>
-          <a class="dropdown-item" href="#">Delete</a>
-        </div>
-      </div>
-      <!-- Code for an individual widget text + dropright menu ends -->
-      <div class="dropright list-group-item list-group-item-action bg-light">
-        <a class="dropright dropdown-toggle" href="#"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Widget2
-        </a>
-        <div class="dropdown-menu">
-          <!-- Dropdown menu links -->
-          <a class="dropdown-item" href="#">Add</a>
-          <a class="dropdown-item" href="#">Delete</a>
-        </div>
-      </div>
-      <div class="dropright list-group-item list-group-item-action bg-light">
-        <a class="dropright dropdown-toggle" href="#"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Widget3
-        </a>
-        <div class="dropdown-menu">
-          <!-- Dropdown menu links -->
-          <a class="dropdown-item" href="#">Add</a>
-          <a class="dropdown-item" href="#">Delete</a>
-        </div>
-      </div>
-      <div class="dropright list-group-item list-group-item-action bg-light">
-        <a class="dropright dropdown-toggle" href="#"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Widget4
-        </a>
-        <div class="dropdown-menu">
-          <!-- Dropdown menu links -->
-          <a class="dropdown-item" href="#">Add</a>
-          <a class="dropdown-item" href="#">Delete</a>
-        </div>
-      </div>
-      <div class="dropright list-group-item list-group-item-action bg-light">
-        <a class="dropright dropdown-toggle" href="#"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Widget5
-        </a>
-        <div class="dropdown-menu">
-          <!-- Dropdown menu links -->
-          <a class="dropdown-item" href="#">Add</a>
-          <a class="dropdown-item" href="#">Delete</a>
-        </div>
-      </div>
-      <div class="dropright list-group-item list-group-item-action bg-light">
-        <a class="dropright dropdown-toggle" href="#"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Widget6
+          {{report}}
         </a>
         <div class="dropdown-menu">
           <!-- Dropdown menu links -->
@@ -79,9 +23,9 @@
       <hr>
     </div>
     <div class="sidebar-heading">Current Widgets</div>
-    <div *ngFor="let widget of widgets">
+    <div *ngFor="let report of activeUserGeneratedReports">
       <!-- Add some sort of ngFor loop here to generate current widgets -->
-      <a href="#" class="list-group-item list-group-item-action bg-light">{{widget.name}}</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">{{report}}</a>
     </div>
 
   </div>
@@ -93,10 +37,32 @@
     <div
       class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h2>Dashboard</h2>
+
     </div>
     <div class="d-flex flex-wrap" style="width: 100%">
-      <div *ngFor="let widget of widgets" style="width: 50%">
-        <app-chart [chartInfo]="widget"></app-chart>
+      <div *ngFor="let widget of displayedWidgets" >
+        <div class="container">
+          <div *ngIf="isTable(widget)">
+            <table class="table">
+              <thead>
+              <tr>
+                <th *ngFor="let item of widget.data[0]| keyvalue" scope="col">{{item.key}}</th>
+              </tr>
+              </thead>
+
+              <tbody *ngFor="let emp of widget.data">
+              <tr>
+                <td *ngFor="let item of emp| keyvalue">
+                  {{item.value}}
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <app-chart *ngIf="!isTable(widget)" [chartInfo]="widget"></app-chart>
+
+        </div>
       </div>
     </div>
     <button class="btn btn-dark" id="menu-toggle">
