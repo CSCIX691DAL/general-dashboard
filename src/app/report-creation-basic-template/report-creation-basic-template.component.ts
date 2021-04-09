@@ -152,13 +152,20 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
 
   createInputParamsJsonString(): string{
     let str = '{"params": [';
+    let count = 0;
     for (const param of this.selectedModelStructure){
       const element = document.getElementById(param) as HTMLInputElement;
       if (element.checked){
         str += '{"name":"' + param + '","type":"text"},';
+        count++;
       }
     }
-    str = str.substring(0, str.length - 1) + ']}';
+    if (count > 0){
+      str = str.substring(0, str.length - 1) + ']}';
+    }
+    else {
+      str += ']}';
+    }
     return str;
   }
 }

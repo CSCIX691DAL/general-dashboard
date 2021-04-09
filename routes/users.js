@@ -21,7 +21,6 @@ module.exports = sequelize => {
 
   // these routes require authentication
   const auth = new BackendAuth(sequelize);
-  let dbConnInfo, sql;
 
   router.get('/homepage', auth.authParser(), function (req, res, next) {
     auth.users
@@ -34,7 +33,7 @@ module.exports = sequelize => {
     }
   );
 
-  router.put('/homepage', auth.authParser(), function (req, res, next) {
+  router.put('/homepage',  auth.authParser(),function (req, res, next) {
     auth.users.update(
       // not sure why the body's contents are wrapped inside an additional body
       {homepage_contents: req.body.body.homepageContents },
@@ -45,7 +44,7 @@ module.exports = sequelize => {
     }
   );
 
-  router.get('/getAllUsers', auth.authParser(), function (req, res, next) {
+  router.get('/getAllUsers',function (req, res, next) {
       auth.users.findAll({ attributes: ['ID', 'Admin', 'creation_date']
       }).then(data => {
         res.status(200).json(data);
@@ -57,7 +56,7 @@ module.exports = sequelize => {
   );
 
   //  >>>>>>>>>>> DELETE USER <<<<<<<<<<
-  router.delete('/:user', auth.authParser(), function (req, res, next) {
+  router.delete('/:user',auth.authParser(), function (req, res, next) {
     auth.users.destroy({
         where: {
           ID: req.params.user
@@ -74,11 +73,8 @@ module.exports = sequelize => {
   router.get('/execute', auth.authParser(), async function (req, res, next) {
     console.log("Execute")
     const reportId = req.query.reportId;
-    const rawUser = await auth.users.findAll({where: { ID: req.token.data.email }});
+    const rawUser = await auth.users.findAll({where: { ID: req.token.data.email }}).catch(err => console.log(err));
     const userId = rawUser[0].user_id;
-    const dbConnId = req.query.dbConnId;
-
-
     //get user generated report using inner join
     const rawData = await seqUserGeneratedReport.findAll({
       where: {
@@ -88,18 +84,18 @@ module.exports = sequelize => {
       include: [{
         model: seqReports,
         where: {
-          id: reportId,
-          database_connection_fk: dbConnId
+          id: reportId
         }
       }],
       raw: true
     }).catch(err => {
-      res.status(500).append("Error", err)
+      res.status(500).append("Error", err).send()
     })
 
     //process sql: replace report sql with input params
     const result = rawData[0];
     let input_params = JSON.parse(result['input_params_values']);
+
     let sql = result['reports_model.sql'];
 
     for (let element of input_params['params']) {
@@ -108,7 +104,7 @@ module.exports = sequelize => {
       }
     }
     console.log('processed SQL: ' + sql);
-
+    const dbConnId = result['reports_model.database_connection_fk']
     //get dbConnection information
     const rawDbConnInfo = await seqDbConn.findAll({
       where: {

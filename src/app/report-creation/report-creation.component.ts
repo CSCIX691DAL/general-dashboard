@@ -85,7 +85,7 @@ export class ReportCreationComponent implements OnInit {
       params += ('{"' + param.name + '": ' + '"' + this.paramGroup.get(param.name).value + '"},');
     }
 
-    //Module checks if all parameters as well as a chart type to suit are selected and updates form completion check.
+    // Module checks if all parameters as well as a chart type to suit are selected and updates form completion check.
     if ((this.isFormCompleted = !values.includes('')) === true && this.selectedChartType) {
       this.isFormCompleted = true;
     }
@@ -97,15 +97,16 @@ export class ReportCreationComponent implements OnInit {
       params = params.substring(0, params.length - 1);
       userReportParams += params + ']}';
       this.isLoading = true;
+
       this.userService.createUserReport(this.selectedReport.id, userReportParams, this.selectedChartType).then(data => {
-        this.generateUserReport(this.selectedReport.id + '', this.selectedDatabase.id + '');
+        this.generateUserReport(this.selectedReport.id + '');
 
       });
     }
   }
 
-  private generateUserReport(reportId: string, dbConnId: string) : void{
-    this.userService.getUserGeneratedReport(reportId, dbConnId).then(data => {
+  private generateUserReport(reportId: string) : void{
+    this.userService.executeUserGeneratedReport(reportId).then(data => {
       const widget = this.chartFactory.processChartType(this.selectedChartType, data,
         [this.selectedReport.display_name],
         ['Count']);

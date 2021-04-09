@@ -27,17 +27,40 @@ module.exports = sequelize => {
     }
   );
 
-  router.post('/create', auth.authParser(), function(req, res, ) {
-    auth.users.findAll({where: {ID: req.token.data.email} }).then(data => {
-      console.log("predelete");
+  router.post('/create', auth.authParser(), async function(req, res, ) {
 
-      seqUserGenReports.destroy({where: {
-          user_id_fk: data[0].user_id,
-          report_id_fk: req.body.body.report_id_fk,
-        }
-      }).then(
+    // grab userId
+    const rawUser = await auth.users.findAll(
+      {where:
+          {ID: req.token.data.email}
+      }).catch(err => {
+        res.status(500).append("ERROR", err).send();
+    })
+    const userId = rawUser[0].user_id;
+
+    // This slows down the report process noticeably
+    // upsert
+    seqUserGenReports.findOne({where: {user_id_fk: userId, report_id_fk: req.body.body.report_id_fk}}).then(obj => {
+      // update
+      if(obj){
+        seqUserGenReports.update({
+            input_params_values: req.body.body.input_params_values,
+            chart_type: req.body.body.chart_type
+          }, {
+            where: {
+              user_id_fk: userId,
+              report_id_fk: req.body.body.report_id_fk
+            }
+          }).then(resp => {
+          res.status(200).json(resp)
+        }).catch(err => {
+          res.status(500).append("Error", err).send();
+        })
+      }
+      // create
+      else{
         seqUserGenReports.create({
-          user_id_fk: data[0].user_id,
+          user_id_fk: userId,
           report_id_fk: req.body.body.report_id_fk,
           isActive: true,
           input_params_values: req.body.body.input_params_values,
@@ -46,16 +69,12 @@ module.exports = sequelize => {
           res.status(200).json(resp);
         }).catch(err => {
           console.log(err);
-          res.status(500).append("Error", err);
+          res.status(500).append("Error", err).send();
         })
-      ).catch(err => {
-        console.log(err);
-        console.log('hey');
-      })
+      }
+    })
 
-
-    });
-  })
+  });
 
   router.get('/getReportsByUserId', auth.authParser(), async function (req, res, next) {
     const rawUser = await auth.users.findAll({where: {ID: req.token.data.email}});

@@ -28,25 +28,12 @@ export class UsersService {
   }
 
 
-  getUserGeneratedReportsRaw(reportId: string, dbConnId: string): Observable<any>{
-    return this.http.get('/api/users/execute?reportId=' + reportId + '&dbConnId=' + dbConnId);
+  executeUserGeneratedReportRaw(reportId: string): Observable<any>{
+    return this.http.get('/api/users/execute?reportId=' + reportId);
   }
 
-  public async getUserGeneratedReport(reportId: string, dbConnId: string): Promise<any[]> {
-    const empReport = [];
-    return new Promise<any>((resolve, reject) => this.getUserGeneratedReportsRaw(reportId, dbConnId)
-      .subscribe(data => {
-        console.log(data);
-        for (const item of data) {
-          const itemAttr = [];
-          for (const key in item) {
-            // console.log('key: ' + key + '\t' + item[key]);
-            itemAttr.push(item[key]);
-          }
-          empReport.push(new Employee(itemAttr));
-        }
-        resolve(data);
-      }));
+  public async executeUserGeneratedReport(reportId: string): Promise<any[]> {
+    return this.executeUserGeneratedReportRaw(reportId).toPromise();
   }
 
   getUserGeneratedReportsByUserIdRaw(): Observable<any>{
@@ -55,7 +42,7 @@ export class UsersService {
 
   public async getUserGeneratedReportsByUserId(): Promise<any[]> {
     const empReport = [];
-    return new Promise<any>((resolve, reject) => this.getUserGeneratedReportsByUserIdRaw()
+    return new Promise<any[]>((resolve, reject) => this.getUserGeneratedReportsByUserIdRaw()
       .subscribe(data => {
         for (const item of data) {
           const itemAttr = [];

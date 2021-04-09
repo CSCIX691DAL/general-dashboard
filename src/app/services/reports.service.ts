@@ -65,8 +65,16 @@ export class ReportsService {
     }));
   }
 
+  public async readReportById(id: number): Promise<Report>{
+    return new Promise<Report>((resolve, reject) => this.http.get<Report>('/api/reports/' + id).subscribe(report => {
+      // need to parse the nested parameter array from string to json to a valid parameter object array
+      report.input_params = this.parseParams(report.input_params.toString());
+      resolve(report);
+    }));
+  }
+
   public async readReportsForDatabase(databaseID: number): Promise<Report[]>{
-    return new Promise<Report[]>((resolve, reject) => this.http.get<Report[]>('/api/reports/' + databaseID).subscribe(reports => {
+    return new Promise<Report[]>((resolve, reject) => this.http.get<Report[]>('/api/reports/database/' + databaseID).subscribe(reports => {
       // need to parse the nested parameter array from string to json to a valid parameter object array
       reports.forEach(report => report.input_params = this.parseParams(report.input_params.toString()));
       resolve(reports);

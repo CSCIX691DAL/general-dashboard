@@ -10,6 +10,8 @@ import {SequelizeService} from '../services/sequelize.service';
 import {DatabaseService} from '../services/database-connection.service';
 import {ReportsService} from '../services/reports.service';
 import {UsersService} from '../services/users.service';
+import {Report} from '../../models/report';
+import {UserGeneratedReport} from '../../models/userGeneratedReport';
 
 @Component({
   selector: 'app-userhome',
@@ -17,65 +19,56 @@ import {UsersService} from '../services/users.service';
   styleUrls: ['./userhome.component.css']
 })
 export class UserhomeComponent implements OnInit {
-  private employees = [];
-  private genderMap = new Map();
-  public widgets: WidgetInfo[] = [];
 
-  constructor(private reportService: ReportsService, private userService: UsersService,
-    private employee: EmployeesService, private chartFactory: ChartFactoryService) {
+  public allUserGeneratedReports: any[];
+  public activeUserGeneratedReports: any[];
+  public displayedWidgets: WidgetInfo[] = [];
+  constructor(private reportService: ReportsService,
+              private userService: UsersService,
+              private chartFactory: ChartFactoryService) {
   }
 
   ngOnInit(): void {
     // function taken from:  https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
     // tslint:disable-next-line:only-arrow-functions
-    $('#menu-toggle').click(function(e) {
+    $('#menu-toggle').click(e => {
       e.preventDefault();
       $('#wrapper').toggleClass('toggled');
     });
-    $('#menu-toggle').click(function(event) {
+    $('#menu-toggle').click(e => {
       event.preventDefault();
       $('#barRight').toggle();
       $('#barLeft').toggle();
     });
-    this.employees = this.employee.getAllEmployees();
-    this.employee.getEmployeesGender().subscribe(data => {
-      for (const item of data) {
-        this.genderMap.set(item.gender, item.SumOfGender);
-      }
 
-      // example Charts (to test flexgrid)
-      for (let i = 0; i < 4; i++){
-        // example chart for genders
-        this.widgets.push({
-          name: 'chart',
-          chartOptions: baseOptions,
-          labels: ['Count'],
-          data: [
-            {data: [this.genderMap.get('M')], label: 'Male'},
-            {data: [this.genderMap.get('F')], label: 'Female'},
-          ],
-          chartType: 'bar',
-          showLegends: true
+    this.userService.getUserGeneratedReportsByUserId().then(reports => {
+      this.allUserGeneratedReports = reports;
+      this.activeUserGeneratedReports = reports.filter(report => report.isActive === 1);
+
+      this.executeReports(this.activeUserGeneratedReports);
+    });
+
+  }
+
+  private executeReports(reports: any[]): void{
+    reports.forEach(report => {
+        this.userService.executeUserGeneratedReport(report.report_id_fk + '').then(data => {
+          const widget = this.chartFactory.processChartType(report.chart_type, data,
+            [report['reports_model.display_name']],
+            ['Count']);
+          this.displayedWidgets.push(widget);
         });
-      }
     });
 
-    this.userService.getUserGeneratedReportsByUserId().then(r => {
-      console.log(r);
-    });
   }
 
-  printEmployees(): void {
-    for (const emp of this.employees) {
-      console.log(emp);
-    }
+
+  isTable(obj: WidgetInfo): boolean{
+    return obj.name === 'table';
   }
 
-  // for test purpose
-  printGenderMap(): void {
-    for (const entry of this.genderMap) {
-      console.log(entry);
-    }
+  test(): void{
+    console.log(this.displayedWidgets);
   }
-
 }
+
