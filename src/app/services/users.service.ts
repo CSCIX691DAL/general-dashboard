@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-
+import { UserGeneratedReport } from '../../models/userGeneratedReport';
 import {Employee} from '../../models/employee';
 import {DatabaseService} from './database-connection.service';
 import {Observable, Subscription} from 'rxjs';
@@ -84,5 +84,12 @@ export class UsersService {
         }
       }
     ).toPromise();
+  }
+
+  public async deleteUserReport(reportID : number): Promise<any> {
+     return new Promise<any>((resolve, reject) => this.http.delete('/api/userGeneratedReports/'
+     + reportID, {headers: this.header,}).subscribe(reports => {
+     resolve(reports);
+    }));
   }
 }
