@@ -65,13 +65,12 @@ export class UserhomeComponent implements OnInit {
         });
     });
 
-  }  
+  }
   async deleteWidgets(report: UserGeneratedReport): Promise<void> {
-    await this.userService.deleteUserReport(report.report_id_fk) 
+    await this.userService.deleteUserReport(report.report_id_fk)
     .catch(err => console.log(err));
     location.reload();
   }
-  
 
   public addWidget(report: any): void{
     // check if report is already added
