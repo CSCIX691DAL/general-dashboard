@@ -65,7 +65,6 @@ export class UsersService {
         headers: this.header,
         body: {
           report_id_fk: reportID,
-          isActive: true,
           input_params_values: inputParamsValues,
           chart_type: selectedChartType
         }

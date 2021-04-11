@@ -1,8 +1,10 @@
+<h1 class="text-center">Features</h1>
 <div class="d-flex flex-wrap justify-content-around">
-      <div *ngFor="let feature of features">
-        <figure class="feature-fig">
-          <img class="feature-image"src="{{feature.url}}">
-          <figcaption class="feature-caption">{{feature.name}}</figcaption>
-        </figure>
-      </div>
+  <div *ngFor="let feature of features">
+    <figure class="feature-fig">
+      <img style="width:450px; height:264px;" class="feature-image"src="{{feature.url}}">
+      <figcaption class="feature-caption">{{feature.name}}</figcaption>
+    </figure>
+  </div>
 </div>
+

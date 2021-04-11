@@ -5,6 +5,7 @@ import {Employee} from '../../models/employee';
 // need this for typeof because typescript can't handle custom types easily
 export interface TypeName {
   name: string;
+  displayName?: string;
 }
 
 export interface ChartInfo extends TypeName{
