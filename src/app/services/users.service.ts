@@ -73,9 +73,9 @@ export class UsersService {
     ).toPromise();
   }
 
-  public updateIsActive(reportID: number, isActive: number): Promise<any>{
+  public updateIsActive(userGeneratedReportID: number, isActive: number): Promise<any>{
     return this.http.put(
-      '/api/userGeneratedReports/' + reportID + '/update',
+      '/api/userGeneratedReports/' + userGeneratedReportID + '/update',
       {
         headers: this.header,
         body: {

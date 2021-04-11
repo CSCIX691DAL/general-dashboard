@@ -45,7 +45,8 @@ module.exports = sequelize => {
       if(obj){
         seqUserGenReports.update({
             input_params_values: req.body.body.input_params_values,
-            chart_type: req.body.body.chart_type
+            chart_type: req.body.body.chart_type,
+            isActive: true
           }, {
             where: {
               user_id_fk: userId,

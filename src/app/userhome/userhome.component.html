@@ -23,9 +23,16 @@
       <hr>
     </div>
     <div class="sidebar-heading">Current Widgets</div>
-    <div *ngFor="let report of activeUserGeneratedReports">
+    <div *ngFor="let report of activeUserGeneratedReports" class="dropright list-group-item list-group-item-action bg-light">
       <!-- Add some sort of ngFor loop here to generate current widgets -->
-      <a href="#" class="list-group-item list-group-item-action bg-light">{{report}}</a>
+      <a class="dropright dropdown-toggle" href="#"
+         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{report}}
+      </a>
+      <div class="dropdown-menu">
+        <!-- Dropdown menu links -->
+        <a class="dropdown-item" (click)="setReportInactive(report)">Delete</a>
+      </div>
     </div>
 
   </div>
