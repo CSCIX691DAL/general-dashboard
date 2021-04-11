@@ -16,7 +16,7 @@
         </a>
         <div class="dropdown-menu">
           <!-- Dropdown menu links -->
-          <a class="dropdown-item" href="#">Add</a>
+          <a class="dropdown-item" (click)="addWidget(report)">Add</a>
           <a class="dropdown-item" href="#">Delete</a>
         </div>
       </div>
@@ -42,6 +42,8 @@
     <div class="d-flex flex-wrap" style="width: 100%">
       <div *ngFor="let widget of displayedWidgets">
         <div class="container">
+          <h5 style="align-content: center">{{widget.displayName}}</h5>
+
           <div *ngIf="isTable(widget)">
             <table class="table">
               <thead>

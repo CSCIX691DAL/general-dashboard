@@ -62,7 +62,7 @@ module.exports = sequelize => {
         seqUserGenReports.create({
           user_id_fk: userId,
           report_id_fk: req.body.body.report_id_fk,
-          isActive: true,
+          isActive: false,
           input_params_values: req.body.body.input_params_values,
           chart_type: req.body.body.chart_type
         }).then(resp => {

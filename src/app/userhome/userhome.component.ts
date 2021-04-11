@@ -59,19 +59,32 @@ export class UserhomeComponent implements OnInit {
           const widget = this.chartFactory.processChartType(report.chart_type, data,
             [report['reports_model.display_name']],
             ['Count']);
+          widget.displayName = report['reports_model.display_name'];
           this.displayedWidgets.push(widget);
         });
     });
 
   }
 
+  public addWidget(report: any): void{
+    // check if report is already added
+    if (!this.activeUserGeneratedReports.includes(report)){
+      // update active status in db
+      this.userService.updateIsActive(report.id, 1).then(resp => {
+        this.activeUserGeneratedReports.push(report);
+        // execute report
+        this.executeReports([report]);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+
+
+  }
 
   isTable(obj: WidgetInfo): boolean{
     return obj.name === 'table';
   }
 
-  test(): void{
-    console.log(this.displayedWidgets);
-  }
 }
 

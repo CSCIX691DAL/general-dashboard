@@ -78,7 +78,7 @@ module.exports = sequelize => {
 
   router.get('/:databaseID/models/:model', auth.authParser(), function (req, res, next) {
     try{
-      const dbID = req.databaseID;
+      const dbID = req.params.databaseID;
       const inputModel = req.params.model;
       const path = '../models' + '/' + dbID + '/' + inputModel;
       console.log(path);
