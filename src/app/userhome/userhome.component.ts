@@ -85,6 +85,10 @@ export class UserhomeComponent implements OnInit {
       });
     }
   }
+  public setReportInactive(selectedReport: UserGeneratedReport): void{
+    this.userService.updateIsActive(selectedReport.id, 0).then(r => console.log(r));
+    location.reload();
+  }
 
   isTable(obj: WidgetInfo): boolean{
     return obj.name === 'table';
