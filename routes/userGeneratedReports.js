@@ -114,5 +114,22 @@ module.exports = sequelize => {
 
   });
 
+  router.delete('/:reportID', auth.authParser(), async function (req, res, next) {
+    const rawUser = await auth.users.findAll({where: {ID: req.token.data.email}});
+    const userId = rawUser[0].user_id;
+    
+    seqUserGenReports.destroy({
+      where: {
+        report_id_fk: req.params.reportID, 
+        user_id_fk: userId
+      }
+    }).then(data => {
+      res.status(200).json(data);
+    }).catch(err => {
+      console.log(err)
+      res.status(500).append("Error", err);
+    });
+  }); 
+
   return router;
 }

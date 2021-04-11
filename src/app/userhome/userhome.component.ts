@@ -12,6 +12,7 @@ import {ReportsService} from '../services/reports.service';
 import {UsersService} from '../services/users.service';
 import {Report} from '../../models/report';
 import {UserGeneratedReport} from '../../models/userGeneratedReport';
+import { User } from 'src/models/users';
 
 @Component({
   selector: 'app-userhome',
@@ -65,6 +66,11 @@ export class UserhomeComponent implements OnInit {
     });
 
   }
+  async deleteWidgets(report: UserGeneratedReport): Promise<void> {
+    await this.userService.deleteUserReport(report.report_id_fk)
+    .catch(err => console.log(err));
+    location.reload();
+  }
 
   public addWidget(report: any): void{
     // check if report is already added
@@ -78,8 +84,6 @@ export class UserhomeComponent implements OnInit {
         console.log(err);
       });
     }
-
-
   }
 
   isTable(obj: WidgetInfo): boolean{
