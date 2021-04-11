@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Feature} from './Feature';
-import {Cats} from './Feature';
+import {Features} from './Feature';
 
 @Component({
   selector: 'app-example-features',
@@ -8,7 +8,7 @@ import {Cats} from './Feature';
   styleUrls: ['./example-features.component.css']
 })
 export class ExampleFeaturesComponent implements OnInit {
-  features: Feature[] = Cats;
+  features: Feature[] = Features;
   constructor() { }
 
   ngOnInit(): void {
