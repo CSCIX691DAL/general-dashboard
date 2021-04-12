@@ -56,6 +56,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "input_params_values"
+    },
+    chart_type: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "chart_type"
     }
   };
   const options = {

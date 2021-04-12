@@ -19,7 +19,22 @@ module.exports = sequelize => {
     }
   );
 
-  router.get('/:databaseID', auth.authParser(), function (req, res, next) {
+  router.get('/:id', auth.authParser(), function (req, res, next) {
+    const id = req.params.id;
+    seqReports.findAll({
+      where:
+        {
+          id: id
+        }
+    }).then(data => {
+        res.status(200).json(data);
+      }).catch(err => {
+        res.status(500).append("Error", err);
+      })
+    }
+  );
+
+  router.get('/database/:databaseID', auth.authParser(), function (req, res, next) {
       seqReports.findAll({
         where: {
           database_connection_fk: req.params.databaseID

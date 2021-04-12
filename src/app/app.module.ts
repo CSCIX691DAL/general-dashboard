@@ -26,8 +26,6 @@ import { AdminDatabasesPageComponent } from './admin-databases-page/admin-databa
 import { ReportsPageComponent } from './reports-page/reports-page.component';
 import { ReportCreationComponent } from './report-creation/report-creation.component';
 import { ReportCreationBasicTemplateComponent } from './report-creation-basic-template/report-creation-basic-template.component';
-import { WidgetSidebarComponent } from './widget-sidebar/widget-sidebar.component';
-import { SequelizeAutomateGenerateModelsComponent } from './sequelize-automate-generate-models/sequelize-automate-generate-models.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +43,7 @@ import { SequelizeAutomateGenerateModelsComponent } from './sequelize-automate-g
     AdminDatabasesPageComponent,
     ReportsPageComponent,
     ReportCreationComponent,
-    ReportCreationBasicTemplateComponent,
-    WidgetSidebarComponent,
-    SequelizeAutomateGenerateModelsComponent
+    ReportCreationBasicTemplateComponent
   ],
   imports: [
     BrowserModule,
