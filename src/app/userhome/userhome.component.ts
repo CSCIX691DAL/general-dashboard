@@ -54,7 +54,7 @@ export class UserhomeComponent implements OnInit {
   private executeReports(reports: any[]): void{
     reports.forEach(report => {
         this.userService.executeUserGeneratedReport(report.report_id_fk + '').then(data => {
-          if (data.length > 5){
+          if (data.length > 5 && report.chart_type === 'table'){
             data = data.slice(0, 5);
           }
           const widget = this.chartFactory.processChartType(report.chart_type, data,
