@@ -50,3 +50,6 @@ testresults
 
 # sequelize models
 models/
+
+# env variables
+.env
