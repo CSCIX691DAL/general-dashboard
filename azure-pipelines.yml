@@ -4,30 +4,30 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "12.x"
+    displayName: "Install Node.js"
 
-- script: |
-    npm install -g @angular/cli
-    npm install
-  displayName: 'install dependencies'
-- script: ng build --prod
-  displayName: 'production build'
-- script: xvfb-run ng test --watch=false --sourceMap=false --browsers=ChromeHeadless
-  displayName: 'execute headless tests'
-  continueOnError: true
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-    failTaskOnFailedTests: true # Optional
-    testResultsFiles: 'testresults/junit/unit-test-result.xml'
-  condition: succeededOrFailed()
-  continueOnError: true
+  - script: |
+      npm install -g @angular/cli
+      npm install
+    displayName: "install dependencies"
+  - script: ng build --prod
+    displayName: "production build"
+  - script: xvfb-run ng test --watch=false --sourceMap=false --browsers=ChromeHeadless
+    displayName: "execute headless tests"
+    continueOnError: true
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: "JUnit" # Options: JUnit, NUnit, VSTest, xUnit, cTest
+      failTaskOnFailedTests: true # Optional
+      testResultsFiles: "testresults/junit/unit-test-result.xml"
+    condition: succeededOrFailed()
+    continueOnError: true
