@@ -1,0 +1,31 @@
+<div class="container" >
+  <h1>Manage Users</h1>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Admin</th>
+        <th scope="col">Creation Date</th>
+      </tr>
+      </thead>
+
+      <tbody *ngFor="let user of Users">
+      <tr>
+        <td>
+          {{user.ID}}
+        </td>
+        <td>
+          {{user.Admin}}
+        </td>
+        <td>
+          {{user.creation_date}}
+        </td>
+        <td>
+          <button (click)="this.deleteUser(user.ID); this.ngOnInit()">Remove User</button>
+        </td>
+      </tr>
+
+
+      </tbody>
+    </table>
+  </div>

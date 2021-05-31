@@ -1,0 +1,12 @@
+diff --git a/node_modules/sequelize-automate/src/generate/template/javascript/user.text b/node_modules/sequelize-automate/src/generate/template/javascript/user.text
+index 36e06ec..f6a5a0a 100644
+--- a/node_modules/sequelize-automate/src/generate/template/javascript/user.text
++++ b/node_modules/sequelize-automate/src/generate/template/javascript/user.text
+@@ -52,6 +52,7 @@ module.exports = sequelize => {
+   const options = {
+     tableName: 'user',
+     comment: 'user table',
++    timestamps: false,
+     indexes: [{
+       name: 'uk_name_email',
+       unique: true,

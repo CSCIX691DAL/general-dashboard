@@ -1,0 +1,41 @@
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.title {
+  text-align: center;
+  margin: 10px;
+}
+
+.form-control_reports-DB, .form-control_reports-charts {
+  width: 250px;
+  float: right;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.section > h4 {
+  flex: 1;
+}
+
+.section > div {
+  flex: 2;
+  justify-content: center;
+}
+
+.form-buttons-execute_and_save {
+  float: right;
+  margin: 2px;
+}
+
+.error-msg {
+  color:red;
+}

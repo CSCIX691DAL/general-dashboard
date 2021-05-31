@@ -1,0 +1,28 @@
+.title {
+  text-align: center;
+  margin: 10px;
+}
+.section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.section > h4 {
+  flex: 1;
+}
+
+.section > div {
+  flex: 2;
+  justify-content: center;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.btn{
+  display: flex;
+  justify-content: center;
+}
