@@ -1,86 +1,86 @@
 <div class="content">
 
-  <div class="title">
-    <h2>List of Reports</h2>
-    <p>
-      Connect to your database & begin configuring your own report!
-    </p> <hr>
-  </div>
+    <div class="title">
+        <h2>List of Reports</h2>
+        <p>
+            Connect to your database & begin configuring your own report!
+        </p>
+        <hr>
+    </div>
 
-  <!-- Database Connection -->
-  <div class="section">
-    <h4>Select your Database Connection: </h4>
-    <select class="form-control_reports-DB" (change)="updateFormGroup()" (change)="updateReportType()" [(ngModel)]="selectedDatabase">
+    <!-- Database Connection -->
+    <div class="section">
+        <h4>Select your Database Connection: </h4>
+        <select class="form-control_reports-DB" (change)="updateFormGroup()" (change)="updateReportType()" [(ngModel)]="selectedDatabase">
       <option value= "" selected> Please select a database </option>
       <!-- Utilizes Database values -->
-     <option *ngFor="let database of databases" [ngValue]="database">{{database.id}}</option>
+     <option *ngFor="let database of databases" [ngValue]="database">{{database.host_name}}</option>
     </select>
-  </div> <br>
+    </div> <br>
 
 
-  <!-- List of Reports Configurations -->
-  <div *ngIf="selectedDatabase">
-    <!-- Report Search By Type -->
-    <div class="section">
-      <div>
-        <h4>Choose a report to search by: </h4>
-        <select class="form-control reports" (change)="updateFormGroup()" [(ngModel)]="selectedReport" size="{{reports.length}}">
+    <!-- List of Reports Configurations -->
+    <div *ngIf="selectedDatabase">
+        <!-- Report Search By Type -->
+        <div class="section">
+            <div>
+                <h4>Choose a report to search by: </h4>
+                <select class="form-control reports" (change)="updateFormGroup()" [(ngModel)]="selectedReport" size="{{reports.length}}">
           <option *ngFor="let report of reports" [ngValue]="report">{{report.name}}</option>
         </select>
-      </div>
-    </div> <br>
-    <!-- Report parameter configuarations -->
-    <div class="section" *ngIf="selectedReport">
-      <div>
-        <h4>Report Parameters: </h4>
-        <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
-          <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.input_params">
-            <div class="input-group-prepend">
-              <span class="input-group-text input-field" id="inputGroup-sizing-default">{{param.name}}</span>
             </div>
-            <input formControlName="{{param.name}}" type="{{param.type}}" class="form-control input-field" aria-label="Default"
-                  aria-describedby="inputGroup-sizing-default">
-          </div>
-        </form>
-      </div>
-    </div> <br>
-    <!-- Report chart type configuaration -->
-    <div class="section" *ngIf="selectedReport">
-      <h4>Select the chart type you'd like to use: </h4>
-        <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
-            <select class="form-control_reports-charts" [(ngModel)]="selectedChartType" [ngModelOptions]="{standalone: true}">
+        </div> <br>
+        <!-- Report parameter configuarations -->
+        <div class="section" *ngIf="selectedReport">
+            <div>
+                <h4>Report Parameters: </h4>
+                <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
+                    <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.input_params">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-field" id="inputGroup-sizing-default">{{param.name}}</span>
+                        </div>
+                        <input formControlName="{{param.name}}" type="{{param.type}}" class="form-control input-field" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </form>
+            </div>
+        </div> <br>
+        <!-- Report chart type configuaration -->
+        <div class="section" *ngIf="selectedReport">
+            <h4>Select the chart type you'd like to use: </h4>
+            <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
+                <select class="form-control_reports-charts" [(ngModel)]="selectedChartType" [ngModelOptions]="{standalone: true}">
               <option value= "" selected> Please select a chart type </option>
               <option *ngFor="let type of chartTypes" [ngValue]="type">{{type}}</option>
             </select>
-        </form>
-    </div> <br>
-    <!-- List of Reports Submission Button -->
-    <div *ngIf="selectedReport">
-      <div class="form-buttons-execute_and_save">
-        <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark" [disabled]="isLoading" >View & Save Report</button>
-      </div> <br> <br>
-    </div> <hr>
-  </div>
-
-  <!--  spinner-->
-  <div class="text-center" *ngIf="isLoading">
-    <div class="spinner-border col-md-12" role="status">
-      <span class="visually-hidden"></span>
+            </form>
+        </div> <br>
+        <!-- List of Reports Submission Button -->
+        <div *ngIf="selectedReport">
+            <div class="form-buttons-execute_and_save">
+                <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark" [disabled]="isLoading">View & Save Report</button>
+            </div> <br> <br>
+        </div>
+        <hr>
     </div>
-  </div>
 
-  <!-- List of Reports user messaging -->
-  <div class="section-errors">
-    <div>
-      <span class="error-msg" *ngIf="!isFormCompleted">
+    <!--  spinner-->
+    <div class="text-center" *ngIf="isLoading">
+        <div class="spinner-border col-md-12" role="status">
+            <span class="visually-hidden"></span>
+        </div>
+    </div>
+
+    <!-- List of Reports user messaging -->
+    <div class="section-errors">
+        <div>
+            <span class="error-msg" *ngIf="!isFormCompleted">
         <h4>Please fill out all the fields </h4>
       </span>
+        </div>
     </div>
-  </div>
-  <div class="section" *ngIf="selectedReport && !isLoading">
-    <div>
-      <strong>Your chart is shown below: </strong> <br>
-      If you see an empty chart then your query is returning null results. <br>
+    <div class="section" *ngIf="selectedReport && !isLoading">
+        <div>
+            <strong>Your chart is shown below: </strong> <br> If you see an empty chart then your query is returning null results. <br>
+        </div> <br>
     </div> <br>
-  </div> <br>
 </div>
