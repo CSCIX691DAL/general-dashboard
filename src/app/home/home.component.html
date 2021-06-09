@@ -1,2 +1,9 @@
 <app-app-desc></app-app-desc>
-<app-login></app-login>
+<app-login
+  (switchLoginStateEvent)="switchLoginState()"
+  *ngIf="loginState"
+></app-login>
+<app-registration
+  (switchLoginStateEvent)="switchLoginState()"
+  *ngIf="!loginState"
+></app-registration>

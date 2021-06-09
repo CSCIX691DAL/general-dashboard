@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import {DatabaseService} from '../services/database-connection.service';
-import {AuthService} from '../auth.service';
+import { DatabaseService } from '../services/database-connection.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private conn: DatabaseService,
+    private auth: AuthService
+  ) {}
 
-  constructor(private router: Router, private conn: DatabaseService, private auth: AuthService) {
-  }
+  @Output() switchLoginStateEvent = new EventEmitter<string>();
 
   /**
    * @desc This is what will take the users input and checks it against the pattern
@@ -22,7 +26,7 @@ export class RegistrationComponent implements OnInit {
   userEmail = new FormGroup({
     email: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
+      Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'),
     ]),
   });
 
@@ -37,10 +41,9 @@ export class RegistrationComponent implements OnInit {
       Validators.maxLength(12),
       Validators.pattern(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/),
       Validators.pattern(/\d/),
-      Validators.pattern(/[a-zA-Z]/)
-    ]), confirmPassword: new FormControl('', [
-      Validators.required,
-    ])
+      Validators.pattern(/[a-zA-Z]/),
+    ]),
+    confirmPassword: new FormControl('', [Validators.required]),
   });
   /**
    * @desc Hides div which displays error message if user exists in database
@@ -70,13 +73,18 @@ export class RegistrationComponent implements OnInit {
   getConfirmPassword(): AbstractControl {
     return this.passwords.get('confirmPassword');
   }
-  getAdminAccount(): boolean{
-    const adminAccount = document.getElementById('adminAccount')as HTMLInputElement;
+  getAdminAccount(): boolean {
+    const adminAccount = document.getElementById(
+      'adminAccount'
+    ) as HTMLInputElement;
     return adminAccount.checked;
   }
 
-  ngOnInit(): void {
+  switchToLogin() {
+    this.switchLoginStateEvent.emit();
   }
+
+  ngOnInit(): void {}
 
   /**
    * @desc Triggers when register button is clicked on Registration page
@@ -92,17 +100,24 @@ export class RegistrationComponent implements OnInit {
     const adminAccount = this.getAdminAccount();
     // Ensures all form data is validated, if so calls existingUser to either create new user
     // or notify user that this email is already in use by another user
-    if (passwordInputTag.valid && emailInputTag.valid &&
-      passwordString === confirmPasswordString) {
-      this.auth.register(emailString, passwordString, adminAccount).then(() => {
-        this.router.navigate(['/userhome']).catch(e => console.error(e));
-      }, reason => {
-        console.log(reason);
-        this.alreadyExists = true;
-      });
-    }
-    else{
-      alert('Please fill all input fields according to specifications in red text');
+    if (
+      passwordInputTag.valid &&
+      emailInputTag.valid &&
+      passwordString === confirmPasswordString
+    ) {
+      this.auth.register(emailString, passwordString, adminAccount).then(
+        () => {
+          this.router.navigate(['/userhome']).catch((e) => console.error(e));
+        },
+        (reason) => {
+          console.log(reason);
+          this.alreadyExists = true;
+        }
+      );
+    } else {
+      alert(
+        'Please fill all input fields according to specifications in red text'
+      );
     }
   }
 }
