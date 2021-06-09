@@ -1,84 +1,34 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">General Dashboard</a>
-  <ul class="navbar-nav">
-    <li class="nav-link" routerLink="/home" routerLinkActive="active">Home</li>
-    <li
-      *ngIf="!auth.hasToken()"
-      id="login"
-      class="nav-link"
-      routerLink="/login"
-      routerLinkActive="active"
-    >
-      Login
-    </li>
-    <li
-      *ngIf="!auth.hasToken()"
-      id="register"
-      class="nav-link"
-      routerLink="/registration"
-      routerLinkActive="active"
-    >
-      Register
-    </li>
-    <li
-      *ngIf="auth.hasToken()"
-      id="userhome"
-      class="nav-link"
-      routerLink="/userhome"
-      routerLinkActive="active"
-    >
-      UserHome
-    </li>
-    <li
-      *ngIf="auth.hasToken()"
-      id="reports"
-      class="nav-link"
-      routerLink="/reports"
-      routerLinkActive="active"
-    >
-      Reports
-    </li>
-    <!-- Dropdown menu taken from: https://getbootstrap.com/docs/4.0/components/navbar/ -->
-    <li *ngIf="auth.hasToken() && auth.isAdmin()" class="nav-item dropdown">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        id="navbarDropdown"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
+    <a class="navbar-brand" href="#">General Dashboard</a>
+    <ul class="navbar-nav">
+        <li class="nav-link" routerLink="/home" routerLinkActive="active">Home</li>
+        <li *ngIf="auth.hasToken()" id="userhome" class="nav-link" routerLink="/userhome" routerLinkActive="active">
+            UserHome
+        </li>
+        <li *ngIf="auth.hasToken()" id="reports" class="nav-link" routerLink="/reports" routerLinkActive="active">
+            Reports
+        </li>
+        <!-- Dropdown menu taken from: https://getbootstrap.com/docs/4.0/components/navbar/ -->
+        <li *ngIf="auth.hasToken() && auth.isAdmin()" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Configurations
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a
-          class="dropdown-item"
-          routerLink="/admin-report-page"
-          routerLinkActive="active"
-        >
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" routerLink="/admin-report-page" routerLinkActive="active">
           Reports
         </a>
-        <a
-          class="dropdown-item"
-          routerLink="/admin-users-page"
-          routerLinkActive="active"
-        >
+                <a class="dropdown-item" routerLink="/admin-users-page" routerLinkActive="active">
           Users
         </a>
-        <a
-          class="dropdown-item"
-          routerLink="/admin-databases-page"
-          routerLinkActive="active"
-        >
+                <a class="dropdown-item" routerLink="/admin-databases-page" routerLinkActive="active">
           Databases
         </a>
-      </div>
-    </li>
-  </ul>
-  <ul class="navbar-nav ml-auto">
-    <li *ngIf="auth.hasToken()" id="logout" class="nav-link" (click)="logout()">
-      Logout
-    </li>
-  </ul>
+            </div>
+        </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        <li *ngIf="auth.hasToken()" id="logout" class="nav-link" (click)="logout()">
+            Logout
+        </li>
+    </ul>
 </nav>

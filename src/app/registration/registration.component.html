@@ -1,61 +1,131 @@
-<div class="background"></div>
 <div class="registration text-center">
-<div class="center">
-  <h1>Registration</h1>
+  <div class="center">
+    <h1>Registration</h1>
 
-  <form>
-    <div [formGroup]="userEmail" class="form-group">
-      <label><b>Username</b></label>
-      <!--Takes the user input then tells the program whether it's valid or not-->
-      <input [class.is-invalid]="userEmail.get('email').invalid"
-             type="email" class="form-control" formControlName="email" placeholder="Enter Username:" required>
-      <!--This is what displays the error message if isn't a valid email-->
-      <div *ngIf="(getUserEmail().invalid && getUserEmail().touched)|| getUserEmail().dirty">
-        <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">Please provide a valid email address</small>
-      </div>
-    </div>
-
-  <div [formGroup]="passwords" class="form-group">
-    <label><b>Password</b></label>
-    <div class = "Password-Input">
-      <input [class.is-invalid]="passwords.get('password').invalid"
-             type="password" class="form-control" formControlName="password" placeholder="Enter Password:" required>
-
-      <!--Displays this error messages if isn't a valid password-->
-      <div *ngIf="(getPassword().invalid && getPassword().touched)|| getPassword().dirty">
-        <small *ngIf="getPassword().errors?.pattern" class="text-danger">Password must contain at least one letter,
-          one symbol, and one number</small>
-      </div>
-      <!-- Displays error message when char length exceeds boundaries -->
-      <div *ngIf="(getPassword().invalid && getPassword().touched)|| getPassword().dirty">
-        <small *ngIf="getPassword().errors?.minlength || getPassword().errors?.maxlength" class="text-danger">
-          Password must be between 4 and 12 characters</small>
+    <form>
+      <div [formGroup]="userEmail" class="form-group">
+        <label><b>Username</b></label>
+        <!--Takes the user input then tells the program whether it's valid or not-->
+        <input
+          [class.is-invalid]="userEmail.get('email').invalid"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Enter Username:"
+          required
+        />
+        <!--This is what displays the error message if isn't a valid email-->
+        <div
+          *ngIf="
+            (getUserEmail().invalid && getUserEmail().touched) ||
+            getUserEmail().dirty
+          "
+        >
+          <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">
+            Please provide a valid email address
+          </small>
+        </div>
       </div>
 
-      <label><b>Confirm Password</b></label>
-      <input [class.is-invalid]="passwords.get('confirmPassword').invalid || getConfirmPassword().value !== getPassword().value"
-              type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password:" required>
+      <div [formGroup]="passwords" class="form-group">
+        <label><b>Password</b></label>
+        <div class="Password-Input">
+          <input
+            [class.is-invalid]="passwords.get('password').invalid"
+            type="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="Enter Password:"
+            required
+          />
 
-      <!--Displays this error messages if isn't a valid password-->
-      <div *ngIf="(getConfirmPassword().touched)|| getConfirmPassword().dirty">
-        <small *ngIf="getConfirmPassword().value !== getPassword().value" class="text-danger">Passwords do not match</small>
-      </div>
+          <!--Displays this error messages if isn't a valid password-->
+          <div
+            *ngIf="
+              (getPassword().invalid && getPassword().touched) ||
+              getPassword().dirty
+            "
+          >
+            <small *ngIf="getPassword().errors?.pattern" class="text-danger"
+              >Password must contain at least one letter, one symbol, and one
+              number</small
+            >
+          </div>
+          <!-- Displays error message when char length exceeds boundaries -->
+          <div
+            *ngIf="
+              (getPassword().invalid && getPassword().touched) ||
+              getPassword().dirty
+            "
+          >
+            <small
+              *ngIf="
+                getPassword().errors?.minlength ||
+                getPassword().errors?.maxlength
+              "
+              class="text-danger"
+            >
+              Password must be between 4 and 12 characters</small
+            >
+          </div>
 
-      <!-- Displays error message if user exists in database already -->
-      <div *ngIf="alreadyExists">
-        <small class="alert alert-danger">
-          It appears this user already exists, please login or try again with a different email
-        </small>
+          <label><b>Confirm Password</b></label>
+          <input
+            [class.is-invalid]="
+              passwords.get('confirmPassword').invalid ||
+              getConfirmPassword().value !== getPassword().value
+            "
+            type="password"
+            class="form-control"
+            formControlName="confirmPassword"
+            placeholder="Confirm Password:"
+            required
+          />
+
+          <!--Displays this error messages if isn't a valid password-->
+          <div
+            *ngIf="getConfirmPassword().touched || getConfirmPassword().dirty"
+          >
+            <small
+              *ngIf="getConfirmPassword().value !== getPassword().value"
+              class="text-danger"
+              >Passwords do not match</small
+            >
+          </div>
+
+          <!-- Displays error message if user exists in database already -->
+          <div *ngIf="alreadyExists">
+            <small class="alert alert-danger">
+              It appears this user already exists, please login or try again
+              with a different email
+            </small>
+          </div>
+        </div>
       </div>
-    </div>
+      <div>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="adminAccount"
+        />
+        <label class="form-check-label" for="adminAccount">
+          <b>Administrator Account?</b>
+        </label>
+      </div>
+      <div class="mt-4 d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" (click)="register()">
+          Register
+        </button>
+      </div>
+      <div class="mt-4 d-flex justify-content-center">
+        <p>
+          Already have an account?
+          <a href="javascript:void(0);" (click)="switchToLogin()">
+            Login here!
+          </a>
+        </p>
+      </div>
+    </form>
   </div>
-    <div>
-      <input class="form-check-input" type="checkbox" value="" id="adminAccount">
-      <label class="form-check-label" for="adminAccount">
-        <b>Administrator Account?</b>
-      </label>
-    </div>
-    <button type="button" class="btn-primary" (click)="register()">Register</button>
-  </form>
-</div>
 </div>
