@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import {AuthService} from '../auth.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   valid = true;
   error_msg = '';
 
-  constructor(private router: Router, private auth: AuthService) {
-  }
+  constructor(private router: Router, private auth: AuthService) {}
+
+  @Output() switchLoginStateEvent = new EventEmitter<string>();
 
   /**
    * @desc Login username and password validation follows rules of registration
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   userEmail = new FormGroup({
     email: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
+      Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'),
     ]),
   });
 
@@ -34,9 +35,8 @@ export class LoginComponent implements OnInit {
       // Validators.pattern(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/),
       // Validators.pattern(/\d/),
       // Validators.pattern(/[a-zA-Z]/)
-    ]), confirmPassword: new FormControl('', [
-      Validators.required,
-    ])
+    ]),
+    confirmPassword: new FormControl('', [Validators.required]),
   });
 
   getUserEmail(): AbstractControl {
@@ -47,33 +47,45 @@ export class LoginComponent implements OnInit {
     return this.passwords.get('password');
   }
 
-  ngOnInit(): void {
+  switchToRegister() {
+    this.switchLoginStateEvent.emit();
   }
+
+  ngOnInit(): void {}
 
   signIn(): void {
     const login = this;
     const form = document.getElementById('logInForm');
     if (this.validForm(form)) {
-        this.auth.authenticate(this.getUserEmail().value, this.getUserPassword().value).then(() => {
-          login.valid = true;
-          this.router.navigate(['/userhome']).then(() => {}).catch(e => console.error(e));
-        }, rej => {
-			console.error(rej);
-			login.error_msg = '';
-			login.valid = false;
-			switch(rej.status) {
-				case 403:
-					login.error_msg = 'Invalid Credentials';
-				default:
-					login.error_msg = `Server Error: ${rej.status} ${rej.statusText}`;
-				break;
-			}
-		}).catch(err => {
-			console.error(err);
-			login.error_msg = JSON.stringify(err);
-			login.valid = false;
-		});
-	}
+      this.auth
+        .authenticate(this.getUserEmail().value, this.getUserPassword().value)
+        .then(
+          () => {
+            login.valid = true;
+            this.router
+              .navigate(['/userhome'])
+              .then(() => {})
+              .catch((e) => console.error(e));
+          },
+          (rej) => {
+            console.error(rej);
+            login.error_msg = '';
+            login.valid = false;
+            switch (rej.status) {
+              case 403:
+                login.error_msg = 'Invalid Credentials';
+              default:
+                login.error_msg = `Server Error: ${rej.status} ${rej.statusText}`;
+                break;
+            }
+          }
+        )
+        .catch((err) => {
+          console.error(err);
+          login.error_msg = JSON.stringify(err);
+          login.valid = false;
+        });
+    }
   }
 
   validForm(form): boolean {

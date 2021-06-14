@@ -1,4 +1,7 @@
-.jumbotron{
-  text-align: center;
-  margin: 10%;
+h1 {
+  font-size: 3.8rem !important;
+}
+
+.jumbotron {
+  margin-bottom: 0 !important;
 }
