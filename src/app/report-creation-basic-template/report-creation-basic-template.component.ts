@@ -15,6 +15,7 @@ import {ReportsService} from '../services/reports.service';
 })
 export class ReportCreationBasicTemplateComponent implements OnInit {
 
+
   models: string[];
   closeResult = '';
   selectedModel: string;
@@ -169,3 +170,7 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
     return str;
   }
 }
+function reason(reason: any) {
+  throw new Error('Function not implemented.');
+}
+
