@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />">
 <div class="sign-in text-center">
   <div class="center">
     <h1>Login</h1>
@@ -35,6 +36,10 @@
           id="password"
           required
         />
+        <span id="eyeSpan" ng-click="toggle()">
+          <i class="fa fa-eye" aria-hidden="true" id="eye"></i>
+        </span>
+        
       </div>
 
       <!--Displays error message after pressing the login button -->
@@ -62,3 +67,14 @@
     </form>
   </div>
 </div>
+
+<script>
+function toggle() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>

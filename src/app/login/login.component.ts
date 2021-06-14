@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { bufferToggle } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -103,4 +104,9 @@ export class LoginComponent implements OnInit {
       return true;
     }
   }
+}
+
+function toggle() {
+  var temp = document.getElementById("password").getAttribute("type");
+  console.log(temp);
 }
