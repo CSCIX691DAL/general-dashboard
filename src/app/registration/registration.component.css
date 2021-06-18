@@ -23,6 +23,7 @@ label {
 /* CSS style pulled from:
  https://www.w3schools.com/howto/howto_css_login_form.asp
  */
+ /*
 input[type="text"],
 input[type="password"],
 input[type="email"] {
@@ -33,7 +34,8 @@ input[type="email"] {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-
+*/
+/*
 input[type="checkbox"] {
   width: 85%;
   padding: 12px 20px;
@@ -42,6 +44,7 @@ input[type="checkbox"] {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+*/
 
 .center {
   width: 40%;
@@ -61,7 +64,7 @@ input[type="checkbox"] {
   display: table;
 }
 
-button {
+#registerButton {
   width: 75%;
 }
 
@@ -73,11 +76,11 @@ button {
   margin: auto;
   background-color: ghostwhite;
 }
-
+/*
 .Password-Input {
   margin-bottom: 5%;
 }
-
+*/
 @media (max-width: 540px) {
   form {
     text-align: left;

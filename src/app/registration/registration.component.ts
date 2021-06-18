@@ -11,6 +11,8 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
+  passwordState = "password"
+  confirmPasswordState = "password"
   constructor(
     private router: Router,
     private conn: DatabaseService,
@@ -82,6 +84,23 @@ export class RegistrationComponent implements OnInit {
 
   switchToLogin() {
     this.switchLoginStateEvent.emit();
+  }
+  toggle() {
+    if(this.passwordState=="password"){
+      this.passwordState = "text";
+    }
+    else{
+      this.passwordState="password";
+    }
+
+  }
+  change(){
+    if(this.confirmPasswordState=="password"){
+      this.confirmPasswordState = "text";
+    }
+    else{
+      this.confirmPasswordState = "password";
+    }
   }
 
   ngOnInit(): void {}
