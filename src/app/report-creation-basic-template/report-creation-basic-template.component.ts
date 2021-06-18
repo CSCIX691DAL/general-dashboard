@@ -108,7 +108,6 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
       alert(err.msg);
     });
     
-    
   }
 
   resetModal(): void{
