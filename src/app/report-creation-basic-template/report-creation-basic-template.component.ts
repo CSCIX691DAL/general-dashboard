@@ -119,7 +119,6 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
     this.selectedDatabase = (null);
     this.reportDisplayName = ("");
     this.reportName = ("");
-    
   }
 
   private selectColumns(): string {
