@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="sign-in text-center">
   <div class="center">
     <h1>Login</h1>
@@ -28,13 +29,17 @@
       <div [formGroup]="passwords" class="form-group">
         <label><b>Password</b></label>
         <input
-          type="password"
+          [type]="passwordState"
           class="form-control"
           formControlName="password"
-          placeholder="Enters Password"
+          placeholder="Enter Password"
           id="password"
           required
         />
+        <span id="eyeSpan" (click)="toggle()">
+          <i class="fa" [class]="{'fa-eye-slash': passwordState == 'password', 'fa-eye': passwordState == 'text'}" aria-hidden="true"></i>
+        </span>
+        
       </div>
 
       <!--Displays error message after pressing the login button -->
@@ -62,3 +67,4 @@
     </form>
   </div>
 </div>
+
