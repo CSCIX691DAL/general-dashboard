@@ -38,12 +38,12 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
   }
 
   open(content): void {
-    // reset variables
     this.modalService.open(content, {size: 'lg', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    
   }
 
   async databaseChange(event: any): Promise<void>{
@@ -101,10 +101,24 @@ export class ReportCreationBasicTemplateComponent implements OnInit {
       this.selectedModel,
       this.selectedDatabase.id).then(resp => {
         alert('report has been created');
+        this.modalService.dismissAll();
+        this.resetModal();
     })
       .catch(err => {
       alert(err.msg);
     });
+    
+    
+  }
+
+  resetModal(): void{
+    this.selectedModel = ("");
+    this.selectedModelStructure = (null);
+    this.selectedFunc = ("");
+    this.selectedForFunc = ("");
+    this.selectedDatabase = (null);
+    this.reportDisplayName = ("");
+    this.reportName = ("");
   }
 
   private selectColumns(): string {
