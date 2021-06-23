@@ -37,6 +37,12 @@ body {
 #wrapper.toggled #sidebar-wrapper {
   margin-left: 0;
 }
+.reportBtn{
+  margin-right: 20px;
+}
+.reportBtn,.widgetsBtn{
+  margin-bottom: 40px;
+}
 @media (min-width: 768px) {
   #sidebar-wrapper {
     margin-left: 0;

@@ -1,6 +1,7 @@
 <!-- Sidebar modified from:
      https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
      -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="d-flex" id="wrapper">
   <!-- Sidebar -->
   <div class="bg-light border-right" id="sidebar-wrapper">
@@ -40,11 +41,13 @@
   <!-- Page Content -->
   <div id="page-content-wrapper" class="container-fluid">
     <!-- To display UserHomepage contents -->
-    <h1>User Homepage</h1>
     <div
       class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h2>Dashboard</h2>
-
+    </div>
+    <div class="topButtons">
+      <button type="button" class="btn btn-secondary btn-lg reportBtn">Create basic report</button>
+      <button type="button" class="btn btn-secondary btn-lg widgetsBtn">Create Widgets</button>
     </div>
     <div class="d-flex flex-wrap" style="width: 100%">
       <div *ngFor="let widget of displayedWidgets">
