@@ -9,7 +9,7 @@ env:
   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT }}
   YOUR_PROJECT_ID: ${{secrets.CLOUD_RUN_PROJECT_ID}}
   REPO_NAME: general-dashboard
-  PORT: 3000
+
 jobs:
   build-and-deploy:
     name: Setup, Build, and Deploy
