@@ -46,8 +46,8 @@
       <h2>Dashboard</h2>
     </div>
     <div class="topButtons">
-      <button type="button" class="btn btn-secondary btn-lg reportBtn">Create basic report</button>
-      <button type="button" class="btn btn-secondary btn-lg widgetsBtn">Create Widgets</button>
+      <button class="btn btn-secondary btn-lg reportBtn" (click)="open(reportCreater)">Create Basic Report</button>
+      <button class="btn btn-secondary btn-lg reportBtn" (click)="open(widgetCreater)">Create Widgets</button>
     </div>
     <div class="d-flex flex-wrap" style="width: 100%">
       <div *ngFor="let widget of displayedWidgets">
@@ -91,3 +91,124 @@
   <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
+
+
+<ng-template #reportCreater let-modal>
+
+  <div class="modal-header">
+      <h2>Basic Report</h2>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+
+  <div class="modal-body">
+      <div class="top">
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                  <span class="input-group-text">Name</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="reportName">
+          </div>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                  <span class="input-group-text">Display Name</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="reportDisplayName">
+          </div>
+      </div> <br>
+
+      <div class="top">
+          <h4>Select your Database Connection: </h4>
+          <select class="form-control_reports-DB" [(ngModel)]="selectedDatabase" (ngModelChange)="databaseChange($event)">
+        <option value= "" selected> Please select a database </option>
+        <!-- Utilizes Database values -->
+        <option *ngFor="let database of databases" [ngValue]="database">{{database.host_name}}</option>
+      </select>
+      </div> <br>
+
+      <div class="top" *ngIf="selectedDatabase">
+          <div class="body-header">
+              <h4>Table</h4>
+          </div>
+          <div class="body-content">
+              <label>
+        <select class="form-control reports" (change)="onModelChange()" [(ngModel)]="selectedModel">
+          <option *ngFor="let model of models" [ngValue]="model">{{model}}</option>
+        </select>
+      </label>
+          </div>
+      </div>
+
+      <div>
+          <div class="body-header">
+              <h4>User Input</h4>
+          </div>
+          <div class="body-content" id="userInput">
+              <div *ngFor="let param of selectedModelStructure">
+                  <input class="form-check-input" type="checkbox" value="" id="{{param}}">
+                  <label class="form-check-label" for="{{param}}">{{param}}</label>
+              </div>
+
+          </div>
+      </div>
+
+      <div>
+        <div class="body-header">
+            <h4>User Input Testing</h4>
+        </div>
+        <div class="body-content">
+          <label>
+            <select class="form-control reports" [(ngModel)]="selectedForFunc">
+              <option *ngFor="let param of selectedModelStructure" [ngValue]="param">{{param}}</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div *ngIf="selectedModel">
+          <div class="body-header">
+              <h4>Function</h4>
+          </div>
+          <div class="body-content">
+              <label>
+        <select class="form-control func" [(ngModel)]="selectedFunc">
+          <option *ngFor="let func of functions" [ngValue]="func">{{func}}</option>
+        </select>
+      </label>
+          </div>
+      </div>
+
+      <div *ngIf="selectedFunc && selectedFunc !== 'All'">
+          <div class="body-header">
+              <h4>On Column</h4>
+          </div>
+          <div class="body-content">
+              <label>
+        <select class="form-control reports" [(ngModel)]="selectedForFunc">
+          <option *ngFor="let param of selectedModelStructure" [ngValue]="param">{{param}}</option>
+        </select>
+      </label>
+          </div>
+
+      </div>
+
+  </div>
+  <div class="modal-footer">
+      <button type="button" id="exit-btn" class="btn btn-outline-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">Close</span>
+  </button>
+      <button type="submit" (click)="submit() " class="btn btn-outline-dark">Save</button>
+</div>
+</ng-template>
+
+
+<ng-template #widgetCreater let-modal>
+
+  <div class="modal-header">
+      <h2>Create Widget</h2>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+</ng-template>
