@@ -26,10 +26,20 @@ button {
   width: 100%;
   height: 100%;
   padding-top: 5%;
-  padding-bottom: 5%;
   margin: auto;
   background-color: ghostwhite;
 }
+span{
+  position: absolute;
+  right:174px;
+  transform:translate(0,-50%);
+  top:62%;
+  cursor: pointer;
+}
+.fa{
+  color: #7a797e;
+}
+
 
 @media (max-width: 540px) {
   form {

@@ -16,4 +16,7 @@ export class HomeComponent implements OnInit {
   switchLoginState() {
     this.loginState = !this.loginState;
   }
+
+
 }
+

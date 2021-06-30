@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { bufferToggle } from 'rxjs/operators';
+import { iif } from 'rxjs';
+import { fakeAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +15,8 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
   valid = true;
   error_msg = '';
+  passwordState = "password"
+  isShown: boolean = true;
 
   constructor(private router: Router, private auth: AuthService) {}
 
@@ -39,6 +44,15 @@ export class LoginComponent implements OnInit {
     confirmPassword: new FormControl('', [Validators.required]),
   });
 
+  toggle() {
+  if(this.passwordState=="password"){
+    this.passwordState = "text";
+  }
+  else{
+    this.passwordState="password";
+  }
+
+}
   getUserEmail(): AbstractControl {
     return this.userEmail.get('email');
   }
@@ -49,6 +63,10 @@ export class LoginComponent implements OnInit {
 
   switchToRegister() {
     this.switchLoginStateEvent.emit();
+  }
+
+  toggleHide(){
+    this.isShown = !this.isShown;
   }
 
   ngOnInit(): void {}
@@ -104,3 +122,6 @@ export class LoginComponent implements OnInit {
     }
   }
 }
+
+
+
