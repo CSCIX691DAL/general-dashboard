@@ -166,6 +166,23 @@
         </div>
       </div>
 
+      <div>
+        <div class="body-header">
+            <h4>User Input Testing 2</h4>
+        </div>
+        <div class="body-content">
+          <label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Please Select Columns'"
+              [settings]="dropdownSettings"
+              [data]="selectedModelStructure"
+              [(ngModel)]="selectedUserInputs"
+            >
+            </ng-multiselect-dropdown>
+          </label>
+        </div>
+      </div>
+
       <div *ngIf="selectedModel">
           <div class="body-header">
               <h4>Function</h4>

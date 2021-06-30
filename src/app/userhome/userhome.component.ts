@@ -16,6 +16,7 @@ import { User } from 'src/models/users';
 import { Database } from 'src/models/database';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-userhome',
@@ -41,6 +42,8 @@ export class UserhomeComponent implements OnInit {
   reportDisplayName: string;
   form: FormGroup;
 
+  selectedUserInputs: string[] = [];
+  dropdownSettings: IDropdownSettings = {};
 
   constructor(
     private reportService: ReportsService, 
@@ -72,6 +75,15 @@ export class UserhomeComponent implements OnInit {
 
       this.executeReports(this.activeUserGeneratedReports);
     });
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true
+    };
   }
 
   private executeReports(reports: any[]): void{
