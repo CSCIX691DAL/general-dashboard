@@ -19,18 +19,26 @@
 
       <div [formGroup]="passwords" class="form-group">
         <label><b>Password</b></label>
-        <input
-          [type]="passwordState"
-          class="form-control"
-          formControlName="password"
-          placeholder="Enter Password"
-          id="password"
-          required
-        />
-        <span id="eyeSpan" (click)="toggle()">
-          <i class="fa" [class]="{'fa-eye-slash': passwordState == 'password', 'fa-eye': passwordState == 'text'}" aria-hidden="true"></i>
-        </span>
+        <div class="Password-Input">
+          <div class="input-group">
+            <input 
+            [type]="passwordState" 
+            class="form-control"
+            formControlName="password" 
+            placeholder="Enter Password:"  
+            id="password"
+            required
+            >
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <i class="fa" [class]="{'fa-eye-slash': passwordState == 'password', 'fa-eye': passwordState == 'text'}" aria-hidden="true" (click)="toggle()"></i>
+              </button>
+            </div>
+          </div>
         
+        
+        </div>
+
       </div>
 
       <!--Displays error message after pressing the login button -->
@@ -38,7 +46,7 @@
         <small class="text-danger">{{ error_msg }}</small>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button id="button" type="button" class="btn btn-primary" (click)="signIn()" (click)="toggleHide()">
+                    <button id="button" type="button" class="btn btn-primary" (click)="signIn()" id="logInButton">
           Log in
         </button>
                 </div>
