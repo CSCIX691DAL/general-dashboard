@@ -28,7 +28,8 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/angular2-multiselect-dropdown/themes/default.theme.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.min.js",

@@ -26,6 +26,8 @@ import { AdminDatabasesPageComponent } from './admin-databases-page/admin-databa
 import { ReportsPageComponent } from './reports-page/reports-page.component';
 import { ReportCreationComponent } from './report-creation/report-creation.component';
 import { ReportCreationBasicTemplateComponent } from './report-creation-basic-template/report-creation-basic-template.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { ReportCreationBasicTemplateComponent } from './report-creation-basic-te
     ReactiveFormsModule,
     NgbModule,
     FormsModule,
-    ChartsModule
+    ChartsModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    AngularMultiSelectModule
   ],
   providers: [EmployeesService, AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

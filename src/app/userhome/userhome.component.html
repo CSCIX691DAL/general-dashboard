@@ -1,6 +1,7 @@
 <!-- Sidebar modified from:
      https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
      -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="d-flex" id="wrapper">
   <!-- Sidebar -->
   <div class="bg-light border-right" id="sidebar-wrapper">
@@ -40,11 +41,13 @@
   <!-- Page Content -->
   <div id="page-content-wrapper" class="container-fluid">
     <!-- To display UserHomepage contents -->
-    <h1>User Homepage</h1>
     <div
       class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h2>Dashboard</h2>
-
+    </div>
+    <div class="topButtons">
+      <button class="btn btn-secondary btn-lg reportBtn" (click)="open(reportCreater)">Create Basic Report</button>
+      <button class="btn btn-secondary btn-lg reportBtn" (click)="open(widgetCreater)">Create Widgets</button>
     </div>
     <div class="d-flex flex-wrap" style="width: 100%">
       <div *ngFor="let widget of displayedWidgets">
@@ -88,3 +91,239 @@
   <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
+
+
+<ng-template #reportCreater let-modal>
+
+  <div class="modal-header">
+      <h2>Basic Report</h2>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+
+  <div class="modal-body">
+      <div class="top">
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                  <span class="input-group-text">Name</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="reportName">
+          </div>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                  <span class="input-group-text">Display Name</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="reportDisplayName">
+          </div>
+      </div> <br>
+
+      <div class="top">
+          <h4>Select your Database Connection: </h4>
+          <select class="form-control_reports-DB" [(ngModel)]="selectedDatabase" (ngModelChange)="databaseChange($event)">
+        <option value= "" selected> Please select a database </option>
+        <!-- Utilizes Database values -->
+        <option *ngFor="let database of databases" [ngValue]="database">{{database.host_name}}</option>
+      </select>
+      </div> <br>
+
+      <div class="top" *ngIf="selectedDatabase">
+          <div class="body-header">
+              <h4>Table</h4>
+          </div>
+          <div class="body-content">
+              <label>
+        <select class="form-control reports" (change)="onModelChange()" [(ngModel)]="selectedModel">
+          <option *ngFor="let model of models" [ngValue]="model">{{model}}</option>
+        </select>
+      </label>
+          </div>
+      </div>
+
+      <!-- <div>
+          <div class="body-header">
+              <h4>User Input</h4>
+          </div>
+          <div class="body-content" id="userInput">
+              <div *ngFor="let param of selectedModelStructure">
+                  <input class="form-check-input" type="checkbox" value="" id="{{param}}">
+                  <label class="form-check-label" for="{{param}}">{{param}}</label>
+              </div>
+
+          </div>
+      </div> -->
+
+      <!-- <div>
+        <div class="body-header">
+            <h4>User Input Testing 1</h4>
+        </div>
+        <div class="body-content">
+          <label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Please Select Columns'"
+              [settings]="dropdownSettings"
+              [data]="selectedModelStructure"
+              [(ngModel)]="selectedUserInputs"
+            >
+            </ng-multiselect-dropdown>
+          </label>
+        </div>
+      </div> -->
+
+      <div>
+        <div class="body-header">
+            <h4>User Input</h4>
+        </div>
+        <div class="body-content">
+            <angular2-multiselect 
+              [data]="selectedModelStructure" 
+              [(ngModel)]="selectedUserInputs" 
+              [settings]="dropdownSettings">
+            </angular2-multiselect>
+        </div>
+      </div>
+
+      <!-- <div>
+        <div class="body-header">
+            <h4>User Input Testing Compare</h4>
+        </div>
+        <div class="body-content">
+            <angular2-multiselect 
+              [data]="dropdownList" 
+              [(ngModel)]="selectedUserInputs" 
+              [settings]="dropdownSettings">
+            </angular2-multiselect>
+        </div>
+      </div> -->
+
+      <div *ngIf="selectedModel">
+          <div class="body-header">
+              <h4>Function</h4>
+          </div>
+          <div class="body-content">
+              <label>
+        <select class="form-control func" [(ngModel)]="selectedFunc">
+          <option *ngFor="let func of functions" [ngValue]="func">{{func}}</option>
+        </select>
+      </label>
+          </div>
+      </div>
+
+      <div *ngIf="selectedFunc && selectedFunc !== 'All'">
+          <div class="body-header">
+              <h4>On Column</h4>
+          </div>
+          <div class="body-content">
+              <label>
+        <select class="form-control reports" [(ngModel)]="selectedForFunc">
+          <option *ngFor="let param of selectedModelStructure" [ngValue]="param">{{param}}</option>
+        </select>
+      </label>
+          </div>
+
+      </div>
+
+  </div>
+  <div class="modal-footer">
+      <button type="button" id="exit-btn" class="btn btn-outline-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">Close</span>
+  </button>
+      <button type="submit" (click)="submit() " class="btn btn-outline-dark">Save</button>
+</div>
+</ng-template>
+
+
+<ng-template #widgetCreater let-modal>
+  <div class="content" id="widgetContainer">
+
+    <div class="modal-header">
+      <h2>Create Widget</h2>  
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="title">
+      <p>Connect to your database & begin configuring your own report!</p>
+      <hr>
+    </div>
+
+    <!-- Database Connection -->
+    <div class="section">
+        <h4>Select your Database Connection: </h4>
+        <select class="form-control_reports-DB" (change)="updateFormGroup()" (change)="updateReportType()" [(ngModel)]="selectedDatabase">
+      <option value= "" selected> Please select a database </option>
+      <!-- Utilizes Database values -->
+     <option *ngFor="let database of databases" [ngValue]="database">{{database.host_name}}</option>
+    </select>
+    </div> <br>
+
+
+    <!-- List of Reports Configurations -->
+    <div *ngIf="selectedDatabase">
+        <!-- Report Search By Type -->
+        <div class="section">
+            <div>
+                <h4>Choose a report to search by: </h4>
+                <select class="form-control reports" (change)="updateFormGroup()" [(ngModel)]="selectedReport" size="{{reports.length}}">
+          <option *ngFor="let report of reports" [ngValue]="report">{{report.name}}</option>
+        </select>
+            </div>
+        </div> <br>
+        <!-- Report parameter configuarations -->
+        <div class="section" *ngIf="selectedReport">
+            <div>
+                <h4>Report Parameters: </h4>
+                <form id="reportForm" [formGroup]="paramGroup" (ngSubmit)="onSubmit()">
+                    <div class="input-group mb-3 input-param" *ngFor="let param of selectedReport.input_params">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-field" id="inputGroup-sizing-default">{{param.name}}</span>
+                        </div>
+                        <input formControlName="{{param.name}}" type="{{param.type}}" class="form-control input-field" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </form>
+            </div>
+        </div> <br>
+        <!-- Report chart type configuaration -->
+        <div class="section" *ngIf="selectedReport">
+            <h4>Select the chart type you'd like to use: </h4>
+            <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
+                <select class="form-control_reports-charts" [(ngModel)]="selectedChartType" [ngModelOptions]="{standalone: true}">
+              <option value= "" selected> Please select a chart type </option>
+              <option *ngFor="let type of chartTypes" [ngValue]="type">{{type}}</option>
+            </select>
+            </form>
+        </div> <br>
+        <!-- List of Reports Submission Button -->
+        <div *ngIf="selectedReport">
+            <div class="form-buttons-execute_and_save">
+                <button type="submit" id="save-btn" form="reportForm" class="btn btn-outline-dark" [disabled]="isLoading">View & Save Report</button>
+            </div> <br> <br>
+        </div>
+        <hr>
+    </div>
+
+    <!--  spinner-->
+    <div class="text-center" *ngIf="isLoading">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden"></span>
+        </div>
+    </div>
+
+    <!-- List of Reports user messaging -->
+    <div class="section-errors">
+        <div>
+            <span class="error-msg" *ngIf="!isFormCompleted">
+        <h4>Please fill out all the fields </h4>
+      </span>
+        </div>
+    </div>
+    <div class="section" *ngIf="selectedReport && !isLoading">
+        <div>
+            <strong>Your chart is shown below: </strong> <br> If you see an empty chart then your query is returning null results. <br>
+        </div> <br>
+    </div> <br>
+</div>
+
+
+</ng-template>
