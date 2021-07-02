@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "live": "nodemon ",
-    "postinstall": "patch-package"
+    "heroku-postinstall": "patch-package"
   },
   "private": true,
   "dependencies": {
@@ -57,11 +57,7 @@
     "sequelize-automate": "^1.2.2",
     "serve-favicon": "^2.5.0",
     "tslib": "^2.2.0",
-    "zone.js": "~0.11.3",
-    "typescript": "~4.1.5",
-    "@angular-devkit/build-angular": "~0.1102.0",
-    "@angular/cli": "~11.2.0",
-    "@angular/compiler-cli": "~11.2.0"
+    "zone.js": "~0.11.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.0",
