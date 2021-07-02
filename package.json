@@ -9,14 +9,15 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "live": "nodemon ",
-    "postinstall": "patch-package",
-    "preinstall": "npm install -g @angular/cli"
+    "postinstall": "patch-package"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^11.2.5",
     "@angular/common": "~11.2.0",
     "@angular/compiler": "~11.2.0",
+    "@angular/cli": "~11.2.0",
+    "@angular/compiler-cli": "~11.2.0",
     "@angular/core": "~11.2.0",
     "@angular/forms": "~11.2.0",
     "@angular/http": "^7.2.16",
