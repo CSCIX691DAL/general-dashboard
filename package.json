@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "live": "nodemon ",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "preinstall": "npm install -g @angular/cli"
   },
   "private": true,
   "dependencies": {
