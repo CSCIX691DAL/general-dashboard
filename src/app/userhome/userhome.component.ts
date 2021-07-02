@@ -19,6 +19,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {WidgetTypes} from '../services/Chart';
 import {FormControl} from '@angular/forms';
 
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class UserhomeComponent implements OnInit {
   models: string[];
   closeResult = '';
   selectedModel: string;
-  selectedModelStructure: string[];
+  selectedModelStructure: any[] = [];
   functions = ['All', 'Distinct', 'Count'];
   selectedFunc: string;
   selectedForFunc: string;
@@ -53,6 +54,9 @@ export class UserhomeComponent implements OnInit {
   reports: Report[] = [];
   isLoading = false;
 
+  selectedUserInputs: string[] = [];
+  dropdownSettings = {};
+  dropdownList = [];
 
   constructor(
     private employeeService: EmployeesService,
@@ -92,13 +96,26 @@ export class UserhomeComponent implements OnInit {
       this.executeReports(this.activeUserGeneratedReports);
     });
 
-  }
-  //start of report creation modal ts
+    this.dropdownList = [
+      {"id":1,"itemName":"India"},
+      {"id":2,"itemName":"Singapore"},
+      {"id":3,"itemName":"Australia"},
+      {"id":4,"itemName":"Canada"},
+      {"id":5,"itemName":"South Korea"},
+      {"id":6,"itemName":"Germany"},
+      {"id":7,"itemName":"France"},
+      {"id":8,"itemName":"Russia"},
+      {"id":9,"itemName":"Italy"},
+      {"id":10,"itemName":"Sweden"}
+    ];
 
-  async updateReportType() : Promise<void> {
-    this.reportsService.readReportsForDatabase(this.selectedDatabase.id)
-      .then(reports => this.reports = reports)
-      .catch(err => console.log(err));
+    this.dropdownSettings = { 
+      singleSelection: false, 
+      text:"Select Countries",
+      selectAllText:'Select All',
+      unSelectAllText:'UnSelect All',
+      enableSearchFilter: true
+    }; 
   }
 
   updateFormGroup(): void{
@@ -220,9 +237,11 @@ export class UserhomeComponent implements OnInit {
 
     this.seq.getModel(this.selectedDatabase.id, this.selectedModel).then(data => {
       this.selectedModelStructure = [];
+      var i = 1;
       for (const key in data){
         if (data.hasOwnProperty(key)) {
-          this.selectedModelStructure.push(key);
+          this.selectedModelStructure.push({id: i, itemName: key});
+          i = i + 1;
         }
       }
     });
@@ -276,7 +295,7 @@ export class UserhomeComponent implements OnInit {
 
   resetModal(): void{
     this.selectedModel = ("");
-    this.selectedModelStructure = (null);
+    this.selectedModelStructure = [];
     this.selectedFunc = ("");
     this.selectedForFunc = ("");
     this.selectedDatabase = (null);

@@ -153,18 +153,48 @@
           </div>
       </div>
 
-      <div>
+      <!-- <div>
         <div class="body-header">
-            <h4>User Input Testing</h4>
+            <h4>User Input Testing 1</h4>
         </div>
         <div class="body-content">
           <label>
-            <select class="form-control reports" [(ngModel)]="selectedForFunc">
-              <option *ngFor="let param of selectedModelStructure" [ngValue]="param">{{param}}</option>
-            </select>
+            <ng-multiselect-dropdown
+              [placeholder]="'Please Select Columns'"
+              [settings]="dropdownSettings"
+              [data]="selectedModelStructure"
+              [(ngModel)]="selectedUserInputs"
+            >
+            </ng-multiselect-dropdown>
           </label>
         </div>
       </div>
+
+      <div>
+        <div class="body-header">
+            <h4>User Input Testing 2</h4>
+        </div>
+        <div class="body-content">
+            <angular2-multiselect 
+              [data]="selectedModelStructure" 
+              [(ngModel)]="selectedUserInputs" 
+              [settings]="dropdownSettings">
+            </angular2-multiselect>
+        </div>
+      </div> -->
+
+      <!-- <div>
+        <div class="body-header">
+            <h4>User Input Testing Compare</h4>
+        </div>
+        <div class="body-content">
+            <angular2-multiselect 
+              [data]="dropdownList" 
+              [(ngModel)]="selectedUserInputs" 
+              [settings]="dropdownSettings">
+            </angular2-multiselect>
+        </div>
+      </div> -->
 
       <div *ngIf="selectedModel">
           <div class="body-header">
