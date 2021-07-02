@@ -111,7 +111,7 @@ export class UserhomeComponent implements OnInit {
 
     this.dropdownSettings = { 
       singleSelection: false, 
-      text:"Select Countries",
+      text:"Please Select Columns",
       selectAllText:'Select All',
       unSelectAllText:'UnSelect All',
       enableSearchFilter: true
