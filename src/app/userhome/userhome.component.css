@@ -43,6 +43,10 @@ body {
 .reportBtn,.widgetsBtn{
   margin-bottom: 40px;
 }
+
+#widgetContainer{
+  padding: 20px;
+}
 @media (min-width: 768px) {
   #sidebar-wrapper {
     margin-left: 0;
@@ -80,3 +84,7 @@ body {
 .error-msg{
   color:red;
 }
+
+
+
+

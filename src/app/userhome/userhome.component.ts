@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,EventEmitter,Output } from '@angular/core';
 import * as $ from 'jquery';
 import { EmployeesService } from '../services/employees.service';
 import { Chart } from 'chart.js';
@@ -16,6 +16,9 @@ import { User } from 'src/models/users';
 import { Database } from 'src/models/database';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {WidgetTypes} from '../services/Chart';
+import {FormControl} from '@angular/forms';
+
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 
@@ -25,6 +28,8 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   styleUrls: ['./userhome.component.css']
 })
 export class UserhomeComponent implements OnInit {
+
+  @Output() outputEvent = new EventEmitter<WidgetInfo>();
 
   public allUserGeneratedReports: any[];
   public activeUserGeneratedReports: any[];
@@ -42,19 +47,32 @@ export class UserhomeComponent implements OnInit {
   reportName: string;
   reportDisplayName: string;
   form: FormGroup;
+  //start
+  selectedReport: Report;
+  selectedChartType: string;
+  chartTypes = WidgetTypes;
+  reports: Report[] = [];
+  isLoading = false;
 
   selectedUserInputs: string[] = [];
   dropdownSettings = {};
   dropdownList = [];
 
   constructor(
-    private reportService: ReportsService, 
+    private employeeService: EmployeesService,
+    private reportService: ReportsService,
+    private reportsService: ReportsService, 
     private userService: UsersService, 
     private chartFactory: ChartFactoryService, 
     private dbService: DatabaseService,
     private seq: SequelizeService, 
-    private modalService: NgbModal) {
-  }
+    private modalService: NgbModal,
+     private auth: AuthService) {}
+     
+  paramGroup = new FormGroup({});
+  chartType = new FormGroup({});
+  isFormCompleted = true;
+  differentAxisValues = false;
 
   async ngOnInit(): Promise<void> {
 
@@ -99,6 +117,63 @@ export class UserhomeComponent implements OnInit {
       enableSearchFilter: true
     }; 
   }
+
+  updateFormGroup(): void{
+    this.isFormCompleted = true;
+    if (this.selectedDatabase === undefined || this.selectedReport === undefined) {return; }
+    this.paramGroup = new FormGroup({});
+    for (const param of this.selectedReport.input_params){
+      this.paramGroup.addControl(param.name, new FormControl(''));
+    }
+    this.chartType = new FormGroup({});
+    console.log(this.selectedReport); // Useful Debugging line.
+  }
+
+  onSubmit(): Promise<void>{
+    if (this.selectedReport === undefined) { return; }
+
+    const values: string[] = [];
+    let userReportParams = '{"params": [';
+    let params = '';
+    // required field check because 'required' tag wasn't working
+    for (const param of this.selectedReport.input_params){
+      values.push(this.paramGroup.get(param.name).value);
+      params += ('{"' + param.name + '": ' + '"' + this.paramGroup.get(param.name).value + '"},');
+    }
+
+    // Module checks if all parameters as well as a chart type to suit are selected and updates form completion check.
+    if ((this.isFormCompleted = !values.includes('')) === true && this.selectedChartType) {
+      this.isFormCompleted = true;
+    }
+    else {this.isFormCompleted = false;}
+
+    // close modal if form is completed
+    if (this.isFormCompleted){
+
+      params = params.substring(0, params.length - 1);
+      userReportParams += params + ']}';
+      this.isLoading = true;
+
+      this.userService.createUserReport(this.selectedReport.id, userReportParams, this.selectedChartType).then(data => {
+        this.generateUserReport(this.selectedReport.id + '');
+
+      });
+    }
+  }
+
+  private generateUserReport(reportId: string) : void{
+    this.userService.executeUserGeneratedReport(reportId).then(data => {
+      const widget = this.chartFactory.processChartType(this.selectedChartType, data,
+        [this.selectedReport.display_name],
+        ['Count']);
+      this.outputEvent.emit(widget);
+      this.isLoading = false;
+      console.log(widget);
+    });
+
+  }
+
+    //end of report creation modal ts
 
   private executeReports(reports: any[]): void{
     reports.forEach(report => {
