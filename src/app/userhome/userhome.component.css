@@ -42,6 +42,8 @@ body {
 }
 .reportBtn,.widgetsBtn{
   margin-bottom: 40px;
+  width: 250px;
+  text-align: center;
 }
 
 #widgetContainer{
@@ -58,6 +60,31 @@ body {
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+}
+
+.container-header{
+  width: 1750px;
+  height: 200px;
+}
+
+.line2{
+    width: 50%;
+    float: left;
+}
+
+.subTitle{
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  width: 70%;
+}
+
+.topButtons{
+  padding-top: 3rem;
+  align-items: center;
+  float: right;
 }
 
 .body-header{
