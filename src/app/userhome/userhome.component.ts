@@ -54,7 +54,7 @@ export class UserhomeComponent implements OnInit {
   reports: Report[] = [];
   isLoading = false;
 
-  selectedUserInputs: string[] = [];
+  selectedUserInputs: {id: number, itemName: string}[] = [];
   dropdownSettings = {};
   dropdownList = [];
 
@@ -233,6 +233,7 @@ export class UserhomeComponent implements OnInit {
   }
 
   onModelChange(): void{
+    this.selectedUserInputs = [];
     if (!this.selectedModel){ return; }
 
     this.seq.getModel(this.selectedDatabase.id, this.selectedModel).then(data => {
@@ -291,6 +292,7 @@ export class UserhomeComponent implements OnInit {
       alert(err.msg);
     });
     
+    this.selectedUserInputs = [];
   }
 
   resetModal(): void{
@@ -311,14 +313,14 @@ export class UserhomeComponent implements OnInit {
       cols = this.selectedForFunc + ' ';
     }
 
-    this.selectedModelStructure.forEach(param => {
+    this.selectedUserInputs.forEach(param => {
       // skip our selected param because its at the front
-      if (param !== this.selectedForFunc){
+      if (param.itemName !== this.selectedForFunc){
         if (cols === ''){
-          cols += param;
+          cols += param.itemName;
         }
         else {
-          cols += ',' + param;
+          cols += ',' + param.itemName;
         }
       }
     });
@@ -328,19 +330,32 @@ export class UserhomeComponent implements OnInit {
 
   private parseInputParams(): string {
     let str = '';
-    for (const param of this.selectedModelStructure){
-      const element = document.getElementById(param) as HTMLInputElement;
-      if (element.checked){
+    // for (const param of this.selectedModelStructure){
+    //   const element = document.getElementById(param) as HTMLInputElement;
+    //   if (element.checked){
 
-        // handle starting 'and'
-        if (str === '') {
-          str += param + ' = @ ';
-        }
-        else {
-          str += ' AND ' + param + ' = @ ';
-        }
+    //     // handle starting 'and'
+    //     if (str === '') {
+    //       str += param + ' = @ ';
+    //     }
+    //     else {
+    //       str += ' AND ' + param + ' = @ ';
+    //     }
+    //   }
+    // }
+
+    for (var i of this.selectedUserInputs){
+      // handle starting 'and'
+      if (str === '') {
+        str += i.itemName + ' = @ ';
+      }
+      else {
+        str += ' AND ' + i.itemName + ' = @ ';
       }
     }
+
+
+    
     if (str !== ''){
       str = ' WHERE ' + str;
     }
@@ -350,13 +365,22 @@ export class UserhomeComponent implements OnInit {
   createInputParamsJsonString(): string{
     let str = '{"params": [';
     let count = 0;
-    for (const param of this.selectedModelStructure){
-      const element = document.getElementById(param) as HTMLInputElement;
-      if (element.checked){
-        str += '{"name":"' + param + '","type":"text"},';
-        count++;
-      }
+
+
+    // for (const param of this.selectedModelStructure){
+    //   const element = document.getElementById(param) as HTMLInputElement;
+    //   if (element.checked){
+    //     str += '{"name":"' + param + '","type":"text"},';
+    //     count++;
+    //   }
+    // }
+
+
+    for (var i of this.selectedUserInputs){
+      str += '{"name":"' + i.itemName + '","type":"text"},';
+      count++;
     }
+
     if (count > 0){
       str = str.substring(0, str.length - 1) + ']}';
     }

@@ -216,7 +216,7 @@
           <div class="body-content">
               <label>
         <select class="form-control reports" [(ngModel)]="selectedForFunc">
-          <option *ngFor="let param of selectedModelStructure" [ngValue]="param">{{param}}</option>
+          <option *ngFor="let param of selectedUserInputs" [ngValue]="param.itemName">{{param.itemName}}</option>
         </select>
       </label>
           </div>
