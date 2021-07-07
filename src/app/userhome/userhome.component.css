@@ -37,6 +37,16 @@ body {
 #wrapper.toggled #sidebar-wrapper {
   margin-left: 0;
 }
+.reportBtn{
+  margin-right: 20px;
+}
+.reportBtn,.widgetsBtn{
+  margin-bottom: 40px;
+}
+
+#widgetContainer{
+  padding: 20px;
+}
 @media (min-width: 768px) {
   #sidebar-wrapper {
     margin-left: 0;
@@ -49,4 +59,32 @@ body {
     margin-left: -15rem;
   }
 }
+
+.body-header{
+  flex: 1;
+}
+.body-content{
+  flex:2;
+}
+
+.modal-body > div {
+  margin:10px;
+  display:flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+#userInput {
+  margin:10px;
+  display:flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.error-msg{
+  color:red;
+}
+
+
+
 
