@@ -5,6 +5,7 @@ import { Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { bufferToggle } from 'rxjs/operators';
 import { iif } from 'rxjs';
+import { fakeAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +15,13 @@ import { iif } from 'rxjs';
 export class LoginComponent implements OnInit {
   valid = true;
   error_msg = '';
-  passwordState = "password"
+  passwordState = "password";
+  
+
   constructor(private router: Router, private auth: AuthService) {}
 
   @Output() switchLoginStateEvent = new EventEmitter<string>();
+
 
   /**
    * @desc Login username and password validation follows rules of registration
@@ -32,11 +36,6 @@ export class LoginComponent implements OnInit {
   passwords = new FormGroup({
     password: new FormControl('', [
       Validators.required,
-      // Validators.minLength(4),
-      // Validators.maxLength(12),
-      // Validators.pattern(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/),
-      // Validators.pattern(/\d/),
-      // Validators.pattern(/[a-zA-Z]/)
     ]),
     confirmPassword: new FormControl('', [Validators.required]),
   });
@@ -61,6 +60,8 @@ export class LoginComponent implements OnInit {
   switchToRegister() {
     this.switchLoginStateEvent.emit();
   }
+
+  
 
   ngOnInit(): void {}
 
