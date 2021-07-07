@@ -67,7 +67,7 @@ export class UserhomeComponent implements OnInit {
     private dbService: DatabaseService,
     private seq: SequelizeService, 
     private modalService: NgbModal,
-     private auth: AuthService) {}
+    private auth: AuthService) {}
      
   paramGroup = new FormGroup({});
   chartType = new FormGroup({});
@@ -116,6 +116,12 @@ export class UserhomeComponent implements OnInit {
       unSelectAllText:'UnSelect All',
       enableSearchFilter: true
     }; 
+  }
+  
+  async updateReportType() : Promise<void> {
+    this.reportsService.readReportsForDatabase(this.selectedDatabase.id)
+      .then(reports => this.reports = reports)
+      .catch(err => console.log(err));
   }
 
   updateFormGroup(): void{
