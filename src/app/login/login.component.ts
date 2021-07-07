@@ -15,12 +15,13 @@ import { fakeAsync } from '@angular/core/testing';
 export class LoginComponent implements OnInit {
   valid = true;
   error_msg = '';
-  passwordState = "password"
-  isShown: boolean = true;
+  passwordState = "password";
+  
 
   constructor(private router: Router, private auth: AuthService) {}
 
   @Output() switchLoginStateEvent = new EventEmitter<string>();
+
 
   /**
    * @desc Login username and password validation follows rules of registration
@@ -35,11 +36,6 @@ export class LoginComponent implements OnInit {
   passwords = new FormGroup({
     password: new FormControl('', [
       Validators.required,
-      // Validators.minLength(4),
-      // Validators.maxLength(12),
-      // Validators.pattern(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/),
-      // Validators.pattern(/\d/),
-      // Validators.pattern(/[a-zA-Z]/)
     ]),
     confirmPassword: new FormControl('', [Validators.required]),
   });
@@ -65,9 +61,7 @@ export class LoginComponent implements OnInit {
     this.switchLoginStateEvent.emit();
   }
 
-  toggleHide(){
-    this.isShown = !this.isShown;
-  }
+  
 
   ngOnInit(): void {}
 
