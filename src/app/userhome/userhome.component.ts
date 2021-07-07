@@ -34,6 +34,7 @@ export class UserhomeComponent implements OnInit {
   public allUserGeneratedReports: any[];
   public activeUserGeneratedReports: any[];
   public displayedWidgets: WidgetInfo[] = [];
+  public widget: WidgetInfo;
 
   models: string[];
   closeResult = '';
