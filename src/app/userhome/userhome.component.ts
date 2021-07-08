@@ -253,6 +253,8 @@ export class UserhomeComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
+      this.modalService.dismissAll();
+      this.resetModal();
       return `with: ${reason}`;
     }
   }
@@ -294,13 +296,14 @@ export class UserhomeComponent implements OnInit {
   }
 
   resetModal(): void{
+    this.selectedDatabase = (null);
     this.selectedModel = ("");
     this.selectedModelStructure = [];
     this.selectedFunc = ("");
     this.selectedForFunc = ("");
-    this.selectedDatabase = (null);
     this.reportDisplayName = ("");
     this.reportName = ("");
+    this.selectedUserInputs = [];
   }
 
   private selectColumns(): string {
