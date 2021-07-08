@@ -1,10 +1,12 @@
-.container{
-  text-align:center;
+.container {
+  text-align: center;
 }
 /*
  To disable the blue link color of anchor tags in sidebar
  */
-a { color: inherit; }
+a {
+  color: inherit;
+}
 
 /*
 CSS modified from:  https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
@@ -13,16 +15,16 @@ body {
   overflow-x: hidden;
 }
 #menu-toggle {
-  position:fixed;
-  bottom:0;
+  position: fixed;
+  bottom: 0;
 }
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
 }
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
@@ -37,14 +39,15 @@ body {
 #wrapper.toggled #sidebar-wrapper {
   margin-left: 0;
 }
-.reportBtn{
+.reportBtn {
   margin-right: 20px;
 }
-.reportBtn,.widgetsBtn{
+.reportBtn,
+.widgetsBtn {
   margin-bottom: 40px;
 }
 
-#widgetContainer{
+#widgetContainer {
   padding: 20px;
 }
 @media (min-width: 768px) {
@@ -60,31 +63,27 @@ body {
   }
 }
 
-.body-header{
+.body-header {
   flex: 1;
 }
-.body-content{
-  flex:2;
+.body-content {
+  flex: 2;
 }
 
 .modal-body > div {
-  margin:10px;
-  display:flex;
+  margin: 10px;
+  display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
 
 #userInput {
-  margin:10px;
-  display:flex;
+  margin: 10px;
+  display: flex;
   flex-wrap: wrap;
   flex-direction: column;
 }
 
-.error-msg{
-  color:red;
+.error-msg {
+  color: red;
 }
-
-
-
-
