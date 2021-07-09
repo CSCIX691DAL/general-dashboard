@@ -40,11 +40,13 @@ body {
   margin-left: 0;
 }
 .reportBtn {
-  margin-right: 20px;
+  width: 200px;
+  height: 50px;
+  margin: 10px 10px 10px 10px;
 }
 .reportBtn,
 .widgetsBtn {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 #widgetContainer {
@@ -63,6 +65,29 @@ body {
   }
 }
 
+.homepage-row{
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.homepage-col-4{
+  float: left;
+  width: 30%;
+  
+}
+.homepage-col-8{
+  float: right;
+  width: 60%;
+  position: relative;
+}
+
+.topButtons{
+right: 0;
+position: absolute;
+}
+
 .body-header {
   flex: 1;
 }
@@ -75,6 +100,10 @@ body {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+}
+
+.line{
+  margin-right: 3rem;
 }
 
 #userInput {
