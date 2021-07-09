@@ -267,9 +267,11 @@ export class UserhomeComponent implements OnInit {
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;
+          this.resetModal();
         },
         (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          this.resetModal();
         }
       );
   }
@@ -359,6 +361,7 @@ export class UserhomeComponent implements OnInit {
     this.selectedDatabase = null;
     this.reportDisplayName = '';
     this.reportName = '';
+    this.selectedUserInputs = [];
   }
 
   private selectColumns(): string {
