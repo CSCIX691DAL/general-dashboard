@@ -63,36 +63,31 @@
   <div id="page-content-wrapper" class="container-fluid">
     <!-- To display UserHomepage contents -->
     <div class="homepage-col-12">
-    <div class="homepage-row">
-      <div>
-      <div class="homepage-col-4 
-        pt-3
-        pb-3
-      "
-    >
-      <h2 class="pt-2 pb-2">User Homepage</h2>
-      <h4 class="pt-2 pb-2">Dashboard</h4>
-      </div>
-      <div class="homepage-col-8 pt-4 pb-4">
-        <div class="topButtons">
-        
-      <button
-        class="btn btn-secondary btn-lg reportBtn"
-        (click)="open(reportCreater)"
-      >
-        Create Basic Report
-      </button>
-      <button
-        class="btn btn-secondary btn-lg reportBtn"
-        (click)="open(widgetCreater)"
-      >
-        Create Widgets
-      </button>
-    </div>
-      </div>
+      <div class="homepage-row">
+        <div>
+          <div class="homepage-col-4 pt-3 pb-3">
+            <h2 class="pt-2 pb-2">User Homepage</h2>
+            <h4 class="pt-2 pb-2">Dashboard</h4>
+          </div>
+          <div class="homepage-col-8 pt-4 pb-4">
+            <div class="topButtons">
+              <button
+                class="btn btn-secondary btn-lg reportBtn"
+                (click)="open(reportCreater)"
+              >
+                Create Basic Report
+              </button>
+              <button
+                class="btn btn-secondary btn-lg reportBtn"
+                (click)="open(widgetCreater)"
+              >
+                Create Widgets
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
     <div class="d-flex flex-wrap pt-4 border-top" style="width: 100%">
       <div *ngFor="let widget of displayedWidgets">
         <div class="container">
@@ -100,7 +95,7 @@
 
           <div *ngIf="isTable(widget)">
             <table class="table">
-              <thead>
+              <thead class="thead-dark">
                 <tr>
                   <th
                     *ngFor="let item of widget.data[0] | keyvalue"
@@ -203,7 +198,7 @@
     <br />
 
     <div class="top">
-      <h4 class="line">Select your Database Connection: </h4>
+      <h4 class="line">Select your Database Connection:</h4>
       <select
         class="form-control form-control_reports-DB"
         [(ngModel)]="selectedDatabase"
@@ -238,7 +233,7 @@
     </div>
 
     <div *ngIf="selectedModel">
-      <div class="body-header" >
+      <div class="body-header">
         <h4>User Input</h4>
       </div>
       <div class="body-content">
@@ -314,7 +309,7 @@
           <div class="container" *ngIf="widget">
             <div *ngIf="isTable(widget)">
               <table class="table">
-                <thead>
+                <thead class="thead-dark">
                   <tr>
                     <th
                       *ngFor="let item of widget.data[0] | keyvalue"
