@@ -1,37 +1,22 @@
 <!-- Sidebar modified from:
      https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
      -->
-<link
-  rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-  crossorigin="anonymous"
-/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 <div class="d-flex" id="wrapper">
-  <!-- Sidebar -->
-  <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Widgets</div>
-    <div class="list-group list-group-flush">
-      <!-- Add some sort of ngFor loop here to generate available widgets -->
-      <!-- Code for an individual widget text + dropright menu starts -->
-      <div
-        *ngFor="let report of allUserGeneratedReports"
-        class="dropright list-group-item list-group-item-action bg-light"
-      >
-        <a
-          class="dropright dropdown-toggle"
-          href="#"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Widgets</div>
+        <div class="list-group list-group-flush">
+            <!-- Add some sort of ngFor loop here to generate available widgets -->
+            <!-- Code for an individual widget text + dropright menu starts -->
+            <div *ngFor="let report of allUserGeneratedReports" class="dropright list-group-item list-group-item-action bg-light">
+                <a class="dropright dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ report["reports_model.name"] }}
         </a>
-        <div class="dropdown-menu">
-          <!-- Dropdown menu links -->
-          <a class="dropdown-item" (click)="addWidget(report)">Add</a>
-          <a class="dropdown-item" (click)="this.deleteWidgets(report)"
-            >Delete</a
+                <div class="dropdown-menu">
+                    <!-- Dropdown menu links -->
+                    <a class="dropdown-item" (click)="addWidget(report)">Add</a>
+                    <a class="dropdown-item" (click)="this.deleteWidgets(report)">Delete</a
           >
         </div>
       </div>
@@ -52,76 +37,65 @@
       >
         {{ report["reports_model.name"] }}
       </a>
-      <div class="dropdown-menu">
-        <!-- Dropdown menu links -->
-        <a class="dropdown-item" (click)="setReportInactive(report)">Delete</a>
-      </div>
-    </div>
-  </div>
-  <!-- /#sidebar-wrapper -->
-  <!-- Page Content -->
-  <div id="page-content-wrapper" class="container-fluid">
-    <!-- To display UserHomepage contents -->
-    <div
-      class="
-        d-flex
-        justify-content-between
-        flex-wrap flex-md-nowrap
-        align-items-center
-        pt-3
-        pb-2
-        mb-3
-        border-bottom
-      "
-    >
-      <h2>Dashboard</h2>
-    </div>
-    <div class="topButtons">
-      <button
-        class="btn btn-secondary btn-lg reportBtn"
-        (click)="open(reportCreater)"
-      >
-        Create Basic Report
-      </button>
-      <button
-        class="btn btn-secondary btn-lg reportBtn"
-        (click)="open(widgetCreater)"
-      >
-        Create Widgets
-      </button>
-    </div>
-    <div class="d-flex flex-wrap" style="width: 100%">
-      <div *ngFor="let widget of displayedWidgets">
-        <div class="container">
-          <h5 style="align-content: center">{{ widget.displayName }}</h5>
+                    <div class="dropdown-menu">
+                        <!-- Dropdown menu links -->
+                        <a class="dropdown-item" (click)="setReportInactive(report)">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+            <!-- Page Content -->
+            <div id="page-content-wrapper" class="container-fluid">
+                <!-- To display UserHomepage contents -->
+                <div class="homepage-col-12">
+                    <div class="homepage-row">
+                        <div>
+                            <div class="homepage-col-4 pt-3 pb-3">
+                                <h2 class="pt-2 pb-2">User Homepage</h2>
+                                <h4 class="pt-2 pb-2">Dashboard</h4>
+                            </div>
+                            <div class="homepage-col-8 pt-4 pb-4">
+                                <div class="topButtons">
+                                    <button class="btn btn-secondary btn-lg reportBtn" (click)="open(reportCreater)">
+                Create Basic Report
+              </button>
+                                    <button class="btn btn-secondary btn-lg reportBtn" (click)="open(widgetCreater)">
+                Create Widgets
+              </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap pt-4 border-top" style="width: 100%">
+                    <div *ngFor="let widget of displayedWidgets">
+                        <div class="container">
+                            <h5 style="align-content: center">{{ widget.displayName }}</h5>
 
-          <div *ngIf="isTable(widget)">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th
-                    *ngFor="let item of widget.data[0] | keyvalue"
-                    scope="col"
-                  >
-                    {{ item.key }}
-                  </th>
-                </tr>
-              </thead>
+                            <div *ngIf="isTable(widget)">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th *ngFor="let item of widget.data[0] | keyvalue" scope="col">
+                                                {{ item.key }}
+                                            </th>
+                                        </tr>
+                                    </thead>
 
-              <tbody *ngFor="let emp of widget.data">
-                <tr>
-                  <td *ngFor="let item of emp | keyvalue">
-                    {{ item.value }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <app-chart *ngIf="!isTable(widget)" [chartInfo]="widget"></app-chart>
-        </div>
-      </div>
-    </div>
-    <button class="btn btn-dark" id="menu-toggle">
+                                    <tbody *ngFor="let emp of widget.data">
+                                        <tr>
+                                            <td *ngFor="let item of emp | keyvalue">
+                                                {{ item.value }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <app-chart *ngIf="!isTable(widget)" [chartInfo]="widget"></app-chart>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-dark" id="menu-toggle">
       <svg
         id="barLeft"
         xmlns="http://www.w3.org/2000/svg"
@@ -152,75 +126,54 @@
         />
       </svg>
     </button>
-  </div>
-  <!-- /#page-content-wrapper -->
-</div>
-<!-- /#wrapper -->
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
 
-<ng-template #reportCreater let-modal>
-  <div class="modal-header">
-    <h2>Basic Report</h2>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
+        <ng-template #reportCreater let-modal>
+            <div class="modal-header">
+                <h2>Basic Report</h2>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
+            </div>
 
-  <div class="modal-body">
-    <div class="top">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">Name</span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-          [(ngModel)]="reportName"
-        />
-      </div>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">Display Name</span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-          [(ngModel)]="reportDisplayName"
-        />
-      </div>
-    </div>
-    <br />
+            <div class="modal-body">
+                <div class="top">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Name</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="reportName" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Display Name</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="reportDisplayName" />
+                    </div>
+                </div>
+                <br />
 
-    <div class="top">
-      <h4>Select your Database Connection:</h4>
-      <select
-        class="form-control_reports-DB"
-        [(ngModel)]="selectedDatabase"
-        (ngModelChange)="databaseChange($event)"
-      >
+                <div class="top">
+                    <h4 class="line">Select your Database Connection:</h4>
+                    <select class="form-control form-control_reports-DB" [(ngModel)]="selectedDatabase" (ngModelChange)="databaseChange($event)">
         <option value="" selected>Please select a database</option>
         <!-- Utilizes Database values -->
         <option *ngFor="let database of databases" [ngValue]="database">
           {{ database.host_name }}
         </option>
       </select>
-    </div>
-    <br />
+                </div>
+                <br />
 
-    <div class="top" *ngIf="selectedDatabase">
-      <div class="body-header">
-        <h4>Table</h4>
-      </div>
-      <div class="body-content">
-        <label>
+                <div class="top" *ngIf="selectedDatabase">
+                    <div class="body-header">
+                        <h4>Table</h4>
+                    </div>
+                    <div class="body-content">
+                        <label>
           <select
             class="form-control reports"
             (change)="onModelChange()"
@@ -231,10 +184,10 @@
             </option>
           </select>
         </label>
-      </div>
-    </div>
+                    </div>
+                </div>
 
-    <!-- <div>
+                <!-- <div>
           <div class="body-header">
               <h4>User Input</h4>
           </div>
@@ -247,7 +200,7 @@
           </div>
       </div> -->
 
-    <!-- <div>
+                <!-- <div>
         <div class="body-header">
             <h4>User Input Testing 1</h4>
         </div>
@@ -264,21 +217,17 @@
         </div>
       </div> -->
 
-    <div>
-      <div class="body-header">
-        <h4>User Input</h4>
-      </div>
-      <div class="body-content">
-        <angular2-multiselect
-          [data]="selectedModelStructure"
-          [(ngModel)]="selectedUserInputs"
-          [settings]="dropdownSettings"
-        >
-        </angular2-multiselect>
-      </div>
-    </div>
+                <div *ngIf="selectedModel">
+                    <div class="body-header">
+                        <h4>User Input</h4>
+                    </div>
+                    <div class="body-content">
+                        <angular2-multiselect [data]="selectedModelStructure" [(ngModel)]="selectedUserInputs" [settings]="dropdownSettings">
+                        </angular2-multiselect>
+                    </div>
+                </div>
 
-    <!-- <div>
+                <!-- <div>
         <div class="body-header">
             <h4>User Input Testing Compare</h4>
         </div>
@@ -291,27 +240,27 @@
         </div>
       </div> -->
 
-    <div *ngIf="selectedModel">
-      <div class="body-header">
-        <h4>Function</h4>
-      </div>
-      <div class="body-content">
-        <label>
+                <div *ngIf="selectedModel">
+                    <div class="body-header">
+                        <h4>Function</h4>
+                    </div>
+                    <div class="body-content">
+                        <label>
           <select class="form-control func" [(ngModel)]="selectedFunc">
             <option *ngFor="let func of functions" [ngValue]="func">
               {{ func }}
             </option>
           </select>
         </label>
-      </div>
-    </div>
+                    </div>
+                </div>
 
-    <div *ngIf="selectedFunc && selectedFunc !== 'All'">
-      <div class="body-header">
-        <h4>On Column</h4>
-      </div>
-      <div class="body-content">
-        <label>
+                <div *ngIf="selectedFunc && selectedFunc !== 'All'">
+                    <div class="body-header">
+                        <h4>On Column</h4>
+                    </div>
+                    <div class="body-content">
+                        <label>
           <select class="form-control reports" [(ngModel)]="selectedForFunc">
             <option
               *ngFor="let param of selectedUserInputs"
@@ -321,73 +270,59 @@
             </option>
           </select>
         </label>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      id="exit-btn"
-      class="btn btn-outline-dark"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="exit-btn" class="btn btn-outline-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">Close</span>
     </button>
-    <button type="submit" (click)="submit()" class="btn btn-outline-dark">
+                <button type="submit" (click)="submit()" class="btn btn-outline-dark">
       Save
     </button>
-  </div>
-</ng-template>
-
-<ng-template #widgetCreater let-modal>
-  <div class="content">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <app-report-creation
-            (outputEvent)="widget = $event"
-          ></app-report-creation>
-        </div>
-        <div class="col">
-          <div class="container" *ngIf="widget">
-            <div *ngIf="isTable(widget)">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th
-                      *ngFor="let item of widget.data[0] | keyvalue"
-                      scope="col"
-                    >
-                      {{ item.key }}
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody *ngFor="let emp of widget.data">
-                  <tr>
-                    <td *ngFor="let item of emp | keyvalue">
-                      {{ item.value }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
+        </ng-template>
 
-            <app-chart
-              *ngIf="!isTable(widget)"
-              [chartInfo]="widget"
-            ></app-chart>
+        <ng-template #widgetCreater let-modal>
+            <div class="content">
+                <div class="container">
+                    <div class="Column">
+                        <div class="col">
+                            <app-report-creation (outputEvent)="widget = $event"></app-report-creation>
+                        </div>
+                        <div class="col">
+                            <div class="container" *ngIf="widget">
+                                <div *ngIf="isTable(widget)">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th *ngFor="let item of widget.data[0] | keyvalue" scope="col">
+                                                    {{ item.key }}
+                                                </th>
+                                            </tr>
+                                        </thead>
 
-            <!-- End of Reports Page Messaging -->
-            <br />
-            <hr />
-            <p>Your report has been saved to your account!</p>
-            <hr />
-            <br />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>
+                                        <tbody *ngFor="let emp of widget.data">
+                                            <tr>
+                                                <td *ngFor="let item of emp | keyvalue">
+                                                    {{ item.value }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <app-chart *ngIf="!isTable(widget)" [chartInfo]="widget"></app-chart>
+
+                                <!-- End of Reports Page Messaging -->
+                                <br />
+                                <hr />
+                                <p>Your report has been saved to your account!</p>
+                                <hr />
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>

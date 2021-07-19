@@ -1,89 +1,133 @@
 .container {
-  text-align: center;
+    text-align: center;
 }
+
+
 /*
  To disable the blue link color of anchor tags in sidebar
  */
+
 a {
-  color: inherit;
+    color: inherit;
 }
+
 
 /*
 CSS modified from:  https://therichpost.com/how-to-make-simple-sidebar-template-with-bootstrap-4-and-angular-9/
  */
+
 body {
-  overflow-x: hidden;
+    overflow-x: hidden;
 }
+
 #menu-toggle {
-  position: fixed;
-  bottom: 0;
+    position: fixed;
+    bottom: 0;
 }
+
 #sidebar-wrapper {
-  min-height: 100vh;
-  margin-left: -15rem;
-  -webkit-transition: margin 0.25s ease-out;
-  -moz-transition: margin 0.25s ease-out;
-  -o-transition: margin 0.25s ease-out;
-  transition: margin 0.25s ease-out;
+    min-height: 100vh;
+    margin-left: -15rem;
+    -webkit-transition: margin 0.25s ease-out;
+    -moz-transition: margin 0.25s ease-out;
+    -o-transition: margin 0.25s ease-out;
+    transition: margin 0.25s ease-out;
 }
+
 #sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
-  font-size: 1.2rem;
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
 }
+
 #sidebar-wrapper .list-group {
-  width: 15rem;
+    width: 15rem;
 }
+
 #page-content-wrapper {
-  min-width: 100vw;
+    min-width: 100vw;
 }
+
 #wrapper.toggled #sidebar-wrapper {
-  margin-left: 0;
+    margin-left: 0;
 }
+
 .reportBtn {
-  margin-right: 20px;
+    width: 200px;
+    height: 50px;
+    margin: 10px 10px 10px 10px;
 }
+
 .reportBtn,
 .widgetsBtn {
-  margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 #widgetContainer {
-  padding: 20px;
+    padding: 20px;
 }
+
 @media (min-width: 768px) {
-  #sidebar-wrapper {
-    margin-left: 0;
-  }
-  #page-content-wrapper {
-    min-width: 0;
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
+}
+
+.homepage-row {
     width: 100%;
-  }
-  #wrapper.toggled #sidebar-wrapper {
-    margin-left: -15rem;
-  }
+    float: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.homepage-col-4 {
+    float: left;
+    width: 30%;
+}
+
+.homepage-col-8 {
+    float: right;
+    width: 60%;
+    position: relative;
+}
+
+.topButtons {
+    right: 0;
+    position: absolute;
 }
 
 .body-header {
-  flex: 1;
-}
-.body-content {
-  flex: 2;
+    flex: 1;
 }
 
-.modal-body > div {
-  margin: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+.body-content {
+    flex: 2;
+}
+
+.modal-body>div {
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.line {
+    margin-right: 3rem;
 }
 
 #userInput {
-  margin: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .error-msg {
-  color: red;
+    color: red;
 }

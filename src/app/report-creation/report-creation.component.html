@@ -8,8 +8,8 @@
   <!-- Database Connection -->
   <div class="section">
     <h4>Select your Database Connection:</h4>
-    <select
-      class="form-control_reports-DB"
+    <select 
+      class="form-control form-control_reports-DB"
       (change)="updateFormGroup()"
       (change)="updateReportType()"
       [(ngModel)]="selectedDatabase"
@@ -75,7 +75,7 @@
       <h4>Select the chart type you'd like to use:</h4>
       <form [formGroup]="chartType" (ngSubmit)="onSubmit()">
         <select
-          class="form-control_reports-charts"
+          class="form-control form-control_reports-charts"
           [(ngModel)]="selectedChartType"
           [ngModelOptions]="{ standalone: true }"
         >

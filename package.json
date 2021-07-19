@@ -9,7 +9,8 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "live": "nodemon ",
-        "postinstall": "patch-package"
+        "postinstall": "patch-package",
+        "dev": "ng build && node ./bin/www"
     },
     "private": true,
     "dependencies": {

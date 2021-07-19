@@ -1,11 +1,12 @@
 <div class="container" >
   <h1>Manage Users</h1>
-    <table class="table">
-      <thead>
+    <table class="table mt-2">
+      <thead class="thead-dark">
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Admin</th>
         <th scope="col">Creation Date</th>
+        <th scope="col">Actions</th>
       </tr>
       </thead>
 
@@ -21,7 +22,7 @@
           {{user.creation_date}}
         </td>
         <td>
-          <button (click)="this.deleteUser(user.ID); this.ngOnInit()">Remove User</button>
+          <button class="btn btn-danger" (click)="this.deleteUser(user.ID); this.ngOnInit()">Remove User</button>
         </td>
       </tr>
 
