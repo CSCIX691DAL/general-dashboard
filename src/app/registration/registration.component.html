@@ -1,45 +1,83 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
 />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous"
+/>
 <div class="registration text-center">
-    <div class="center">
-        <h1>Registration</h1>
+  <div class="center">
+    <h1>Registration</h1>
 
-        <form>
-            <div [formGroup]="userEmail" class="form-group">
-                <label><b>Username</b></label>
-                <!--Takes the user input then tells the program whether it's valid or not-->
-                <input [class.is-invalid]="userEmail.get('email').invalid" type="email" class="form-control" formControlName="email" placeholder="Enter Username:" required />
-                <!--This is what displays the error message if isn't a valid email-->
-                <div *ngIf="
+    <form>
+      <div [formGroup]="userEmail" class="form-group">
+        <label><b>Username</b></label>
+        <!--Takes the user input then tells the program whether it's valid or not-->
+        <input
+          [class.is-invalid]="userEmail.get('email').invalid"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Enter Username:"
+          required
+        />
+        <!--This is what displays the error message if isn't a valid email-->
+        <div
+          *ngIf="
             (getUserEmail().invalid && getUserEmail().touched) ||
             getUserEmail().dirty
-          ">
-                    <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">
+          "
+        >
+          <small *ngIf="getUserEmail().errors?.pattern" class="text-danger">
             Please provide a valid email address
           </small>
-                </div>
+        </div>
+      </div>
+
+      <!-- Added password see/unsee button-->
+      <div [formGroup]="passwords" class="form-group">
+        <label><b>Password</b></label>
+        <div class="Password-Input">
+          <div class="input-group">
+            <input
+              [class.is-invalid]="passwords.get('password').invalid"
+              [type]="passwordState"
+              class="form-control"
+              formControlName="password"
+              placeholder="Enter Password:"
+              aria-describedby="basic-addon2"
+              required
+            />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <i
+                  class="fa"
+                  [class]="{
+                    'fa-eye-slash': passwordState == 'password',
+                    'fa-eye': passwordState == 'text'
+                  }"
+                  aria-hidden="true"
+                  (click)="toggle()"
+                ></i>
+              </button>
             </div>
+          </div>
 
-            <!-- Added password see/unsee button-->
-            <div [formGroup]="passwords" class="form-group">
-                <label><b>Password</b></label>
-                <div class="Password-Input">
-                    <div class="input-group">
-                        <input [class.is-invalid]="passwords.get('password').invalid" [type]="passwordState" class="form-control" formControlName="password" placeholder="Enter Password:" aria-describedby="basic-addon2" required>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button">
-                    <i class="fa" [class]="{'fa-eye-slash': passwordState == 'password', 'fa-eye': passwordState == 'text'}" aria-hidden="true" (click)="toggle()"></i>
-                </button>
-                        </div>
-                    </div>
-
-                    <!--Displays this error messages if isn't a valid password-->
-                    <div *ngIf="
+          <!--Displays this error messages if isn't a valid password-->
+          <div
+            *ngIf="
               (getPassword().invalid && getPassword().touched) ||
               getPassword().dirty
-            ">
-                        <small *ngIf="getPassword().errors?.pattern" class="text-danger">Password must contain at least one letter, one symbol, and one
+            "
+          >
+            <small *ngIf="getPassword().errors?.pattern" class="text-danger"
+              >Password must contain at least one letter, one symbol, and one
               number</small
             >
           </div>
@@ -64,23 +102,33 @@
           <!--Added password see/unsee button-->
           <label><b>Confirm Password</b></label>
           <div class="input-group">
-            <input [class.is-invalid]="
-              passwords.get('confirmPassword').invalid ||
-              getConfirmPassword().value !== getPassword().value
-            "
-            [type]="confirmPasswordState"
-            class="form-control"
-            formControlName="confirmPassword"
-            placeholder="Confirm Password:"
-            aria-describedby="basic-addon2"
-            required>
+            <input
+              [class.is-invalid]="
+                passwords.get('confirmPassword').invalid ||
+                getConfirmPassword().value !== getPassword().value
+              "
+              [type]="confirmPasswordState"
+              class="form-control"
+              formControlName="confirmPassword"
+              placeholder="Confirm Password:"
+              aria-describedby="basic-addon2"
+              required
+            />
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">
-                  <i class="fa" [class]="{'fa-eye-slash': confirmPasswordState == 'password', 'fa-eye': confirmPasswordState == 'text'}" aria-hidden="true" (click)="change()"></i>
-                </button>
+              <button class="btn btn-outline-secondary" type="button">
+                <i
+                  class="fa"
+                  [class]="{
+                    'fa-eye-slash': confirmPasswordState == 'password',
+                    'fa-eye': confirmPasswordState == 'text'
+                  }"
+                  aria-hidden="true"
+                  (click)="change()"
+                ></i>
+              </button>
             </div>
           </div>
-          
+
           <!--Displays this error messages if isn't a valid password-->
           <div
             *ngIf="getConfirmPassword().touched || getConfirmPassword().dirty"
@@ -98,28 +146,38 @@
               It appears this user already exists, please login or try again
               with a different email
             </small>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <input class="form-check-input" type="checkbox" value="" id="adminAccount" />
-                <label class="form-check-label" for="adminAccount">
+          </div>
+        </div>
+      </div>
+      <div>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="adminAccount"
+        />
+        <label class="form-check-label" for="adminAccount">
           <b>Administrator Account?</b>
         </label>
-            </div>
-            <div class="mt-4 d-flex justify-content-center">
-                <button type="button" class="btn btn-primary" (click)="register()" id="registerButton">
+      </div>
+      <div class="mt-4 d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="register()"
+          id="registerButton"
+        >
           Register
         </button>
-            </div>
-            <div class="mt-4 d-flex justify-content-center">
-                <p>
-                    Already have an account?
-                    <a href="javascript:void(0);" (click)="switchToLogin()">
+      </div>
+      <div class="mt-4 d-flex justify-content-center">
+        <p>
+          Already have an account?
+          <a href="javascript:void(0);" (click)="switchToLogin()">
             Login here!
           </a>
-                </p>
-            </div>
-        </form>
-    </div>
+        </p>
+      </div>
+    </form>
+  </div>
 </div>
