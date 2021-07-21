@@ -154,7 +154,7 @@
   <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
-
+<!--Create Basic Report Modal-->
 <ng-template #reportCreater let-modal>
   <div class="modal-header">
     <h2>Basic Report</h2>
@@ -232,36 +232,6 @@
       </div>
     </div>
 
-    <!-- <div>
-          <div class="body-header">
-              <h4>User Input</h4>
-          </div>
-          <div class="body-content" id="userInput">
-              <div *ngFor="let param of selectedModelStructure">
-                  <input class="form-check-input" type="checkbox" value="" id="{{param}}">
-                  <label class="form-check-label" for="{{param}}">{{param}}</label>
-              </div>
-
-          </div>
-      </div> -->
-
-    <!-- <div>
-        <div class="body-header">
-            <h4>User Input Testing 1</h4>
-        </div>
-        <div class="body-content">
-          <label>
-            <ng-multiselect-dropdown
-              [placeholder]="'Please Select Columns'"
-              [settings]="dropdownSettings"
-              [data]="selectedModelStructure"
-              [(ngModel)]="selectedUserInputs"
-            >
-            </ng-multiselect-dropdown>
-          </label>
-        </div>
-      </div> -->
-
     <div *ngIf="selectedModel">
       <div class="body-header">
         <h4>User Input</h4>
@@ -275,19 +245,6 @@
         </angular2-multiselect>
       </div>
     </div>
-
-    <!-- <div>
-        <div class="body-header">
-            <h4>User Input Testing Compare</h4>
-        </div>
-        <div class="body-content">
-            <angular2-multiselect 
-              [data]="dropdownList" 
-              [(ngModel)]="selectedUserInputs" 
-              [settings]="dropdownSettings">
-            </angular2-multiselect>
-        </div>
-      </div> -->
 
     <div *ngIf="selectedModel">
       <div class="body-header">
@@ -338,6 +295,7 @@
   </div>
 </ng-template>
 
+<!--Create Widgets Modal-->
 <ng-template #widgetCreater let-modal>
   <div class="content">
     <div class="container">
