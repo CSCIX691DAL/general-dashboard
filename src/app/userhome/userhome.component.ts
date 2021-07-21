@@ -52,7 +52,7 @@ export class UserhomeComponent implements OnInit {
   reportName: string;
   reportDisplayName: string;
   form: FormGroup;
-  //start
+  //start of widget and report creation variables
   selectedReport: Report;
   selectedChartType: string;
   chartTypes = WidgetTypes;
@@ -387,19 +387,6 @@ export class UserhomeComponent implements OnInit {
 
   private parseInputParams(): string {
     let str = '';
-    // for (const param of this.selectedModelStructure){
-    //   const element = document.getElementById(param) as HTMLInputElement;
-    //   if (element.checked){
-
-    //     // handle starting 'and'
-    //     if (str === '') {
-    //       str += param + ' = @ ';
-    //     }
-    //     else {
-    //       str += ' AND ' + param + ' = @ ';
-    //     }
-    //   }
-    // }
 
     for (var i of this.selectedUserInputs) {
       // handle starting 'and'
@@ -419,15 +406,7 @@ export class UserhomeComponent implements OnInit {
   createInputParamsJsonString(): string {
     let str = '{"params": [';
     let count = 0;
-
-    // for (const param of this.selectedModelStructure){
-    //   const element = document.getElementById(param) as HTMLInputElement;
-    //   if (element.checked){
-    //     str += '{"name":"' + param + '","type":"text"},';
-    //     count++;
-    //   }
-    // }
-
+    
     for (var i of this.selectedUserInputs) {
       str += '{"name":"' + i.itemName + '","type":"text"},';
       count++;
